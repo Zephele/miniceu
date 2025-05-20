@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/19 11:59:10 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:44:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int	main(void)
 {
 	char	*input;
 	t_token	*tokens;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -62,7 +64,7 @@ int	main(void)
 			break ;
 		}
 		add_history(input);
-		tokens = tokenize(input);
+		tokens = tokenize(input, i);
 		if (tokens)
 		{
 			print_tokens(tokens);

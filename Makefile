@@ -1,7 +1,7 @@
 NAME		= minishell
 LIBFT		= libft.a
 FT_PRINTF	= ft_printf.a
-SRCS		= ./src/main.c ./src/tokens.c ./src/frees.c 
+SRCS		= ./src/main.c ./src/tokens.c ./src/frees.c ./src/quote_aux.c 
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc

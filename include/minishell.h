@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/15 18:53:21 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:09:02 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_token
 # define HEREDOC 5
 # define PIPE 6
 
-t_token	*tokenize(char *input);
+t_token	*tokenize(char *input, int i);
 void	free_tokens(t_token *tokens);
+int		seen_quotes(char *input, int i);
 
 #endif
