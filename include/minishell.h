@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/20 13:09:02 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:49:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ typedef struct s_token
 t_token	*tokenize(char *input, int i);
 void	free_tokens(t_token *tokens);
 int		seen_quotes(char *input, int i);
+char	*ft_strjoin_free(char *s1, char *s2);
+char	*include_quotes(char *content, char quote);
 
 #endif

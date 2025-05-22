@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/20 12:44:05 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:38:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	main(void)
 		}
 		free(input);
 	}
+	clear_history();
 	return (0);
 }
 

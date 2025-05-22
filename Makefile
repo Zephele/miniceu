@@ -6,7 +6,7 @@ OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
-RL_FLAGS	= -lreadline -lncurses
+RL_FLAGS	= -lreadline -lhistory
 INCLUDE		= -I include
 RM			= rm -rf
 
