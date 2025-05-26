@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/22 13:11:20 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:08:39 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,46 +64,15 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 {
 	t_token	*token;
 	char	*content;
-	int		start;
-	char	*temp;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	content = ft_strdup("");
+	content = extract_quoted_content(input, i, quote);
 	if (!content)
 	{
 		free(token);
 		return (NULL);
-	}
-	while (input[*i] != '\0')
-	{
-		if (input[*i] == quote)
-		{
-			start = ++(*i);
-			while (input[*i] != '\0' && input[*i] != quote)
-				(*i)++;
-			temp = ft_substr(input, start, *i - start);
-			if (!temp)
-			{
-				free(content);
-				free(token);
-				return (NULL);
-			}
-			content = ft_strjoin_free(content, temp);
-			free(temp);
-			if (input[*i] == quote)
-				(*i)++;
-			else
-				break ;
-		}
-		if (input[*i] != quote)
-			break ;
-	}
-	if (ft_strlen(content) == 0)
-	{
-		free(content);
-		content = ft_strdup("");
 	}
 	content = include_quotes(content, quote);
 	token->content = content;
@@ -137,10 +106,7 @@ t_token	*tokenize(char *input, int i)
 	head = NULL;
 	current = &head;
 	if (seen_quotes(input, i))
-	{
-		ft_putstr_fd("Error: unclosed quote\n", STDERR_FILENO);
 		return (NULL);
-	}
 	i = 0;
 	while ((size_t)i < ft_strlen(input))
 	{
