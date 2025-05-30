@@ -6,11 +6,11 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/26 11:08:39 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:25:39 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 static void	schar_aux(char *input, int *i, t_token *token)
 {

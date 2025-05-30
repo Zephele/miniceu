@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/23 15:22:47 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:30:42 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ int		seen_quotes(char *input, int i);
 char	*ft_strjoin_free(char *s1, char *s2);
 char	*include_quotes(char *content, char quote);
 char	*extract_quoted_content(char *input, int *i, char quote);
+int		validate_syntax(t_token *tokens);
 
 #endif

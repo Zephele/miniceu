@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/22 15:38:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:36:33 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int	main(void)
 		}
 		add_history(input);
 		tokens = tokenize(input, i);
+		if (tokens && validate_syntax(tokens))
+		{
+			free_tokens(tokens);
+			free(input);
+			continue ;
+		}
 		if (tokens)
 		{
 			print_tokens(tokens);

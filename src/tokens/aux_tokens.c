@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_aux.c                                        :+:      :+:    :+:   */
+/*   tokens_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/26 11:08:18 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:34:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 static void	asux_seen_quotes(char *input, int *i, int *quotes, char quote)
 {
@@ -29,6 +29,12 @@ static void	asux_seen_quotes(char *input, int *i, int *quotes, char quote)
 
 static int	aux_seen_redirerror(char *input, int i)
 {
+	if ((input[i] == '<' && input[i] == '>')
+		&& (input[i] == '>' && input[i] == '<'))
+	{
+		ft_putstr_fd("Error: SyntaxError\n", STDERR_FILENO);
+		return (1);
+	}
 	if ((input[i] == '<' || input[i] == '>')
 		&& (input[i + 1] == '<' || input[i + 1] == '>'))
 	{
