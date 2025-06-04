@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/30 17:44:03 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:51:25 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,21 @@ int	validate_syntax(t_token *tokens)
 		return (1);
 	}
 	return (0);
+}
+
+t_token	*handle_env(char *input, int *i)
+{
+	t_token	*token;
+	int		start;
+
+	start = *i;
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+		(*i)++;
+	token->content = ft_substr(input, start, *i - start);
+	token->type = ENV;
+	token->next = NULL;
+	return (token);
 }

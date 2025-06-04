@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/30 17:36:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:01:35 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
 	int		i;
 
 	i = 0;
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		input = readline("minishell> ");

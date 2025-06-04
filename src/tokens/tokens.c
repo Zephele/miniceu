@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/05/26 11:25:39 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:47:56 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ t_token	*tokenize(char *input, int i)
 			*current = handle_schar(input, &i);
 		else if (input[i] == '\'' || input[i] == '\"')
 			*current = handle_quotes(input, &i, input[i]);
+		else if (input[i] == '$')
+			*current = handle_env(input, &i);
 		else
 			*current = handle_general(input, &i);
 		if (*current)
