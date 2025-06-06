@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/04 17:51:25 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:34:32 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,74 @@ t_token	*handle_env(char *input, int *i)
 	token->type = ENV;
 	token->next = NULL;
 	return (token);
+}
+
+char	*expand_env_vars(char *content)
+{
+	int		i;
+	int		start;
+	char	*temp;
+	char	*expanded_content;
+	char	*content_name;
+
+	i = 0;
+	while (content[i])
+	{
+		while (content[i] && content[i] != '$')
+			i++;
+		if (content[i] == '$')
+		{
+			start = i;
+			i++;
+			if (ft_isalpha(content[i]) || content[i] == '_')
+			{
+				temp = ft_substr(content, 0, i);
+				while (content[i] && (ft_isalnum(content[i]) || content[i] == '_'))
+					i++;
+				content_name = ft_substr(content, start, i - start);
+				expanded_content = getenv(content_name);
+				free(content);
+				return (expanded_content);
+			}
+		}
+	}
+}
+
+char	*expand_env_vars(char *content)
+{
+	int		i;
+	int		j;
+	int		start;
+	char	*temp;
+	char	*expanded_content;
+	char	*content_name;
+
+	i = 0;
+	while (content[i])
+	{
+		while (content[i] && content[i] != '$')
+		{
+			temp[i] = content[i];
+			i++;
+		}
+		if (content[i] == '$')
+		{
+			start = i;
+			i++;
+			if (ft_isalpha(content[i]) || content[i] == '_')
+			{
+				while (content[i] && (ft_isalnum(content[i])))
+					i++;
+				content_name = ft_substr(content, start, i - start);
+				expanded_content = getenv(content_name);
+				j = 0;
+				while (j < ft_strlen(expanded_content))
+				{
+					temp[start] = expanded_content[j];
+					j++;
+					start++;
+				}
+			}
+		}
+	}
 }

@@ -6,10 +6,11 @@ SRCS		= ./src/main.c ./src/tokens/tokens.c ./src/frees.c ./src/tokens/aux_tokens
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -g3 -Wall -Werror -Wextra
 RL_FLAGS	= -lreadline -lhistory
 INCLUDE		= -I include
 RM			= rm -rf
+SRC_TESTE	= mini_expand.c
 
 all: $(NAME)
 
@@ -33,6 +34,11 @@ fclean: clean
 	${RM} ${NAME}
 
 re: fclean all
+
+teste:
+	@make -C libs/libft
+	@make -C libs/ft_printf
+	$(CC) $(CFLAGS) $(SRC_TESTE) $(INCLUDE) libs/ft_printf/$(FT_PRINTF) libs/libft/$(LIBFT) $(RL_FLAGS) -o teste
 
 val:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
