@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 16:01:18 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:41:34 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int			validate_syntax(t_token *tokens);
 t_token		*handle_env(char *input, int *i);
 int			is_empty(char *temp, char *content);
 t_global	*gg(void);
+char		*expand_env_vars(char *content);
 
 #endif

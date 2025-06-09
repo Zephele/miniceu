@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 15:59:19 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:59:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,10 @@ char	*extract_quoted_content(char *input, int *i, char quote)
 		if (is_empty(temp, content))
 			return (NULL);
 		content = ft_strjoin_free(content, temp);
-		// if (quote == '"')
-		// 	content = expand_env_vars(content);
+		if (quote == '"' )
+		{
+			content = expand_env_vars(content);
+		}
 		free(temp);
 		if (input[*i] == quote)
 			(*i)++;
