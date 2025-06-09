@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:35:58 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 16:31:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:02:10 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*expand_env_vars(char *content)
 	{
 		while (content[i] && content[i] != '$')
 		{
-			temp[temp_size] = content[i];
+			temp = ft_strjoin_free(temp, (char []){content[i], '\0'});
 			i++;
 			temp_size++;
 		}
@@ -128,7 +128,7 @@ int	main(void)
 {
 	char	*content;
 
-	content = "$HOME is the home directory.";
+	content = "     Hello $USERasd, welcome to the shell!";
 	content = expand_env_vars(content);
 	ft_printf("Expanded content: %s\n", content);
 	free(content);
