@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:51:39 by ratanaka          #+#    #+#             */
-/*   Updated: 2024/11/12 19:14:32 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:33:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_putstr(char *s)
 	i = 0;
 	if (!s)
 	{
-		write (1, "(null)", 6);
+		write(1, "(null)", 6);
 		return (6);
 	}
 	while (s[i] != '\0')

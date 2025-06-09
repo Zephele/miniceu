@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/06 16:52:26 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:01:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_global
+{
+	char	*content;
+}	t_global;
+
 # define CMD 0
 # define ARG 1
 # define REDIR_IN 2
@@ -37,16 +42,15 @@ typedef struct s_token
 # define PIPE 6
 # define ENV 7
 
-volatile sig_atomic_t	g_signal;
-
-t_token	*tokenize(char *input, int i);
-void	free_tokens(t_token *tokens);
-int		seen_quotes(char *input, int i);
-char	*ft_strjoin_free(char *s1, char *s2);
-char	*include_quotes(char *content, char quote);
-char	*extract_quoted_content(char *input, int *i, char quote);
-int		validate_syntax(t_token *tokens);
-t_token	*handle_env(char *input, int *i);
-int		is_empty(char *temp, char *content);
+t_token		*tokenize(char *input, int i);
+void		free_tokens(t_token *tokens);
+int			seen_quotes(char *input, int i);
+char		*ft_strjoin_free(char *s1, char *s2);
+char		*include_quotes(char *content, char quote);
+char		*extract_quoted_content(char *input, int *i, char quote);
+int			validate_syntax(t_token *tokens);
+t_token		*handle_env(char *input, int *i);
+int			is_empty(char *temp, char *content);
+t_global	*gg(void);
 
 #endif

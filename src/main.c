@@ -6,11 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/06 16:46:02 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:02:45 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+volatile sig_atomic_t	g_signal;
 
 void	handle_sigint(int sig)
 {

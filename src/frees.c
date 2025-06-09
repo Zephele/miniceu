@@ -6,11 +6,18 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:51:13 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/06 16:52:13 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:03:30 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_global	*gg(void)
+{
+	static t_global	global;
+
+	return (&global);
+}
 
 void	free_tokens(t_token *tokens)
 {
