@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 16:02:45 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:56:28 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	main(void)
 		input = readline("minishell> ");
 		if (!input)
 		{
+			// free_tokens(tokens);
 			printf("exit\n");
 			break ;
 		}
