@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 15:59:56 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:06:54 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,60 @@ t_token	*handle_env(char *input, int *i)
 	token->type = ENV;
 	token->next = NULL;
 	return (token);
+}
+
+char	*expand_aux(char *content, int *i, int *temp_size, char *temp)
+{
+	char	*expanded_content;
+	char	*content_name;
+	int		start;
+	int		temp_i;
+
+	start = *i;
+	temp_i = *i;
+	if (ft_isalpha(content[temp_i]) || content[temp_i] == '_')
+	{
+		temp_i++;
+		while (content[temp_i] && (ft_isalnum_underline(content[temp_i])))
+			temp_i++;
+		content_name = ft_substr(content, start, temp_i - start);
+		expanded_content = getenv(content_name);
+		if (is_empty(expanded_content, content_name))
+		{
+			*i = temp_i;
+			return (temp);
+		}
+		temp = ft_strjoin_free(temp, expanded_content);
+		*temp_size += ft_strlen(expanded_content);
+		free(content_name);
+	}
+	*i = temp_i;
+	return (temp);
+}
+
+char	*expand_env_vars(char *content)
+{
+	int		i;
+	int		temp_size;
+	char	*temp;
+
+	i = 0;
+	temp_size = 0;
+	temp = ft_strdup("");
+	while (content[i])
+	{
+		while (content[i] && content[i] != '$')
+		{
+			temp = ft_strjoin_free(temp, (char []){content[i], '\0'});
+			i++;
+			temp_size++;
+		}
+		if (content[i] == '$')
+		{
+			i++;
+			temp = expand_aux(content, &i, &temp_size, temp);
+		}
+	}
+	free(content);
+	return (temp);
 }

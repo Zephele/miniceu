@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 17:41:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:08:16 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,12 @@ t_token		*handle_env(char *input, int *i);
 int			is_empty(char *temp, char *content);
 t_global	*gg(void);
 char		*expand_env_vars(char *content);
+char		*expand_aux(char *content, int *i, int *temp_size, char *temp);
+int			ft_isalnum_underline(int c);
+
+
+//BUILT-INS
+
+void		echo(t_token *token);
 
 #endif

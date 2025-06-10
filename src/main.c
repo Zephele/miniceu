@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 17:56:28 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/10 16:58:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,50 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	print_tokens(t_token *tokens)
+// static void	print_tokens(t_token *tokens)
+// {
+// 	int	i;
+
+// 	i = 1;
+// 	while (tokens)
+// 	{
+// 		ft_printf("Token %d:\n", i++);
+// 		ft_printf("  Content: [%s]\n", tokens->content);
+// 		ft_printf("  Type:    %d\n", tokens->type);
+// 		if (tokens->type == 2)
+// 			ft_printf("  REDIR_IN\n");
+// 		if (tokens->type == 3)
+// 			ft_printf("  REDIR_OUT\n");
+// 		if (tokens->type == 4)
+// 			ft_printf("  REDIR_APPEND\n");
+// 		if (tokens->type == 5)
+// 			ft_printf("  HEREDOC\n");
+// 		if (tokens->type == 6)
+// 			ft_printf("  PIPE\n");
+// 		ft_printf("\n");
+// 		tokens = tokens->next;
+// 	}
+// }
+
+static void	built_ins_test(t_token *tokens)
 {
 	int	i;
 
 	i = 1;
 	while (tokens)
 	{
-		ft_printf("Token %d:\n", i++);
-		ft_printf("  Content: [%s]\n", tokens->content);
-		ft_printf("  Type:    %d\n", tokens->type);
-		if (tokens->type == 2)
-			ft_printf("  REDIR_IN\n");
-		if (tokens->type == 3)
-			ft_printf("  REDIR_OUT\n");
-		if (tokens->type == 4)
-			ft_printf("  REDIR_APPEND\n");
-		if (tokens->type == 5)
-			ft_printf("  HEREDOC\n");
-		if (tokens->type == 6)
-			ft_printf("  PIPE\n");
-		ft_printf("\n");
-		tokens = tokens->next;
+		if (tokens->type == CMD)
+		{
+			if (ft_strncmp(tokens->content, "echo", 4) == 0)
+			{
+				echo(tokens);
+				return ;
+			}
+			else
+				tokens = tokens->next;
+		}
+		else
+			return ;
 	}
 }
 
@@ -61,7 +83,6 @@ int	main(void)
 		input = readline("minishell> ");
 		if (!input)
 		{
-			// free_tokens(tokens);
 			printf("exit\n");
 			break ;
 		}
@@ -75,7 +96,7 @@ int	main(void)
 		}
 		if (tokens)
 		{
-			print_tokens(tokens);
+			built_ins_test(tokens);
 			free_tokens(tokens);
 		}
 		free(input);
