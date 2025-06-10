@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:08:16 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:34:06 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int			ft_isalnum_underline(int c);
 //BUILT-INS
 
 void		echo(t_token *token);
+void		pwd(t_token *token);
 
 #endif

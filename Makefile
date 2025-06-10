@@ -3,7 +3,7 @@ LIBFT		= libft.a
 FT_PRINTF	= ft_printf.a
 SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c \
 		./src/tokens/tokens.c ./src/tokens/aux_tokens.c ./src/tokens/aux2_tokens.c \
-		./src/built-ins/echo.c
+		./src/built-ins/echo.c ./src/built-ins/pwd.c 
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc

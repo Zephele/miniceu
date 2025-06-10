@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 16:58:18 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:37:11 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ static void	built_ins_test(t_token *tokens)
 			if (ft_strncmp(tokens->content, "echo", 4) == 0)
 			{
 				echo(tokens);
+				return ;
+			}
+			else if (ft_strncmp(tokens->content, "pwd", 3) == 0)
+			{
+				pwd(tokens);
 				return ;
 			}
 			else
