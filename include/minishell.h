@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:34:06 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:57:58 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <unistd.h>
 # include "../libs/ft_printf/ft_printf.h"
 # include "../libs/libft/libft.h"
+
+typedef struct s_env
+{
+	char	**vars;
+}	t_env;
+
 
 typedef struct s_token
 {
@@ -59,7 +65,8 @@ int			ft_isalnum_underline(int c);
 
 //BUILT-INS
 
-void		echo(t_token *token);
-void		pwd(t_token *token);
+void		ft_echo(t_token *token);
+void		ft_pwd(t_token *token);
+void		ft_cd(t_token *token);
 
 #endif

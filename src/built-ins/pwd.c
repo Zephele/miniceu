@@ -6,13 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:56 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:38:56 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:23:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pwd(t_token *token)
+void	ft_pwd(t_token *token)
 {
 	char	*cwd;
 
