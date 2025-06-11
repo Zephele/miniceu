@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:37:11 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:33:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,37 @@ static void	built_ins_test(t_token *tokens)
 		{
 			if (ft_strncmp(tokens->content, "echo", 4) == 0)
 			{
-				echo(tokens);
+				ft_echo(tokens);
 				return ;
 			}
+			else if (ft_strncmp(tokens->content, "cd", 2) == 0)
+			{
+				ft_cd(tokens);
+				return ;
+			}
+			// else if (ft_strncmp(tokens->content, "exit", 4) == 0)
+			// {
+			// 	ft_exit(tokens);
+			// 	return ;
+			// }
+			// else if (ft_strncmp(tokens->content, "env", 3) == 0)
+			// {
+			// 	ft_env(tokens);
+			// 	return ;
+			// }
+			// else if (ft_strncmp(tokens->content, "export", 6) == 0)
+			// {
+			// 	ft_export(tokens);
+			// 	return ;
+			// }
+			// else if (ft_strncmp(tokens->content, "unset", 5) == 0)
+			// {
+			// 	ft_unset(tokens);
+			// 	return ;
+			// }
 			else if (ft_strncmp(tokens->content, "pwd", 3) == 0)
 			{
-				pwd(tokens);
+				ft_pwd(tokens);
 				return ;
 			}
 			else

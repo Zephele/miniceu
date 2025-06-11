@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:03:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/11 13:23:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_strncmp_next(const char *s1, const char *s2,
 	return (0);
 }
 
-void	echo(t_token *token)
+void	ft_echo(t_token *token)
 {
 	int	newline;
 
