@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/11 13:33:05 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:58:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,30 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-// static void	print_tokens(t_token *tokens)
-// {
-// 	int	i;
+static void	print_tokens(t_token *tokens)
+{
+	int	i;
 
-// 	i = 1;
-// 	while (tokens)
-// 	{
-// 		ft_printf("Token %d:\n", i++);
-// 		ft_printf("  Content: [%s]\n", tokens->content);
-// 		ft_printf("  Type:    %d\n", tokens->type);
-// 		if (tokens->type == 2)
-// 			ft_printf("  REDIR_IN\n");
-// 		if (tokens->type == 3)
-// 			ft_printf("  REDIR_OUT\n");
-// 		if (tokens->type == 4)
-// 			ft_printf("  REDIR_APPEND\n");
-// 		if (tokens->type == 5)
-// 			ft_printf("  HEREDOC\n");
-// 		if (tokens->type == 6)
-// 			ft_printf("  PIPE\n");
-// 		ft_printf("\n");
-// 		tokens = tokens->next;
-// 	}
-// }
+	i = 1;
+	while (tokens)
+	{
+		ft_printf("Token %d:\n", i++);
+		ft_printf("  Content: [%s]\n", tokens->content);
+		ft_printf("  Type:    %d\n", tokens->type);
+		if (tokens->type == 2)
+			ft_printf("  REDIR_IN\n");
+		if (tokens->type == 3)
+			ft_printf("  REDIR_OUT\n");
+		if (tokens->type == 4)
+			ft_printf("  REDIR_APPEND\n");
+		if (tokens->type == 5)
+			ft_printf("  HEREDOC\n");
+		if (tokens->type == 6)
+			ft_printf("  PIPE\n");
+		ft_printf("\n");
+		tokens = tokens->next;
+	}
+}
 
 static void	built_ins_test(t_token *tokens)
 {
@@ -59,10 +59,11 @@ static void	built_ins_test(t_token *tokens)
 		{
 			if (ft_strncmp(tokens->content, "echo", 4) == 0)
 			{
-				ft_echo(tokens);
-				return ;
+				tokens = ft_echo(&tokens);
+				if (!tokens)
+					return ;
 			}
-			else if (ft_strncmp(tokens->content, "cd", 2) == 0)
+			if (ft_strncmp(tokens->content, "cd", 2) == 0)
 			{
 				ft_cd(tokens);
 				return ;
@@ -87,7 +88,7 @@ static void	built_ins_test(t_token *tokens)
 			// 	ft_unset(tokens);
 			// 	return ;
 			// }
-			else if (ft_strncmp(tokens->content, "pwd", 3) == 0)
+			if (ft_strncmp(tokens->content, "pwd", 3) == 0)
 			{
 				ft_pwd(tokens);
 				return ;
@@ -126,7 +127,9 @@ int	main(void)
 		}
 		if (tokens)
 		{
+			print_tokens(tokens);
 			built_ins_test(tokens);
+			print_tokens(tokens);
 			free_tokens(tokens);
 		}
 		free(input);

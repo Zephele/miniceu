@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 18:00:46 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:28:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 		free(token);
 		return (NULL);
 	}
-	content = include_quotes(content, quote);
+	while (input[*i])
+	{
+		content = ft_strjoin_free(content, (char []){input[*i], '\0'});
+		i++;
+	}
 	token->content = ft_strdup(content);
 	token->type = ARG;
 	token->next = NULL;
