@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/09 17:59:15 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:14:38 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,34 +70,6 @@ int	seen_quotes(char *input, int i)
 		return (1);
 	}
 	return (0);
-}
-
-char	*include_quotes(char *content, char quote)
-{
-	char	*temp;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	temp = malloc((ft_strlen(content)) + 3);
-	if (!temp)
-	{
-		free (content);
-		return (NULL);
-	}
-	temp[i] = quote;
-	i++;
-	while (content[j] != '\0')
-	{
-		temp[i] = content[j];
-		i++;
-		j++;
-	}
-	temp[i] = quote;
-	temp[++i] = '\0';
-	free(content);
-	return (temp);
 }
 
 char	*extract_quoted_content(char *input, int *i, char quote)
