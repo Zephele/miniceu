@@ -47,3 +47,32 @@
 // 	free(content);
 // 	return (temp);
 // }
+
+// char	*extract_quoted_content(char *input, int *i, char quote)
+// {
+// 	int		start;
+// 	char	*temp;
+// 	char	*content;
+
+// 	content = ft_strdup("");
+// 	while (input[*i] != '\0' && input[*i] != ' ' && input[*i] == quote)
+// 	{
+// 		start = ++(*i);
+// 		while (input[*i] != '\0' && input[*i] != quote)
+// 			(*i)++;
+// 		temp = ft_substr(input, start, *i - start);
+// 		if (is_empty(temp, content))
+// 			return (NULL);
+// 		content = ft_strjoin_free(content, temp);
+// 		if (quote == '"')
+// 		{
+// 			content = expand_env_vars(content);
+// 		}
+// 		free(temp);
+// 		if (input[*i] == quote)
+// 			(*i)++;
+// 		else
+// 			break ;
+// 	}
+// 	return (content);
+// }
