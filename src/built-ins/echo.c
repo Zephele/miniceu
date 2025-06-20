@@ -6,13 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/17 15:55:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:09:57 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*no_quotes(char *content)
+char	*no_quotes(char *content)
 {
 	char	*temp;
 	int		i;
@@ -82,7 +82,7 @@ t_token	*ft_echo(t_token **token)
 	int	newline;
 
 	newline = 1;
-	if (*token && ft_strncmp((*token)->content, "echo", 4) == 0)
+	if (*token && (compare_aux((*token)->content, "echo") == 0))
 	{
 		*token = (*token)->next;
 		if (*token && ft_strncmp_next((*token)->content, "-n", 2, &newline) == 0)

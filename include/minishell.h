@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/17 15:56:17 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:07:09 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ t_global	*gg(void);
 char		*expand_env_vars(char *content);
 char		*expand_aux(char *content, int *i, int *temp_size, char *temp);
 int			ft_isalnum_underline(int c);
+char		*no_quotes(char *content);
+int			compare_aux(char *content, char *comp);
+
 
 
 //BUILT-INS

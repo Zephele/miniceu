@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/17 15:58:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:15:32 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ static void	print_tokens(t_token *tokens)
 
 static void	built_ins_test(t_token *tokens)
 {
-	int	i;
+	int		i;
 
 	i = 1;
 	while (tokens)
 	{
-		if (tokens->type == CMD)
+		if (tokens->type == CMD || tokens->type == ARG)
 		{
-			if (ft_strncmp(tokens->content, "echo", 4) == 0)
+			if (compare_aux(tokens->content, "echo") == 0)
 			{
 				tokens = ft_echo(&tokens);
 				if (!tokens)
 					return ;
 			}
-			if (ft_strncmp(tokens->content, "cd", 2) == 0)
+			if (compare_aux(tokens->content, "cd") == 0)
 			{
 				ft_cd(tokens);
 				return ;
@@ -88,7 +88,7 @@ static void	built_ins_test(t_token *tokens)
 			// 	ft_unset(tokens);
 			// 	return ;
 			// }
-			if (ft_strncmp(tokens->content, "pwd", 3) == 0)
+			if (compare_aux(tokens->content, "pwd") == 0)
 			{
 				ft_pwd(tokens);
 				return ;
@@ -129,7 +129,6 @@ int	main(void)
 		{
 			print_tokens(tokens);
 			built_ins_test(tokens);
-			print_tokens(tokens);
 			free_tokens(tokens);
 		}
 		free(input);

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/17 17:35:58 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:44:59 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,38 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 {
 	t_token	*token;
 	char	*content;
+	char	*temp;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	content = extract_quoted_content(input, i, quote);
-	if (!content)
+	content = NULL;
+	while (input[*i] && !ft_strchr(" <>|", input[*i]))
 	{
-		free(token);
-		return (NULL);
-	}
-	while (input[*i])
-	{
-		content = ft_strjoin_free(content, (char []){input[*i], '\0'});
-		(*i)++;
+		if ((input[*i] == '\'' || input[*i] == '\"'))
+		{
+			quote = input[*i];
+			if (!content)
+			{
+				content = extract_quoted_content(input, i, quote);
+			}
+			else
+			{
+				temp = extract_quoted_content(input, i, quote);
+				content = ft_strjoin_free(content, temp);
+				free (temp);
+			}
+		}
+		if (!content)
+		{
+			free(token);
+			return (NULL);
+		}
+		while (input[*i] && input[*i] != '\'' && input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+		{
+			content = ft_strjoin_free(content, (char []){input[*i], '\0'});
+			(*i)++;
+		}
 	}
 	token->content = ft_strdup(content);
 	token->type = ARG;
@@ -95,7 +113,7 @@ static t_token	*handle_general(char *input, int *i)
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+	while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
 		(*i)++;
 	token->content = ft_substr(input, start, *i - start);
 	token->type = CMD;
