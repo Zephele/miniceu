@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/23 19:28:16 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:39:22 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,28 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 static t_token	*handle_general(char *input, int *i)
 {
 	t_token	*token;
-	int		start;
+	char	*content;
+	char	quote;
 
-	start = *i;
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
-		(*i)++;
-	token->content = ft_substr(input, start, *i - start);
+	content = NULL;
+	quote = '\0';
+	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+	{
+		if (input[*i] && input[*i] != '\''
+			&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+			content = aux_general(input, i, content);
+		if ((input[*i] == '\'' || input[*i] == '\"'))
+			content = aux_quotes(input, i, quote, content);
+		if (is_empty_token(content, token))
+			return (NULL);
+	}
+	token->content = ft_strdup(content);
 	token->type = CMD;
 	token->next = NULL;
+	free (content);
 	return (token);
 }
 

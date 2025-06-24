@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/23 19:29:27 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:33:33 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			ft_isalnum_underline(int c);
 char		*no_quotes(char *content);
 int			compare_aux(char *content, char *comp);
 char		*aux_quotes(char *input, int *i, char quote, char *content);
+char		*aux_general(char *input, int *i, char *content);
 
 //FREES
 int			is_empty(char *temp, char *content);

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:01:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/23 18:17:41 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:33:10 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*aux_quotes(char *input, int *i, char quote, char *content)
 {
 	char	*temp;
 
+	quote = input[*i];
 	if ((input[*i] == '\'' || input[*i] == '\"'))
 	{
 		quote = input[*i];
@@ -30,3 +31,44 @@ char	*aux_quotes(char *input, int *i, char quote, char *content)
 	}
 	return (content);
 }
+
+char	*aux_general(char *input, int *i, char *content)
+{
+	char	*temp;
+	int		start;
+
+	start = *i;
+	while (input[*i] && input[*i] != '\''
+		&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+	{
+		if (!content)
+		{
+			while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
+				(*i)++;
+			content = ft_substr(input, start, *i - start);
+		}
+		else
+		{
+			while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
+				(*i)++;
+			temp = ft_substr(input, start, *i - start);
+			content = ft_strjoin_free(content, temp);
+			free (temp);
+		}
+	}
+	return (content);
+}
+
+	// t_token	*token;
+	// int		start;
+
+	// start = *i;
+	// token = (t_token *)malloc(sizeof(t_token));
+	// if (!token)
+	// 	return (NULL);
+	// while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
+	// 	(*i)++;
+	// token->content = ft_substr(input, start, *i - start);
+	// token->type = CMD;
+	// token->next = NULL;
+	// return (token);
