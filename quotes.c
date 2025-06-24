@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 19:47:53 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/23 19:48:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:27:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,3 +88,17 @@
 // 	}
 // 	return (content);
 // }
+
+	// t_token	*token;
+	// int		start;
+
+	// start = *i;
+	// token = (t_token *)malloc(sizeof(t_token));
+	// if (!token)
+	// 	return (NULL);
+	// while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
+	// 	(*i)++;
+	// token->content = ft_substr(input, start, *i - start);
+	// token->type = CMD;
+	// token->next = NULL;
+	// return (token);
