@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:51:13 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/18 16:20:11 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:26:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ int	is_empty(char *temp, char *content)
 	if (!temp)
 	{
 		free(content);
+		return (1);
+	}
+	return (0);
+}
+
+int	is_empty_token(char *temp, t_token *token)
+{		
+	if (!temp)
+	{
+		free(token);
 		return (1);
 	}
 	return (0);

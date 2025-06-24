@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/20 19:44:59 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:28:16 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 {
 	t_token	*token;
 	char	*content;
-	char	*temp;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
@@ -73,25 +72,11 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 	while (input[*i] && !ft_strchr(" <>|", input[*i]))
 	{
 		if ((input[*i] == '\'' || input[*i] == '\"'))
-		{
-			quote = input[*i];
-			if (!content)
-			{
-				content = extract_quoted_content(input, i, quote);
-			}
-			else
-			{
-				temp = extract_quoted_content(input, i, quote);
-				content = ft_strjoin_free(content, temp);
-				free (temp);
-			}
-		}
-		if (!content)
-		{
-			free(token);
+			content = aux_quotes(input, i, quote, content);
+		if (is_empty_token(content, token))
 			return (NULL);
-		}
-		while (input[*i] && input[*i] != '\'' && input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+		while (input[*i] && input[*i] != '\''
+			&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
 		{
 			content = ft_strjoin_free(content, (char []){input[*i], '\0'});
 			(*i)++;

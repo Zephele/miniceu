@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/20 20:07:09 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:29:27 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_env
 {
 	char	**vars;
 }	t_env;
-
 
 typedef struct s_token
 {
@@ -49,22 +48,24 @@ typedef struct s_global
 # define ENV 7
 
 t_token		*tokenize(char *input, int i);
-void		free_tokens(t_token *tokens);
 int			seen_quotes(char *input, int i);
-char		*ft_strjoin_free(char *s1, char *s2);
 char		*include_quotes(char *content, char quote);
 char		*extract_quoted_content(char *input, int *i, char quote);
 int			validate_syntax(t_token *tokens);
 t_token		*handle_env(char *input, int *i);
-int			is_empty(char *temp, char *content);
 t_global	*gg(void);
 char		*expand_env_vars(char *content);
 char		*expand_aux(char *content, int *i, int *temp_size, char *temp);
 int			ft_isalnum_underline(int c);
 char		*no_quotes(char *content);
 int			compare_aux(char *content, char *comp);
+char		*aux_quotes(char *input, int *i, char quote, char *content);
 
-
+//FREES
+int			is_empty(char *temp, char *content);
+int			is_empty_token(char *temp, t_token *token);
+void		free_tokens(t_token *tokens);
+char		*ft_strjoin_free(char *s1, char *s2);
 
 //BUILT-INS
 

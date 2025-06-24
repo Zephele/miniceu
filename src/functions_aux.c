@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:07:28 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/20 20:37:17 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:01:57 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@ int	ft_isalnum_underline(int c)
 int	compare_aux(char *content, char *comp)
 {
 	int	len;
+	int	content_len;
 
 	len = ft_strlen(comp);
+	content_len = ft_strlen(content);
+	if (!content || !comp)
+		return (1);
 	if (ft_strncmp(content, comp, len) == 0)
 		return (0);
-	else if (content[0] == '\'' && content[len + 1] == '\''
+	else if (content_len == (len + 2)
+		&& content[0] == '\'' && content[len + 1] == '\''
 		&& ft_strncmp(content + 1, comp, len) == 0)
 		return (0);
-	else if (content[0] == '\"' && content[len + 1] == '\"'
+	else if (content_len == (len + 2)
+		&& content[0] == '\"' && content[len + 1] == '\"'
 		&& ft_strncmp(content + 1, comp, len) == 0)
 		return (0);
 	else
