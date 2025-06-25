@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/20 20:15:32 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:43:49 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ static void	built_ins_test(t_token *tokens)
 			}
 			if (compare_aux(tokens->content, "cd") == 0)
 			{
-				ft_cd(tokens);
-				return ;
+				tokens = ft_cd(&tokens);
+				if (!tokens)
+					return ;
 			}
 			// else if (ft_strncmp(tokens->content, "exit", 4) == 0)
 			// {
@@ -90,9 +91,12 @@ static void	built_ins_test(t_token *tokens)
 			// }
 			if (compare_aux(tokens->content, "pwd") == 0)
 			{
-				ft_pwd(tokens);
-				return ;
+				tokens = ft_pwd(&tokens);
+				if (!tokens)
+					return ;
 			}
+			if (tokens->type != CMD && tokens->type != ARG)
+				tokens = tokens->next;
 			else
 				tokens = tokens->next;
 		}

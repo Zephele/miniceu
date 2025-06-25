@@ -6,18 +6,19 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 16:42:56 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/11 13:23:18 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:14:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_pwd(t_token *token)
+t_token	*ft_pwd(t_token **token)
 {
 	char	*cwd;
 
-	if (token && ft_strncmp(token->content, "pwd", 3) == 0)
+	if (token && ft_strncmp((*token)->content, "pwd", 3) == 0)
 	{
+		*token = (*token)->next;
 		cwd = getcwd(NULL, 0);
 		if (cwd)
 		{
@@ -26,4 +27,5 @@ void	ft_pwd(t_token *token)
 			free (cwd);
 		}
 	}
+	return (*token);
 }

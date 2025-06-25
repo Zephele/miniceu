@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/24 16:33:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:39:25 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		*ft_strjoin_free(char *s1, char *s2);
 //BUILT-INS
 
 t_token		*ft_echo(t_token **token);
-void		ft_pwd(t_token *token);
-void		ft_cd(t_token *token);
+t_token		*ft_pwd(t_token **token);
+t_token		*ft_cd(t_token **token);
 
 #endif
