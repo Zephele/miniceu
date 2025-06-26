@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/25 16:39:25 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:40:21 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 typedef struct s_env
 {
-	char	**vars;
+	char	**var;
+	int		count;
 }	t_env;
 
 typedef struct s_token
