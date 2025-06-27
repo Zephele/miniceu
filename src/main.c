@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/25 16:43:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:52:40 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ static void	built_ins_test(t_token *tokens)
 			// 	ft_exit(tokens);
 			// 	return ;
 			// }
-			// else if (ft_strncmp(tokens->content, "env", 3) == 0)
-			// {
-			// 	ft_env(tokens);
-			// 	return ;
-			// }
+			if (compare_aux(tokens->content, "env") == 0)
+			{
+				tokens = ft_env(&tokens);
+				if (!tokens)
+					return ;
+			}
 			// else if (ft_strncmp(tokens->content, "export", 6) == 0)
 			// {
 			// 	ft_export(tokens);
@@ -105,14 +106,24 @@ static void	built_ins_test(t_token *tokens)
 	}
 }
 
+static void	init_minishell(t_env *envs)
+{
+	gg()->envs = envs;
+}
+
 int	main(void)
 {
 	char	*input;
 	t_token	*tokens;
+	t_env	*envs;
 	int		i;
 
 	i = 0;
 	signal(SIGINT, handle_sigint);
+	envs = init_envs(__environ);
+	if (!envs)
+		return (1);
+	init_minishell(envs);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -137,6 +148,7 @@ int	main(void)
 		}
 		free(input);
 	}
+	free_envs(envs);
 	clear_history();
 	return (0);
 }

@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   frees2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 17:45:29 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 18:53:46 by ratanaka         ###   ########.fr       */
+/*   Created: 2025/06/27 16:52:26 by ratanaka          #+#    #+#             */
+/*   Updated: 2025/06/27 17:58:44 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-t_token	*ft_env(t_token **token)
+void	free_envs(t_env *env_list)
 {
 	int	i;
 
-	i = 0;
-	if (*token && (compare_aux((*token)->content, "env") == 0))
+	if (!env_list)
+		return ;
+	if (env_list->var)
 	{
-		while (i < gg()->envs->count)
+		i = 0;
+		while (env_list->var[i])
 		{
-			ft_printf("%s\n", gg()->envs->var[i]);
+			free(env_list->var[i]);
 			i++;
 		}
+		free(env_list->var);
 	}
-	*token = (*token)->next;
-	return (*token);
+	free(env_list);
 }
