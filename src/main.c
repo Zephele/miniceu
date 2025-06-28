@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 20:14:37 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/28 18:45:50 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,30 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	print_tokens(t_token *tokens)
-{
-	int	i;
+// static void	print_tokens(t_token *tokens)
+// {
+// 	int	i;
 
-	i = 1;
-	while (tokens)
-	{
-		ft_printf("Token %d:\n", i++);
-		ft_printf("  Content: [%s]\n", tokens->content);
-		ft_printf("  Type:    %d\n", tokens->type);
-		if (tokens->type == 2)
-			ft_printf("  REDIR_IN\n");
-		if (tokens->type == 3)
-			ft_printf("  REDIR_OUT\n");
-		if (tokens->type == 4)
-			ft_printf("  REDIR_APPEND\n");
-		if (tokens->type == 5)
-			ft_printf("  HEREDOC\n");
-		if (tokens->type == 6)
-			ft_printf("  PIPE\n");
-		ft_printf("\n");
-		tokens = tokens->next;
-	}
-}
+// 	i = 1;
+// 	while (tokens)
+// 	{
+// 		ft_printf("Token %d:\n", i++);
+// 		ft_printf("  Content: [%s]\n", tokens->content);
+// 		ft_printf("  Type:    %d\n", tokens->type);
+// 		if (tokens->type == 2)
+// 			ft_printf("  REDIR_IN\n");
+// 		if (tokens->type == 3)
+// 			ft_printf("  REDIR_OUT\n");
+// 		if (tokens->type == 4)
+// 			ft_printf("  REDIR_APPEND\n");
+// 		if (tokens->type == 5)
+// 			ft_printf("  HEREDOC\n");
+// 		if (tokens->type == 6)
+// 			ft_printf("  PIPE\n");
+// 		ft_printf("\n");
+// 		tokens = tokens->next;
+// 	}
+// }
 
 static void	built_ins_test(t_token *tokens)
 {
@@ -69,11 +69,11 @@ static void	built_ins_test(t_token *tokens)
 				if (!tokens)
 					return ;
 			}
-			// else if (ft_strncmp(tokens->content, "exit", 4) == 0)
-			// {
-			// 	ft_exit(tokens);
-			// 	return ;
-			// }
+			else if (ft_strncmp(tokens->content, "exit", 4) == 0)
+			{
+				ft_exit(&tokens);
+				return ;
+			}
 			if (compare_aux(tokens->content, "env") == 0)
 			{
 				tokens = ft_env(&tokens);
@@ -142,7 +142,7 @@ int	main(void)
 		}
 		if (tokens)
 		{
-			print_tokens(tokens);
+			//print_tokens(tokens);
 			built_ins_test(tokens);
 			free_tokens(tokens);
 		}

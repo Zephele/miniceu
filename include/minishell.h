@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 18:51:00 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:23:25 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ t_token		*ft_echo(t_token **token);
 t_token		*ft_pwd(t_token **token);
 t_token		*ft_cd(t_token **token);
 t_token		*ft_env(t_token **token);
+t_token		*ft_exit(t_token **token);
 
 #endif
