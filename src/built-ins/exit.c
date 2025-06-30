@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:16:00 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/06/28 19:49:23 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:01:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static	int	is_digit(char *string)
 }
 t_token *ft_exit(t_token **token)
 {
-
+	
 	if((*token)->next)
 	{
 		if(is_digit((*token)->next->content) )
@@ -69,6 +69,7 @@ t_token *ft_exit(t_token **token)
 					ft_putstr_fd("exit\n", STDERR_FILENO);
 					ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 					free_tokens(*token);
+					free_envs(gg()->envs);
 					exit(0);
 				}else
 				{
@@ -82,6 +83,7 @@ t_token *ft_exit(t_token **token)
 			{
 				ft_putstr_fd("exit\n", STDERR_FILENO);
 				free_tokens(*token);
+				free_envs(gg()->envs);
 				exit(0);
 			}
 		}else
@@ -89,11 +91,14 @@ t_token *ft_exit(t_token **token)
 			ft_putstr_fd("exit\n", STDERR_FILENO);
 			ft_putstr_fd("minishell: exit:numeric argument required\n", STDERR_FILENO);
 			free_tokens(*token);
+			free_envs(gg()->envs);
 			exit(0);
 		}
 	}
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	free_tokens(*token);
+	free_envs(gg()->envs);
+	clear_history();
 	exit(0);
 //pipe
 //redirect > ver se realmente da exit
