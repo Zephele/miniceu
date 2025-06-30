@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/28 18:45:50 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:28:03 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ static void	built_ins_test(t_token *tokens)
 			// 	ft_export(tokens);
 			// 	return ;
 			// }
-			// else if (ft_strncmp(tokens->content, "unset", 5) == 0)
-			// {
-			// 	ft_unset(tokens);
-			// 	return ;
-			// }
+			if (compare_aux(tokens->content, "unset") == 0)
+			{
+				tokens = ft_unset(&tokens);
+				if (!tokens)
+					return ;
+			}
 			if (compare_aux(tokens->content, "pwd") == 0)
 			{
 				tokens = ft_pwd(&tokens);
@@ -142,7 +143,7 @@ int	main(void)
 		}
 		if (tokens)
 		{
-			//print_tokens(tokens);
+			// print_tokens(tokens);
 			built_ins_test(tokens);
 			free_tokens(tokens);
 		}
