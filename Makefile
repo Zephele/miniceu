@@ -4,7 +4,7 @@ FT_PRINTF	= ft_printf.a
 SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c\
 		./src/tokens/tokens.c ./src/tokens/aux_tokens.c ./src/tokens/aux2_tokens.c ./src/tokens/aux3_tokens.c\
 		./src/built-ins/echo.c ./src/built-ins/cd.c ./src/built-ins/pwd.c ./src/built-ins/envs_init.c \
-		./src/built-ins/env.c ./src/built-ins/exit.c ./src/built-ins/unset.c
+		./src/built-ins/env.c ./src/built-ins/exit.c ./src/built-ins/unset.c ./src/exec/exec_patch.c ./src/exec/exec.c
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/30 18:28:03 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:27:51 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,64 +48,64 @@ void	handle_sigint(int sig)
 // 	}
 // }
 
-static void	built_ins_test(t_token *tokens)
-{
-	int		i;
+// static void	built_ins_test(t_token *tokens)
+// {
+// 	//int		i;
 
-	i = 1;
-	while (tokens)
-	{
-		if (tokens->type == CMD || tokens->type == ARG)
-		{
-			if (compare_aux(tokens->content, "echo") == 0)
-			{
-				tokens = ft_echo(&tokens);
-				if (!tokens)
-					return ;
-			}
-			if (compare_aux(tokens->content, "cd") == 0)
-			{
-				tokens = ft_cd(&tokens);
-				if (!tokens)
-					return ;
-			}
-			else if (ft_strncmp(tokens->content, "exit", 4) == 0)
-			{
-				ft_exit(&tokens);
-				return ;
-			}
-			if (compare_aux(tokens->content, "env") == 0)
-			{
-				tokens = ft_env(&tokens);
-				if (!tokens)
-					return ;
-			}
-			// else if (ft_strncmp(tokens->content, "export", 6) == 0)
-			// {
-			// 	ft_export(tokens);
-			// 	return ;
-			// }
-			if (compare_aux(tokens->content, "unset") == 0)
-			{
-				tokens = ft_unset(&tokens);
-				if (!tokens)
-					return ;
-			}
-			if (compare_aux(tokens->content, "pwd") == 0)
-			{
-				tokens = ft_pwd(&tokens);
-				if (!tokens)
-					return ;
-			}
-			if (tokens->type != CMD && tokens->type != ARG)
-				tokens = tokens->next;
-			else
-				tokens = tokens->next;
-		}
-		else
-			return ;
-	}
-}
+// 	//i = 1;
+// 	while (tokens)
+// 	{
+// 		if (tokens->type == CMD || tokens->type == ARG)
+// 		{
+// 			if (compare_aux(tokens->content, "echo") == 0)
+// 			{
+// 				tokens = ft_echo(&tokens);
+// 				if (!tokens)
+// 					return ;
+// 			}
+// 			if (compare_aux(tokens->content, "cd") == 0)
+// 			{
+// 				tokens = ft_cd(&tokens);
+// 				if (!tokens)
+// 					return ;
+// 			}
+// 			else if (ft_strncmp(tokens->content, "exit", 4) == 0)
+// 			{
+// 				ft_exit(&tokens);
+// 				return ;
+// 			}
+// 			if (compare_aux(tokens->content, "env") == 0)
+// 			{
+// 				tokens = ft_env(&tokens);
+// 				if (!tokens)
+// 					return ;
+// 			}
+// 			// else if (ft_strncmp(tokens->content, "export", 6) == 0)
+// 			// {
+// 			// 	ft_export(tokens);
+// 			// 	return ;
+// 			// }
+// 			if (compare_aux(tokens->content, "unset") == 0)
+// 			{
+// 				tokens = ft_unset(&tokens);
+// 				if (!tokens)
+// 					return ;
+// 			}
+// 			if (compare_aux(tokens->content, "pwd") == 0)
+// 			{
+// 				tokens = ft_pwd(&tokens);
+// 				if (!tokens)
+// 					return ;
+// 			}
+// 			if (tokens->type != CMD && tokens->type != ARG)
+// 				tokens = tokens->next;
+// 			else
+// 				tokens = tokens->next;
+// 		}
+// 		else
+// 			return ;
+// 	}
+// }
 
 static void	init_minishell(t_env *envs)
 {
@@ -144,7 +144,8 @@ int	main(void)
 		if (tokens)
 		{
 			// print_tokens(tokens);
-			built_ins_test(tokens);
+			//built_ins_test(tokens);
+			exec(tokens, envs);
 			free_tokens(tokens);
 		}
 		free(input);

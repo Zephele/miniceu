@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/30 18:21:27 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:23:13 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
+# include <sys/wait.h>
 # include "../libs/ft_printf/ft_printf.h"
 # include "../libs/libft/libft.h"
 
@@ -71,6 +72,7 @@ int			is_empty_token(char *temp, t_token *token);
 void		free_tokens(t_token *tokens);
 char		*ft_strjoin_free(char *s1, char *s2);
 void		free_envs(t_env *env_list);
+void		ft_free(char **ptr);
 
 t_env		*init_envs(char	**envp);
 
@@ -82,5 +84,13 @@ t_token		*ft_cd(t_token **token);
 t_token		*ft_env(t_token **token);
 t_token		*ft_exit(t_token **token);
 t_token		*ft_unset(t_token **token);
+
+
+// EXEC
+
+t_token *exec_external(t_token *tokens, t_env *envs);
+t_token *exec(t_token *tokens, t_env *envs);
+
+
 
 #endif
