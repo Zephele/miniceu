@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_patch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/14 21:19:09 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:12:32 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ t_token *exec_external(t_token *tokens, t_env *envs)
     {
         execve(exec_path, argv, envs->var);
         perror("execve");
+        free_envs(gg()->envs);
+        free_envs(gg()->start_envs);
         exit(127);
     }
     else if (pid > 0)

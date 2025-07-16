@@ -6,13 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 19:37:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 18:07:55 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/16 10:56:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	count_envs(char	**envp)
+int	count_envs(char	**envp)
 {
 	int	count;
 
@@ -42,7 +42,7 @@ static t_env	*alloc_env(int count)
 	return (new);
 }
 
-static int	copy_envs(t_env *new, char **envp, int count)
+int	copy_envs(t_env *new, char **envp, int count)
 {
 	int	i;
 
