@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/14 21:27:51 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:15:53 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	main(void)
 		{
 			// print_tokens(tokens);
 			//built_ins_test(tokens);
-			exec(tokens, envs);
+			exec(tokens, gg()->envs);
 			free_tokens(tokens);
 		}
 		free(input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:52:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/14 21:11:29 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/07/16 16:18:17 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,15 @@ void	free_envs(t_env *env_list)
 		while (env_list->var[i])
 		{
 			free(env_list->var[i]);
+			env_list->var[i] = NULL;
 			i++;
 		}
 		free(env_list->var);
+		env_list->var = NULL;
 	}
 	free(env_list);
 }
+
 void	ft_free(char **ptr)
 {
     int	i;
@@ -43,4 +46,12 @@ void	ft_free(char **ptr)
         i++;
     }
     free(ptr);
+}
+
+void	free_envs_2(void)
+{
+	if (gg()->envs)
+		free_envs(gg()->envs);
+	if (gg()->start_envs)
+		free_envs(gg()->start_envs);
 }

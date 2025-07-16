@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:16:00 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/06/30 20:01:05 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:15:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,40 @@
 
 static	int	is_alpha(char *string)
 {
-		int i;
-		int flag;
+	int	i;
+	int	flag;
 
-		i = 0;
-		flag = 0;
-		
-		while (string[i])
-		{
-			if(!ft_isalpha(string[i]))	
-			{
-				flag = 1;
-			}
-			i++;
-		}
-		if(flag)
-			return 0;
-		return(1);
-		
+	i = 0;
+	flag = 0;
+	while (string[i])
+	{
+		if (!ft_isalpha(string[i]))
+			flag = 1;
+		i++;
+	}
+	if (flag)
+		return (0);
+	return (1);
+
 }
 
 static	int	is_digit(char *string)
 {
-		int i;
-		int flag;
+	int	i;
+	int	flag;
 
-		i = 0;
-		flag = 0;
-		
-		while (string[i])
-		{
-			if(!ft_isdigit(string[i]))	
-			{
-				flag = 1;
-			}
-			i++;
-		}
-		if(flag)
-			return 0;
-		return(1);
-		
+	i = 0;
+	flag = 0;
+
+	while (string[i])
+	{
+		if (!ft_isdigit(string[i]))
+			flag = 1;
+		i++;
+	}
+	if (flag)
+		return (0);
+	return (1);
 }
 t_token *ft_exit(t_token **token)
 {
