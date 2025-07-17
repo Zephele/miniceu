@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:07:28 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/16 11:16:24 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:58:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ int	ft_isalnum_underline(int c)
 	}
 	return (0);
 }
-
-// int	ft_isalphupper_underline(int c)
-// {
-// 	if ((c >= 65 && c <= 90) || (c == '_'))
-// 		return (1);
-// 	return (0);
-// }
 
 int	compare_aux(char *content, char *comp)
 {

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/16 17:15:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 14:55:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int			compare_aux(char *content, char *comp);
 char		*aux_quotes(char *input, int *i, char quote, char *content);
 char		*aux_general(char *input, int *i, char *content);
 int			ft_isalphupper_underline(int c);
+int			ft_same_var(char *new_env, char **new, int i, int next);
+int			alloc_env_1(int count, char *new_env);
 
 //FREES
 int			is_empty(char *temp, char *content);
@@ -74,7 +76,7 @@ void		free_tokens(t_token *tokens);
 char		*ft_strjoin_free(char *s1, char *s2);
 void		free_envs(t_env *env_list);
 void		ft_free(char **ptr);
-void		free_envs_2(void);
+void		free_envs_var(char **var);
 
 //BUILT-INS
 

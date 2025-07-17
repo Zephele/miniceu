@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:52:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/16 16:18:17 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:31:02 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,35 @@ void	free_envs(t_env *env_list)
 	free(env_list);
 }
 
-void	ft_free(char **ptr)
+void	free_envs_var(char **var)
 {
-    int	i;
+	int	i;
 
-    if (!ptr)
-        return ;
-    i = 0;
-    while (ptr[i])
-    {
-        free(ptr[i]);
-        i++;
-    }
-    free(ptr);
+	if (var)
+	{
+		i = 0;
+		while (var[i])
+		{
+			free(var[i]);
+			var[i] = NULL;
+			i++;
+		}
+		free(var);
+		var = NULL;
+	}
 }
 
-void	free_envs_2(void)
+void	ft_free(char **ptr)
 {
-	if (gg()->envs)
-		free_envs(gg()->envs);
-	if (gg()->start_envs)
-		free_envs(gg()->start_envs);
+	int	i;
+
+	if (!ptr)
+		return ;
+	i = 0;
+	while (ptr[i])
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
 }
