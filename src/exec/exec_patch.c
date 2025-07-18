@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/17 10:46:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:39:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ static char *find_executable(const char *cmd, char **envp)
     return full_path;
 }
 
-static void build_argv(t_token *tokens, char **argv)
-{
-    int i = 0;
-    t_token *tmp = tokens;
-    while (tmp && tmp->type != PIPE)
-    {
-        argv[i++] = tmp->content;
-        tmp = tmp->next;
-    }
-    argv[i] = NULL;
-}
+// static void build_argv(t_token *tokens, char **argv)
+// {
+//     int i = 0;
+//     t_token *tmp = tokens;
+//     while (tmp && tmp->type != PIPE)
+//     {
+//         argv[i++] = tmp->content;
+//         tmp = tmp->next;
+//     }
+//     argv[i] = NULL;
+// }
 
 t_token *exec_external(t_token *tokens, t_env *envs)
 {
@@ -73,8 +73,15 @@ t_token *exec_external(t_token *tokens, t_env *envs)
     int status;
     char *argv[256];
     char *exec_path;
+    t_token *tmp = tokens;
 
-    build_argv(tokens, argv);
+    int i = 0;
+    while (tmp && tmp->type != PIPE)
+    {
+        argv[i++] = tmp->content;
+        tmp = tmp->next;
+    }
+    argv[i] = NULL;
 
     if (ft_strchr(argv[0], '/'))
         exec_path = ft_strdup(argv[0]);
@@ -84,7 +91,8 @@ t_token *exec_external(t_token *tokens, t_env *envs)
     if (!exec_path)
     {
         write(2, "Command not found\n", 18);
-        return tokens->next;
+        gg()->last_status = 127;  // Comando não encontrado
+        return tmp;
     }
 
     pid = fork();
@@ -99,12 +107,56 @@ t_token *exec_external(t_token *tokens, t_env *envs)
     {
         free(exec_path);
         waitpid(pid, &status, 0);
-        return tokens->next;
+        gg()->last_status = WEXITSTATUS(status);  // Atualiza o status
+        return tmp;
     }
     else
     {
         free(exec_path);
         perror("fork");
-        return tokens->next;
+        gg()->last_status = 1;  // Erro no fork
+        return tmp;
     }
 }
+
+// t_token *exec_external(t_token *tokens, t_env *envs)
+// {
+//     pid_t pid;
+//     int status;
+//     char *argv[256];
+//     char *exec_path;
+
+//     build_argv(tokens, argv);
+
+//     if (ft_strchr(argv[0], '/'))
+//         exec_path = ft_strdup(argv[0]);
+//     else
+//         exec_path = find_executable(argv[0], envs->var);
+
+//     if (!exec_path)
+//     {
+//         write(2, "Command not found\n", 18);
+//         return tokens->next;
+//     }
+
+//     pid = fork();
+//     if (pid == 0)
+//     {
+//         execve(exec_path, argv, envs->var);
+//         perror("execve");
+//         free_envs(gg()->envs);
+//         exit(127);
+//     }
+//     else if (pid > 0)
+//     {
+//         free(exec_path);
+//         waitpid(pid, &status, 0);
+//         return tokens->next;
+//     }
+//     else
+//     {
+//         free(exec_path);
+//         perror("fork");
+//         return tokens->next;
+//     }
+// }

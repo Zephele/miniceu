@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 20:30:07 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:33:26 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	asux_seen_quotes(char *input, int *i, int *quotes, char quote)
 		if (*quotes == 2)
 			*quotes = 0;
 	}
+	(*i)++;
 }
 
 static int	aux_seen_redirerror(char *input, int i)
@@ -64,11 +65,11 @@ int	seen_quotes(char *input, int i)
 	{
 		if (aux_seen_redirerror(input, i))
 			return (1);
-		if (input[i] == '\'')
+		else if (input[i] == '\'')
 			asux_seen_quotes(input, &i, &quote, '\'');
-		if (input[i] == '\"')
+		else if (input[i] == '\"')
 			asux_seen_quotes(input, &i, &dquote, '\"');
-		if (input[i] == '\\' && input[i + 1])
+		else if (input[i] == '\\' && input[i + 1])
 			i = i + 2;
 		else
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/10 17:06:54 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/18 12:48:50 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,18 @@ char	*expand_aux(char *content, int *i, int *temp_size, char *temp)
 	char	*content_name;
 	int		start;
 	int		temp_i;
+	char	*temp_lstatus;
 
 	start = *i;
 	temp_i = *i;
+	if (content[*i] == '?')
+	{
+		temp_lstatus = ft_itoa(gg()->last_status);
+		temp = ft_strjoin_free(temp, temp_lstatus);
+		(*i)++;
+		free (temp_lstatus);
+		return (temp);
+	}
 	if (ft_isalpha(content[temp_i]) || content[temp_i] == '_')
 	{
 		temp_i++;
@@ -122,7 +131,13 @@ char	*expand_env_vars(char *content)
 		if (content[i] == '$')
 		{
 			i++;
-			temp = expand_aux(content, &i, &temp_size, temp);
+			if (content[i] == ' ' || !content[i]
+				|| content[i] == '"' || content[i] == '\'')
+				temp = ft_strjoin_free(temp, "$");
+			else if (content[i] == '?')
+				temp = expand_aux(content, &i, &temp_size, temp);
+			else
+				temp = expand_aux(content, &i, &temp_size, temp);
 		}
 	}
 	free(content);

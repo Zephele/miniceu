@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:16:00 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/16 17:15:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:07:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,29 @@ static	int	is_digit(char *string)
 		return (0);
 	return (1);
 }
+
 t_token *ft_exit(t_token **token)
 {
-	
-	if((*token)->next)
+	if ((*token)->next)
 	{
-		if(is_digit((*token)->next->content) )
+		if (is_digit((*token)->next->content))
 		{
-			if((*token)->next->next)
+			if ((*token)->next->next)
 			{
-				if(is_alpha((*token)->next->next->content))
+				if (is_alpha((*token)->next->next->content))
 				{
 					ft_putstr_fd("exit\n", STDERR_FILENO);
-					ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+					ft_putstr_fd("minishell: exit: too many arguments\n",
+						STDERR_FILENO);
 					free_tokens(*token);
 					free_envs(gg()->envs);
 					exit(0);
-				}else
+				}
+				else
 				{
 					ft_putstr_fd("exit\n", STDERR_FILENO);
-					ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+					ft_putstr_fd("minishell: exit: too many arguments\n",
+						STDERR_FILENO);
 					*token = (*token)->next->next->next;
 					return (*token);
 				}
@@ -80,10 +83,12 @@ t_token *ft_exit(t_token **token)
 				free_envs(gg()->envs);
 				exit(0);
 			}
-		}else
+		}
+		else
 		{
 			ft_putstr_fd("exit\n", STDERR_FILENO);
-			ft_putstr_fd("minishell: exit:numeric argument required\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit:numeric argument required\n",
+				STDERR_FILENO);
 			free_tokens(*token);
 			free_envs(gg()->envs);
 			exit(0);
