@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:19:21 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/30 19:52:55 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:06:03 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ static void	remove_env_var(t_env *env, char *name)
 t_token	*ft_unset(t_token **token)
 {
 	if (!(*token)->next)
-		return (*token);
+		return ((*token)->next);
 	*token = (*token)->next;
 	while (*token)
 	{
 		remove_env_var(gg()->envs, (*token)->content);
 		*token = (*token)->next;
 	}
+	gg()->last_status = 0;
 	return (*token);
 }

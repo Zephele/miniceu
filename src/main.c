@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/16 17:15:53 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:38:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,50 +110,94 @@ void	handle_sigint(int sig)
 static void	init_minishell(t_env *envs)
 {
 	gg()->envs = envs;
+	gg()->last_status = 0;
 }
 
-int	main(void)
+int main(void)
 {
-	char	*input;
-	t_token	*tokens;
-	t_env	*envs;
-	int		i;
+    char    *input;
+    t_token *tokens;
+    t_env   *envs;
 
-	i = 0;
-	signal(SIGINT, handle_sigint);
-	envs = init_envs(__environ);
-	if (!envs)
-		return (1);
-	init_minishell(envs);
-	while (1)
-	{
-		input = readline("minishell> ");
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		add_history(input);
-		tokens = tokenize(input, i);
-		if (tokens && validate_syntax(tokens))
-		{
-			free_tokens(tokens);
-			free(input);
-			continue ;
-		}
-		if (tokens)
-		{
-			// print_tokens(tokens);
-			//built_ins_test(tokens);
-			exec(tokens, gg()->envs);
-			free_tokens(tokens);
-		}
-		free(input);
-	}
-	free_envs(envs);
-	clear_history();
-	return (0);
+    signal(SIGINT, handle_sigint);
+    envs = init_envs(__environ);
+    if (!envs)
+        return (1);
+    init_minishell(envs);
+    while (1)
+    {
+        input = readline("minishell> ");
+        if (!input)
+        {
+            printf("exit\n");
+            break;
+        }
+        add_history(input);
+        tokens = tokenize(input, 0);
+        if (tokens && validate_syntax(tokens))
+        {
+            free_tokens(tokens);
+            free(input);
+            continue;
+        }
+        if (tokens)
+        {
+            t_token *current = tokens;
+            while (current)  // Processa todos os comandos na linha
+            {
+                current = exec(current, gg()->envs);
+            }
+            free_tokens(tokens);
+        }
+        free(input);
+    }
+    free_envs(envs);
+    clear_history();
+    return (0);
 }
+
+// int	main(void)
+// {
+// 	char	*input;
+// 	t_token	*tokens;
+// 	t_env	*envs;
+// 	int		i;
+
+// 	i = 0;
+// 	signal(SIGINT, handle_sigint);
+// 	envs = init_envs(__environ);
+// 	if (!envs)
+// 		return (1);
+// 	init_minishell(envs);
+// 	while (1)
+// 	{
+// 		input = readline("minishell> ");
+// 		if (!input)
+// 		{
+// 			printf("exit\n");
+// 			break ;
+// 		}
+// 		add_history(input);
+// 		tokens = tokenize(input, i);
+// 		if (tokens && validate_syntax(tokens))
+// 		{
+// 			free_tokens(tokens);
+// 			free(input);
+// 			continue ;
+// 		}
+// 		if (tokens)
+// 		{
+// 			// print_tokens(tokens);
+// 			//built_ins_test(tokens);
+// 			exec(tokens, gg()->envs);
+// 			free_tokens(tokens);
+// 		}
+// 		free(input);
+// 	}
+// 	free_envs(envs);
+// 	clear_history();
+// 	return (0);
+// }
 
 // int	main(void)
 // {

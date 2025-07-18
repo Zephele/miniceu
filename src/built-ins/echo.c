@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/27 20:58:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:36:59 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ t_token	*ft_echo(t_token **token)
 		if (newline)
 			ft_putchar_fd('\n', STDOUT_FILENO);
 	}
+	gg()->last_status = 0;
 	return (*token);
 }

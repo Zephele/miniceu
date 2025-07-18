@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/17 14:55:05 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:33:46 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_global
 	char	*content;
 	t_token	*token;
 	t_env	*envs;
+	int		last_status;
 }	t_global;
 
 # define CMD 0
@@ -68,6 +69,7 @@ char		*aux_general(char *input, int *i, char *content);
 int			ft_isalphupper_underline(int c);
 int			ft_same_var(char *new_env, char **new, int i, int next);
 int			alloc_env_1(int count, char *new_env);
+t_token		*after_comand(t_token **token);
 
 //FREES
 int			is_empty(char *temp, char *content);
