@@ -4,6 +4,7 @@
 		"history.h": "c",
 		"minishell.h": "c",
 		"wait.h": "c",
-		"ft_printf.h": "c"
+		"ft_printf.h": "c",
+		"signal.h": "c"
 	}
 }
