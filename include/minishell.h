@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 15:33:46 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/21 20:16:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <signal.h>
 # include <stdlib.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
@@ -99,7 +101,10 @@ int			count_envs(char	**envp);
 
 t_token		*exec_external(t_token *tokens, t_env *envs);
 t_token		*exec(t_token *tokens, t_env *envs);
+t_token		*exec_biut(t_token *tokens);
 
+//REDIRECTS
 
+t_token		*handle_redirects(t_token **tokens);
 
 #endif
