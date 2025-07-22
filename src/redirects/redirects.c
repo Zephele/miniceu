@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/21 20:18:55 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:23:55 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ int	open_file_reddir(int type, const char *filename)
 	return (0);
 }
 
+static t_token	*built_external(t_token *tokens, t_env *envs)
+{
+	if (is_biut(tokens))
+		return (exec_biut(tokens));
+	else
+	{
+		exec_external(tokens, envs);
+		return (tokens->next);
+	}
+}
+
 t_token	*handle_redirects(t_token **tokens)
 {
 	int		saved_stdout;
@@ -49,13 +60,18 @@ t_token	*handle_redirects(t_token **tokens)
 		if (current->type == 3 || current->type == 4)
 		{
 			if (open_file_reddir(current->type, current->next->content) == -1)
+			{
+				dup2(saved_stdout, STDOUT_FILENO);
+				close(saved_stdout);
 				return (NULL);
+			}
 		}
 		current = current->next;
 	}
-	// current = exec_biut(tokens);
-	if (compare_aux((*tokens)->content, "echo") == 0)
-		current = ft_echo(tokens);
+	current = built_external(*tokens, gg()->envs);
+	while (current && current->type != PIPE)
+		current = current->next;
+	write (1, "\n", 1);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
 	return (current);

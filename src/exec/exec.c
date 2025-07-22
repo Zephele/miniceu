@@ -6,13 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:12:06 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:00:59 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	is_biut(t_token *tokens)
+int	is_biut(t_token *tokens)
 {
 	if (!tokens || !tokens->content)
 		return (0);

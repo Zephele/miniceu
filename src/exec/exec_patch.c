@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/22 16:06:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:56:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,46 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 		gg()->last_status = 1;  // Erro no fork
 		return tmp;
 	}
+}
+
+void exec_external_with_argv(char **argv, t_env *envs)
+{
+    pid_t pid;
+    int status;
+    char *exec_path;
+
+    if (ft_strchr(argv[0], '/'))
+        exec_path = ft_strdup(argv[0]);
+    else
+        exec_path = find_executable(argv[0], envs->var);
+
+    if (!exec_path)
+    {
+        write(2, "Command not found\n", 18);
+        gg()->last_status = 127;
+        return;
+    }
+
+    pid = fork();
+    if (pid == 0)
+    {
+        execve(exec_path, argv, envs->var);
+        perror("execve");
+        free_envs(gg()->envs);
+        exit(127);
+    }
+    else if (pid > 0)
+    {
+        free(exec_path);
+        waitpid(pid, &status, 0);
+        gg()->last_status = WEXITSTATUS(status);
+    }
+    else
+    {
+        free(exec_path);
+        perror("fork");
+        gg()->last_status = 1;
+    }
 }
 
 // t_token *exec_external(t_token *tokens, t_env *envs)
