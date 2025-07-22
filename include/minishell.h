@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/21 20:16:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:17:52 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ t_token		*ft_pwd(t_token **token);
 t_token		*ft_cd(t_token **token);
 t_token		*ft_env(t_token **token);
 t_token		*ft_exit(t_token **token);
+void		ft_case_1(t_token **token);
+void		ft_case_2(t_token **token);
+int			ft_case_3(t_token **token);
+void		ft_case_4(t_token **token);
+void		ft_case_5(t_token **token);
+int			calc_exit_code(t_token **token);
 t_token		*ft_unset(t_token **token);
 t_token		*ft_export(t_token **token);
 
