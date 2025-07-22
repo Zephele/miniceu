@@ -6,11 +6,30 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:23:16 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 16:58:00 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:21:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	is_empty_cmd(char *path, int num)
+{
+	if (num == 1)
+	{
+		if (!path)
+		{
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+			gg()->last_status = 1;
+			return (1);
+		}
+	}
+	if (num == 2)
+	{
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		gg()->last_status = 1;
+	}
+	return (0);
+}
 
 static char	*valid_cmd(t_token *token)
 {
@@ -19,12 +38,8 @@ static char	*valid_cmd(t_token *token)
 	path = getenv("HOME");
 	if (!token || ft_strncmp(token->content, "~\0", 2) == 0)
 	{
-		if (!path)
-		{
-			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-			gg()->last_status = 1;
+		if (is_empty_cmd(path, 1))
 			return (NULL);
-		}
 	}
 	else
 	{
@@ -38,8 +53,7 @@ static char	*valid_cmd(t_token *token)
 	}
 	if (token && token->next != NULL && token->next->content != NULL)
 	{
-		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
-		gg()->last_status = 1;
+		is_empty_cmd(path, 2);
 		return (NULL);
 	}
 	else

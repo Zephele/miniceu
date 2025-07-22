@@ -6,15 +6,11 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:20:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 16:02:47 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:32:02 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// verificacoes de entrada
-//		(se tiver errado um deles apenas retorna e vai para o proximo)
-
 
 static void	size_equal(char *str, int g1)
 {
@@ -28,6 +24,28 @@ static void	size_equal(char *str, int g1)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 	if (g1)
 		gg()->last_status = 1;
+}
+
+static int	valid_argument_aux(int *i, char *new_env)
+{
+	while (new_env[*i])
+	{
+		while (new_env[*i] != '=' && ft_isalnum_underline(new_env[*i]))
+		{
+			if (!ft_isalnum_underline(new_env[*i]))
+				gg()->last_status = 1;
+			(*i)++;
+		}
+		if (new_env[*i] == '=')
+			return (0);
+		else
+		{
+			size_equal(new_env, 1);
+			return (1);
+		}
+		(*i)++;
+	}
+	return (0);
 }
 
 static int	valid_argument(char *new_env)
@@ -44,20 +62,10 @@ static int	valid_argument(char *new_env)
 	{
 		while (new_env[i])
 		{
-			while (new_env[i] != '=' && ft_isalnum_underline(new_env[i]))
-			{
-				if (!ft_isalnum_underline(new_env[i]))
-					gg()->last_status = 1;
-				i++;
-			}
-			if (new_env[i] == '=')
-				return (0);
-			else
-			{
-				size_equal(new_env, 1);
+			if (valid_argument_aux(&i, new_env))
 				return (1);
-			}
-			i++;
+			else
+				return (0);
 		}
 	}
 	while (new_env[++i])

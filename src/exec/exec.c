@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/21 20:15:58 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:12:06 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	there_is_redir(t_token *tokens)
 	}
 	return (0);
 }
-
 
 t_token	*exec_biut(t_token *tokens)
 {

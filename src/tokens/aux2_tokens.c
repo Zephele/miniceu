@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 12:48:50 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:57:32 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,42 +73,21 @@ t_token	*handle_env(char *input, int *i)
 	return (token);
 }
 
-char	*expand_aux(char *content, int *i, int *temp_size, char *temp)
+static char	*expand_dollar(char *temp, int *temp_size, int *i, char *content)
 {
-	char	*expanded_content;
-	char	*content_name;
-	int		start;
-	int		temp_i;
-	char	*temp_lstatus;
+	char	*temp2;
 
-	start = *i;
-	temp_i = *i;
-	if (content[*i] == '?')
-	{
-		temp_lstatus = ft_itoa(gg()->last_status);
-		temp = ft_strjoin_free(temp, temp_lstatus);
-		(*i)++;
-		free (temp_lstatus);
-		return (temp);
-	}
-	if (ft_isalpha(content[temp_i]) || content[temp_i] == '_')
-	{
-		temp_i++;
-		while (content[temp_i] && (ft_isalnum_underline(content[temp_i])))
-			temp_i++;
-		content_name = ft_substr(content, start, temp_i - start);
-		expanded_content = getenv(content_name);
-		if (is_empty(expanded_content, content_name))
-		{
-			*i = temp_i;
-			return (temp);
-		}
-		temp = ft_strjoin_free(temp, expanded_content);
-		*temp_size += ft_strlen(expanded_content);
-		free(content_name);
-	}
-	*i = temp_i;
-	return (temp);
+	temp2 = ft_strdup(temp);
+	free (temp);
+	(*i)++;
+	if (content[*i] == ' ' || !content[*i]
+		|| content[*i] == '"' || content[*i] == '\'')
+		temp2 = ft_strjoin_free(temp2, "$");
+	else if (content[*i] == '?')
+		temp2 = expand_aux(content, i, temp_size, temp2);
+	else
+		temp2 = expand_aux(content, i, temp_size, temp2);
+	return (temp2);
 }
 
 char	*expand_env_vars(char *content)
@@ -129,17 +108,20 @@ char	*expand_env_vars(char *content)
 			temp_size++;
 		}
 		if (content[i] == '$')
-		{
-			i++;
-			if (content[i] == ' ' || !content[i]
-				|| content[i] == '"' || content[i] == '\'')
-				temp = ft_strjoin_free(temp, "$");
-			else if (content[i] == '?')
-				temp = expand_aux(content, &i, &temp_size, temp);
-			else
-				temp = expand_aux(content, &i, &temp_size, temp);
-		}
+			temp = expand_dollar(temp, &temp_size, &i, content);
 	}
 	free(content);
 	return (temp);
 }
+
+		// if (content[i] == '$')
+		// {
+		// 		(i)++;
+		// 	if (content[i] == ' ' || !content[i]
+		// 		|| content[i] == '"' || content[i] == '\'')
+		// 		temp = ft_strjoin_free(temp, "$");
+		// 	else if (content[i] == '?')
+		// 		temp = expand_aux(content, &i, &temp_size, temp);
+		// 	else
+		// 		temp = expand_aux(content, &i, &temp_size, temp);
+		// }

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:01:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/24 16:33:10 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 15:34:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,3 @@ char	*aux_general(char *input, int *i, char *content)
 	}
 	return (content);
 }
-
-	// t_token	*token;
-	// int		start;
-
-	// start = *i;
-	// token = (t_token *)malloc(sizeof(t_token));
-	// if (!token)
-	// 	return (NULL);
-	// while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
-	// 	(*i)++;
-	// token->content = ft_substr(input, start, *i - start);
-	// token->type = CMD;
-	// token->next = NULL;
-	// return (token);
