@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/21 21:17:52 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:13:12 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int			count_envs(char	**envp);
 t_token		*exec_external(t_token *tokens, t_env *envs);
 t_token		*exec(t_token *tokens, t_env *envs);
 t_token		*exec_biut(t_token *tokens);
+int			is_biut(t_token *tokens);
 
 //REDIRECTS
 
