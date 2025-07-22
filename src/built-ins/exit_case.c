@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:37:12 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/21 21:01:33 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/07/21 21:22:17 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_case_1(t_token **token)
 	ft_putstr_fd("minishell: too many arguments\n", STDERR_FILENO);
 	free_tokens(*token);
 	free_envs(gg()->envs);
+	clear_history();
 	exit(1);
 }
 
@@ -36,6 +37,7 @@ int	ft_case_3(t_token **token)
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	free_tokens(*token);
 	free_envs(gg()->envs);
+	clear_history();
 	return (exit_code);
 }
 
@@ -46,6 +48,7 @@ void	ft_case_4(t_token **token)
 		STDERR_FILENO);
 	free_tokens(*token);
 	free_envs(gg()->envs);
+	clear_history();
 	exit(2);
 }
 
