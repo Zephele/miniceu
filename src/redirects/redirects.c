@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 20:23:55 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/22 22:45:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,74 @@ int	open_file_reddir(int type, const char *filename)
 	return (0);
 }
 
+static t_token *copy_tokens(t_token *tokens)
+{
+	t_token	*head;
+	t_token	*prev;
+	t_token	*new_token;
+
+	head = NULL;
+	prev = NULL;
+	while (tokens)
+	{
+		new_token = malloc(sizeof(t_token));
+		if (!new_token)
+		{
+			free_tokens(head);
+			return (NULL);
+		}
+		new_token->content = ft_strdup(tokens->content);
+		new_token->type = tokens->type;
+		new_token->next = NULL;
+		if (!head)
+			head = new_token;
+		if (prev)
+			prev->next = new_token;
+		prev = new_token;
+		tokens = tokens->next;
+	}
+	return (head);
+}
+
+static void	built_external_aux(t_token *current)
+{
+	while (current->content
+		&& current->type != PIPE
+		&& current->type != REDIR_IN
+		&& current->type != REDIR_OUT
+		&& current->type != REDIR_APPEND
+		&& current->type != HEREDOC
+		&& current->type != ENV)
+		current = current->next;
+	while (current)
+	{
+		if (current->content)
+		{
+			free (current->content);
+			current->content = NULL;
+			current = current->next;
+		}
+	}
+}
+
 static t_token	*built_external(t_token *tokens, t_env *envs)
 {
+	t_token	*current;
+	t_token	*temp;
+
 	if (is_biut(tokens))
-		return (exec_biut(tokens));
+	{
+		tokens = exec_biut(tokens);
+		write (1, "\n", 1);
+		return (tokens);
+	}
 	else
 	{
-		exec_external(tokens, envs);
+		temp = copy_tokens(tokens);
+		current = temp;
+		built_external_aux(current);
+		exec_external(temp, envs);
+		free_tokens (temp);
 		return (tokens->next);
 	}
 }
@@ -71,7 +132,6 @@ t_token	*handle_redirects(t_token **tokens)
 	current = built_external(*tokens, gg()->envs);
 	while (current && current->type != PIPE)
 		current = current->next;
-	write (1, "\n", 1);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdout);
 	return (current);
