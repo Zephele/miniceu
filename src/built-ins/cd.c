@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:23:16 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:21:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:52:48 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,13 @@ t_token	*ft_cd(t_token **token)
 
 	if (token && ft_strncmp((*token)->content, "cd", 2) == 0)
 	{
-		*token = (*token)->next;
-		path = valid_cmd(*token);
+		if ((*token)->next)
+		{
+			*token = (*token)->next;
+			path = valid_cmd(*token);
+		}
+		else
+			path = getenv("HOME");
 		if (!path)
 			return (NULL);
 		if (chdir(path) != 0)

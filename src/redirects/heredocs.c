@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/24 23:03:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:47:16 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ t_token	*handle_redirects(t_token **tokens)
 			{
 				dup2(saved_stdout, STDOUT_FILENO);
 				close(saved_stdout);
+				dup2(saved_stdin, STDIN_FILENO);
+				close(saved_stdin);
 				gg()->last_status = 1;
 				return (NULL);
 			}
@@ -159,6 +161,8 @@ t_token	*handle_redirects(t_token **tokens)
 			{
 				dup2(saved_stdin, STDIN_FILENO);
 				close(saved_stdin);
+				dup2(saved_stdout, STDOUT_FILENO);
+				close(saved_stdout);
 				gg()->last_status = 1;
 				return (NULL);
 			}

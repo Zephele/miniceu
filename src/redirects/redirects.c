@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/24 22:14:46 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:15:56 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ static void	built_aux(t_token *current)
 				pass->type = 8;
 				pass = NULL;
 				current = NULL;
-				// pass = pass->next;
 			}
 		}
 	}
