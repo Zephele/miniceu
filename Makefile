@@ -12,7 +12,7 @@ SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c\
 		\
 		./src/exec/exec_patch.c ./src/exec/exec.c \
 		\
-		./src/redirects/redirects.c
+		./src/redirects/redirects.c ./src/redirects/heredocs.c
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc

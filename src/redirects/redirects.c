@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 22:45:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/24 22:14:46 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,35 @@
 
 int	open_file_reddir(int type, const char *filename)
 {
-	int	fd;
+	int		fd;
+	char	*temp;
 
 	fd = -1;
+	temp = ft_strdup(filename);
+	temp = no_quotes(temp);
 	if (type == 3)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(temp, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == 4)
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(temp, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("Open file error");
+		free (temp);
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("Open file error");
 		close(fd);
+		free (temp);
 		return (-1);
 	}
 	close(fd);
+	free (temp);
 	return (0);
 }
 
-static t_token *copy_tokens(t_token *tokens)
+static t_token	*copy_tokens(t_token *tokens)
 {
 	t_token	*head;
 	t_token	*prev;
@@ -86,16 +92,64 @@ static void	built_external_aux(t_token *current)
 	}
 }
 
-static t_token	*built_external(t_token *tokens, t_env *envs)
+static void	built_aux(t_token *current)
+{
+	t_token	*pass;
+
+	while (current->content
+		&& current->type != PIPE
+		&& current->type != REDIR_IN
+		&& current->type != REDIR_OUT
+		&& current->type != REDIR_APPEND
+		&& current->type != HEREDOC
+		&& current->type != ENV)
+		current = current->next;
+	pass = current;
+	if (current && current->next && current->next->next)
+		current = current->next->next;
+	else
+		return ;
+	while (current)
+	{
+		free (pass->content);
+		pass->content = NULL;
+		pass->content = ft_strdup(current->content);
+		pass->type = current->type;
+		pass = pass->next;
+		current = current->next;
+	}
+	if (!current)
+	{
+		current = pass;
+		while (pass)
+		{
+			if (pass->content)
+			{
+				free (pass->content);
+				pass->content = NULL;
+				pass->type = 8;
+				pass = NULL;
+				current = NULL;
+				// pass = pass->next;
+			}
+		}
+	}
+}
+
+t_token	*built_external(t_token *tokens, t_env *envs)
 {
 	t_token	*current;
 	t_token	*temp;
 
 	if (is_biut(tokens))
 	{
-		tokens = exec_biut(tokens);
+		temp = copy_tokens(tokens);
+		current = temp;
+		built_aux(current);
+		tokens = exec_biut(temp);
+		free_tokens (temp);
 		write (1, "\n", 1);
-		return (tokens);
+		return (NULL);
 	}
 	else
 	{
@@ -108,34 +162,33 @@ static t_token	*built_external(t_token *tokens, t_env *envs)
 	}
 }
 
-t_token	*handle_redirects(t_token **tokens)
-{
-	int		saved_stdout;
-	t_token	*current;
+// t_token	*handle_redirects(t_token **tokens)
+// {
+// 	int		saved_stdout;
+// 	t_token	*current;
 
-	saved_stdout = dup(STDOUT_FILENO);
-	current = *tokens;
-
-	while (current && current->type != PIPE)
-	{
-		if (current->type == 3 || current->type == 4)
-		{
-			if (open_file_reddir(current->type, current->next->content) == -1)
-			{
-				dup2(saved_stdout, STDOUT_FILENO);
-				close(saved_stdout);
-				return (NULL);
-			}
-		}
-		current = current->next;
-	}
-	current = built_external(*tokens, gg()->envs);
-	while (current && current->type != PIPE)
-		current = current->next;
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
-	return (current);
-}
+// 	saved_stdout = dup(STDOUT_FILENO);
+// 	current = *tokens;
+// 	while (current && current->type != PIPE)
+// 	{
+// 		if (current->type == 3 || current->type == 4)
+// 		{
+// 			if (open_file_reddir(current->type, current->next->content) == -1)
+// 			{
+// 				dup2(saved_stdout, STDOUT_FILENO);
+// 				close(saved_stdout);
+// 				return (NULL);
+// 			}
+// 		}
+// 		current = current->next;
+// 	}
+// 	current = built_external(*tokens, gg()->envs);
+// 	while (current && current->type != PIPE)
+// 		current = current->next;
+// 	dup2(saved_stdout, STDOUT_FILENO);
+// 	close(saved_stdout);
+// 	return (current);
+// }
 
 // >
 // open flag O_WRONLY | O_CREAT | O_TRUNC.

@@ -5,6 +5,7 @@
 		"minishell.h": "c",
 		"wait.h": "c",
 		"ft_printf.h": "c",
-		"signal.h": "c"
+		"signal.h": "c",
+		"stdlib.h": "c"
 	}
 }

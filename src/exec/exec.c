@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 22:24:10 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:48:13 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ static int	there_is_redir(t_token *tokens)
 		return (0);
 	while (current)
 	{
-		if (current->type == 3
-			|| current->type == 4)
+		if (current->type == 2
+			|| current->type == 3
+			|| current->type == 4
+			|| current->type == 5)
 			return (1);
 		else
 			current = current->next;
