@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 20:13:12 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:52:51 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_global
 # define HEREDOC 5
 # define PIPE 6
 # define ENV 7
+# define NOT 8
 
 t_token		*tokenize(char *input, int i);
 int			seen_quotes(char *input, int i);
@@ -113,5 +114,8 @@ int			is_biut(t_token *tokens);
 //REDIRECTS
 
 t_token		*handle_redirects(t_token **tokens);
+int			handle_heredoc(const char *delimiter);
+int			open_file_reddir(int type, const char *filename);
+t_token		*built_external(t_token *tokens, t_env *envs);
 
 #endif
