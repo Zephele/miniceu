@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 16:02:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:43:53 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,74 +155,3 @@ int	main(void)
 	return (0);
 }
 
-// int	main(void)
-// {
-// 	char	*input;
-// 	t_token	*tokens;
-// 	t_env	*envs;
-// 	int		i;
-
-// 	i = 0;
-// 	signal(SIGINT, handle_sigint);
-// 	envs = init_envs(__environ);
-// 	if (!envs)
-// 		return (1);
-// 	init_minishell(envs);
-// 	while (1)
-// 	{
-// 		input = readline("minishell> ");
-// 		if (!input)
-// 		{
-// 			printf("exit\n");
-// 			break ;
-// 		}
-// 		add_history(input);
-// 		tokens = tokenize(input, i);
-// 		if (tokens && validate_syntax(tokens))
-// 		{
-// 			free_tokens(tokens);
-// 			free(input);
-// 			continue ;
-// 		}
-// 		if (tokens)
-// 		{
-// 			// print_tokens(tokens);
-// 			//built_ins_test(tokens);
-// 			exec(tokens, gg()->envs);
-// 			free_tokens(tokens);
-// 		}
-// 		free(input);
-// 	}
-// 	free_envs(envs);
-// 	clear_history();
-// 	return (0);
-// }
-
-// int	main(void)
-// {
-// 	t_token	*tokens;
-// 	char	*input;
-
-// 	signal(SIGINT, handle_sigint);
-// 	while (1)
-// 	{
-// 		input = readline("minishell> ");
-// 		if (!input)
-// 		{
-// 			ft_printf("exit\n");
-// 			exit(0);
-// 		}
-// 		tokens = tokenize(input);
-// 		if (!tokens)
-// 		{
-// 			ft_printf("Error, tokens");
-// 			free(input);
-// 			return (1);
-// 		}
-// 		ft_printf("\n=== Tokens Generated ===\n");
-// 		print_tokens(tokens);
-// 		free_tokens(tokens);
-// 		free(input);
-// 	}
-// 	return (0);
-// }
