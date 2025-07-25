@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/25 13:47:16 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:09:30 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,40 @@ static int	open_file_reddirin(int type, const char *filename)
 	return (0);
 }
 
+static void	*error_redir(int saved_stdout, int saved_stdin)
+{
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
+	dup2(saved_stdin, STDIN_FILENO);
+	close(saved_stdin);
+	gg()->last_status = 1;
+	return (NULL);
+}
+
+static t_token	*current_aux(t_token *current)
+{
+	while (current)
+	{
+		if (current->next && (current->next->content[0] == '.'
+				&& current->next->content[1] == '/'))
+				current = current->next;
+		else if (current->next && (current->next->content[0] == '\''
+				|| current->next->content[0] == '\"'))
+		{
+			if (current->next && (current->next->content[1] == '.'
+					&& current->next->content[2] == '/'))
+				current = current->next;
+			else
+				break ;
+		}
+		else
+			break ;
+	}
+	return (current);
+}
+
+
+
 t_token	*handle_redirects(t_token **tokens)
 {
 	int		saved_stdout;
@@ -110,62 +144,18 @@ t_token	*handle_redirects(t_token **tokens)
 		if (current->type == 3 || current->type == 4)
 		{
 			type = current->type;
-			while (current)
-			{
-				if (current->next && (current->next->content[0] == '.'
-						&& current->next->content[1] == '/'))
-					current = current->next;
-				else if (current->next && (current->next->content[0] == '\''
-						|| current->next->content[0] == '\"'))
-				{
-					if (current->next && (current->next->content[1] == '.'
-							&& current->next->content[2] == '/'))
-						current = current->next;
-					else
-						break ;
-				}
-				else
-					break ;
-			}
+			if (current)
+				current = current_aux(current);
 			if (open_file_reddir(type, current->content) == -1)
-			{
-				dup2(saved_stdout, STDOUT_FILENO);
-				close(saved_stdout);
-				dup2(saved_stdin, STDIN_FILENO);
-				close(saved_stdin);
-				gg()->last_status = 1;
-				return (NULL);
-			}
+				return (error_redir(saved_stdout, saved_stdin));
 		}
 		else if (current->type == 2 || current->type == 5)
 		{
 			type = current->type;
-			while (current)
-			{
-				if (current->next && (current->next->content[0] == '.'
-						&& current->next->content[1] == '/'))
-					current = current->next;
-				else if (current->next && (current->next->content[0] == '\''
-						|| current->next->content[0] == '\"'))
-				{
-					if (current->next && (current->next->content[1] == '.'
-							&& current->next->content[2] == '/'))
-						current = current->next;
-					else
-						break ;
-				}
-				else
-					break ;
-			}
+			if (current)
+				current = current_aux(current);
 			if (open_file_reddirin(type, current->content) == -1)
-			{
-				dup2(saved_stdin, STDIN_FILENO);
-				close(saved_stdin);
-				dup2(saved_stdout, STDOUT_FILENO);
-				close(saved_stdout);
-				gg()->last_status = 1;
-				return (NULL);
-			}
+				return (error_redir(saved_stdout, saved_stdin));
 		}
 		current = current->next;
 	}
@@ -178,6 +168,7 @@ t_token	*handle_redirects(t_token **tokens)
 	close(saved_stdout);
 	return (current);
 }
+
 
 
 //primeiro eu vou criar o arquivo temporario
