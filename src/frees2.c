@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:52:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/17 12:31:02 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/30 16:27:08 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ void	ft_free(char **ptr)
 		i++;
 	}
 	free(ptr);
+}
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*current;
+	t_list	*next;
+
+	if (!lst || !*lst)
+		return ;
+	current = *lst;
+	while (current)
+	{
+		next = current->next;
+		if (del)
+			del(current->content);
+		free(current);
+		current = next;
+	}
+	*lst = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/25 13:43:53 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/07/31 13:10:05 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,94 +23,11 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-// static void	print_tokens(t_token *tokens)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	while (tokens)
-// 	{
-// 		ft_printf("Token %d:\n", i++);
-// 		ft_printf("  Content: [%s]\n", tokens->content);
-// 		ft_printf("  Type:    %d\n", tokens->type);
-// 		if (tokens->type == 2)
-// 			ft_printf("  REDIR_IN\n");
-// 		if (tokens->type == 3)
-// 			ft_printf("  REDIR_OUT\n");
-// 		if (tokens->type == 4)
-// 			ft_printf("  REDIR_APPEND\n");
-// 		if (tokens->type == 5)
-// 			ft_printf("  HEREDOC\n");
-// 		if (tokens->type == 6)
-// 			ft_printf("  PIPE\n");
-// 		ft_printf("\n");
-// 		tokens = tokens->next;
-// 	}
-// }
-
-// static void	built_ins_test(t_token *tokens)
-// {
-// 	//int		i;
-
-// 	//i = 1;
-// 	while (tokens)
-// 	{
-// 		if (tokens->type == CMD || tokens->type == ARG)
-// 		{
-// 			if (compare_aux(tokens->content, "echo") == 0)
-// 			{
-// 				tokens = ft_echo(&tokens);
-// 				if (!tokens)
-// 					return ;
-// 			}
-// 			if (compare_aux(tokens->content, "cd") == 0)
-// 			{
-// 				tokens = ft_cd(&tokens);
-// 				if (!tokens)
-// 					return ;
-// 			}
-// 			else if (ft_strncmp(tokens->content, "exit", 4) == 0)
-// 			{
-// 				ft_exit(&tokens);
-// 				return ;
-// 			}
-// 			if (compare_aux(tokens->content, "env") == 0)
-// 			{
-// 				tokens = ft_env(&tokens);
-// 				if (!tokens)
-// 					return ;
-// 			}
-// 			// else if (ft_strncmp(tokens->content, "export", 6) == 0)
-// 			// {
-// 			// 	ft_export(tokens);
-// 			// 	return ;
-// 			// }
-// 			if (compare_aux(tokens->content, "unset") == 0)
-// 			{
-// 				tokens = ft_unset(&tokens);
-// 				if (!tokens)
-// 					return ;
-// 			}
-// 			if (compare_aux(tokens->content, "pwd") == 0)
-// 			{
-// 				tokens = ft_pwd(&tokens);
-// 				if (!tokens)
-// 					return ;
-// 			}
-// 			if (tokens->type != CMD && tokens->type != ARG)
-// 				tokens = tokens->next;
-// 			else
-// 				tokens = tokens->next;
-// 		}
-// 		else
-// 			return ;
-// 	}
-// }
-
 static void	init_minishell(t_env *envs)
 {
 	gg()->envs = envs;
 	gg()->last_status = 0;
+	gg()->here_tmp = 0;
 }
 
 int	main(void)
