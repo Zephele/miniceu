@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/31 12:49:08 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:03:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,19 @@ t_token		*handle_redirects(t_token **tokens);
 int			handle_heredoc(const char *delimiter);
 int			open_file_reddir(int type, const char *filename);
 t_token		*built_external(t_token *tokens, t_env *envs);
+void		b_a1(t_token *current, t_token *pass, int i);
+t_token		*b_a2(t_token *current);
+int			exit_file(int fd, char *temp, int i);
 
 //HEREDOCS
 
 char		*gen_tmp_file(int index);
 void		ft_lstadd_back(t_list **lst, t_list *new);
 int			ft_hmheres(t_token *current);
-void		*error_redir(int saved_stdout, int saved_stdin, t_list **lst);
+void		*error_redir(int saved_stdout,
+				int saved_stdin, t_list **lst, int i);
 t_token		*current_aux(t_token *current);
+int			here_open_aux(int fd, char *tmp_file,
+				char *temp, t_list **tmp_files);
 
 #endif
