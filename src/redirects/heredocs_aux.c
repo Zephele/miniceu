@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:45:39 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/31 15:54:09 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/01 16:03:10 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,26 @@ int	ft_hmheres(t_token *current)
 	return (heres);
 }
 
-void	*error_redir(int saved_stdout, int saved_stdin, t_list **lst)
+void	*error_redir(int saved_stdout, int saved_stdin, t_list **lst, int i)
 {
-	ft_lstclear(lst, free);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
-	dup2(saved_stdin, STDIN_FILENO);
-	close(saved_stdin);
-	gg()->last_status = 1;
-	return (NULL);
+	if (i == 1)
+	{
+		ft_lstclear(lst, free);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+		dup2(saved_stdin, STDIN_FILENO);
+		close(saved_stdin);
+		gg()->last_status = 1;
+		return (NULL);
+	}
+	if (i == 2)
+	{
+		dup2(saved_stdin, STDIN_FILENO);
+		close(saved_stdin);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+	return ("o");
 }
 
 t_token	*current_aux(t_token *current)
