@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/01 13:04:24 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:16:43 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ t_token	*exec_biut(t_token *tokens)
 
 t_token	*exec(t_token *tokens, t_env *envs)
 {
-	t_token	*current;
-
-
-	current = tokens;
 	if (there_is_redir(tokens))
 		return (handle_redirects(&tokens));
 	else if (is_biut(tokens))

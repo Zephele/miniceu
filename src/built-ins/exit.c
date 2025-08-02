@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:16:00 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/21 21:18:31 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:16:35 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,6 @@ int	calc_exit_code(t_token **token)
 
 t_token	*ft_exit(t_token **token)
 {
-	int	exit_code;
-
-	exit_code = 0;
 	if ((*token)->next)
 	{
 		if (is_digit((*token)->next->content))
