@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/02 19:20:55 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:43:54 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,14 @@ static char	*get_path_env(char **envp)
 static char	*find_executable(const char *cmd, char **envp)
 {
 	char	*path_env;
-	char	**dirs;
-	char	*full_path;
 
 	path_env = get_path_env(envp);
 	if (!path_env)
 		return (NULL);
-	dirs = ft_split(path_env, ':');
+	char **dirs = ft_split(path_env, ':');
 	if (!dirs)
 		return (NULL);
-	full_path = NULL;
+	char *full_path = NULL;
 	int i = 0;
 	while (dirs[i])
 	{
@@ -55,7 +53,7 @@ static char	*find_executable(const char *cmd, char **envp)
 		full_path = NULL;
 		i++;
 	}
-	ft_free(dirs); // Libera matriz alocada pelo ft_split
+	ft_free(dirs);
 	return full_path;
 }
 
@@ -66,9 +64,8 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	char *argv[256];
 	char *exec_path;
 	t_token *tmp = tokens;
-	int		i;
 
-	i = 0;
+	int i = 0;
 	while (tmp && tmp->type != PIPE)
 	{
 		argv[i++] = tmp->content;
