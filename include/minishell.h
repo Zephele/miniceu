@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/01 16:03:47 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/03 16:32:31 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,14 @@ t_token		*exec_external(t_token *tokens, t_env *envs);
 t_token		*exec(t_token *tokens, t_env *envs);
 t_token		*exec_biut(t_token *tokens);
 int			is_biut(t_token *tokens);
-t_token		*exec_pipe(t_token *left_tokens,
-				t_token *right_tokens, t_env *envs);
+
+//PIPES
+t_token		*handle_pipes(t_token *tokens, t_env *envs);
+t_token		*exec_single_pipe(t_token *left_tokens, t_token *right_tokens, t_env *envs);
+t_token		*exec_multiple_pipes(t_token *tokens, t_env *envs);
+int			count_pipes(t_token *tokens);
+t_token		**split_by_pipes(t_token *tokens);
+void		execute_pipe_segment(t_token *tokens, int input_fd, int output_fd, t_env *envs);
 
 //REDIRECTS
 
