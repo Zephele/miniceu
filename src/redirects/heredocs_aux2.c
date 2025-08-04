@@ -6,13 +6,13 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/01 16:16:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/01 18:46:55 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	read_here_aux(const char *delimiter, char *input, int fd)
+void	*read_here_aux(const char *delimiter, char *input, int fd)
 {
 	while (1)
 	{
@@ -30,6 +30,7 @@ static void	read_here_aux(const char *delimiter, char *input, int fd)
 		ft_putendl_fd(input, fd);
 		free(input);
 	}
+	return ("o");
 }
 
 static char	*ft_read_heredoc(const char *delimiter, int index)
@@ -46,7 +47,11 @@ static char	*ft_read_heredoc(const char *delimiter, int index)
 		perror ("error fd");
 		return (NULL);
 	}
-	read_here_aux(delimiter, input, fd);
+	if (!read_here_aux(delimiter, input, fd))
+	{
+		free(tmp_file);
+		return (NULL);
+	}
 	return (tmp_file);
 }
 
