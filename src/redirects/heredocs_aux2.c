@@ -96,7 +96,6 @@ int	here_open_aux(int fd, char *tmp_file,
 	{
 		perror("Open file error");
 		free (temp);
-		free (tmp_file);
 		return (-1);
 	}
 	return (fd);

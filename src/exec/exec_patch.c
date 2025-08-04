@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_patch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/07/22 18:56:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/03 19:15:55 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,22 @@ static char	*get_path_env(char **envp)
 static char	*find_executable(const char *cmd, char **envp)
 {
 	char	*path_env;
+	char	**dirs;
+	char *full_path;
+	char	*tmp;
+	int		i;
 
+	i = 0;
 	path_env = get_path_env(envp);
 	if (!path_env)
 		return (NULL);
-	char **dirs = ft_split(path_env, ':');
+	dirs = ft_split(path_env, ':');
 	if (!dirs)
 		return (NULL);
-	char *full_path = NULL;
-	int i = 0;
+	full_path = NULL;
 	while (dirs[i])
 	{
-		char *tmp = ft_strjoin(dirs[i], "/");
+		tmp = ft_strjoin(dirs[i], "/");
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
@@ -53,21 +57,9 @@ static char	*find_executable(const char *cmd, char **envp)
 		full_path = NULL;
 		i++;
 	}
-	ft_free(dirs); // Libera matriz alocada pelo ft_split
+	ft_free(dirs);
 	return full_path;
 }
-
-// static void build_argv(t_token *tokens, char **argv)
-// {
-//     int i = 0;
-//     t_token *tmp = tokens;
-//     while (tmp && tmp->type != PIPE)
-//     {
-//         argv[i++] = tmp->content;
-//         tmp = tmp->next;
-//     }
-//     argv[i] = NULL;
-// }
 
 t_token	*exec_external(t_token *tokens, t_env *envs)
 {
@@ -76,8 +68,9 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	char *argv[256];
 	char *exec_path;
 	t_token *tmp = tokens;
+	int 	i;
 
-	int i = 0;
+	i = 0;
 	while (tmp && tmp->type != PIPE)
 	{
 		argv[i++] = tmp->content;
@@ -93,7 +86,7 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	if (!exec_path)
 	{
 		write(2, "Command not found\n", 18);
-		gg()->last_status = 127;  // Comando não encontrado
+		gg()->last_status = 127;
 		return tmp;
 	}
 
@@ -109,14 +102,14 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	{
 		free(exec_path);
 		waitpid(pid, &status, 0);
-		gg()->last_status = WEXITSTATUS(status);  // Atualiza o status
+		gg()->last_status = WEXITSTATUS(status);
 		return tmp;
 	}
 	else
 	{
 		free(exec_path);
 		perror("fork");
-		gg()->last_status = 1;  // Erro no fork
+		gg()->last_status = 1;
 		return tmp;
 	}
 }
@@ -160,45 +153,3 @@ void exec_external_with_argv(char **argv, t_env *envs)
         gg()->last_status = 1;
     }
 }
-
-// t_token *exec_external(t_token *tokens, t_env *envs)
-// {
-//     pid_t pid;
-//     int status;
-//     char *argv[256];
-//     char *exec_path;
-
-//     build_argv(tokens, argv);
-
-//     if (ft_strchr(argv[0], '/'))
-//         exec_path = ft_strdup(argv[0]);
-//     else
-//         exec_path = find_executable(argv[0], envs->var);
-
-//     if (!exec_path)
-//     {
-//         write(2, "Command not found\n", 18);
-//         return tokens->next;
-//     }
-
-//     pid = fork();
-//     if (pid == 0)
-//     {
-//         execve(exec_path, argv, envs->var);
-//         perror("execve");
-//         free_envs(gg()->envs);
-//         exit(127);
-//     }
-//     else if (pid > 0)
-//     {
-//         free(exec_path);
-//         waitpid(pid, &status, 0);
-//         return tokens->next;
-//     }
-//     else
-//     {
-//         free(exec_path);
-//         perror("fork");
-//         return tokens->next;
-//     }
-// }
