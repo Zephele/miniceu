@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:36:08 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/01 14:05:51 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:51:49 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	exit_file(int fd, char *temp, int i)
 	if (i == 1)
 	{
 		perror("Open file error");
-		free (temp);
+		free_safe (temp);
 	}
 	else if (i == 2)
 	{
 		perror("Open file error");
 		close(fd);
-		free (temp);
+		free_safe (temp);
 	}
 	return (-1);
 }

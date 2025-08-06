@@ -1,7 +1,7 @@
 NAME		= minishell
 LIBFT		= libft.a
 FT_PRINTF	= ft_printf.a
-SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c\
+SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c ./src/signal.c\
 		\
 		./src/tokens/tokens.c ./src/tokens/aux_tokens.c ./src/tokens/aux2_tokens.c\
 		./src/tokens/aux3_tokens.c ./src/tokens/aux4_tokens.c\

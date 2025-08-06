@@ -6,22 +6,11 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/31 13:10:05 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:38:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-volatile sig_atomic_t	g_signal;
-
-void	handle_sigint(int sig)
-{
-	g_signal = sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
 
 static void	init_minishell(t_env *envs)
 {
@@ -37,13 +26,13 @@ int	main(void)
 	t_env	*envs;
 	t_token	*current;
 
-	signal(SIGINT, handle_sigint);
 	envs = init_envs(__environ);
 	if (!envs)
 		return (1);
 	init_minishell(envs);
 	while (1)
 	{
+		setup_prompt_signals();
 		input = readline("minishell> ");
 		if (!input)
 		{
@@ -52,6 +41,7 @@ int	main(void)
 		}
 		add_history(input);
 		tokens = tokenize(input, 0);
+		gg()->token = tokens;
 		if (tokens && validate_syntax(tokens))
 		{
 			free_tokens(tokens);

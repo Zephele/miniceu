@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:52:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/30 16:27:08 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/05 20:28:00 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,12 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		current = next;
 	}
 	*lst = NULL;
+}
+
+void	free_safe(void *ptr)
+{
+	if (ptr && ptr != NULL)
+		free(ptr);
+	else
+		return ;
 }
