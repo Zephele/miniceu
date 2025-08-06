@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/03 16:32:31 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:59:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <signal.h>
+# include <sys/signal.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -93,6 +94,7 @@ void		free_envs(t_env *env_list);
 void		ft_free(char **ptr);
 void		free_envs_var(char **var);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
+void		free_safe(void *ptr);
 
 //BUILT-INS
 
@@ -151,5 +153,10 @@ void		*error_redir(int saved_stdout,
 t_token		*current_aux(t_token *current);
 int			here_open_aux(int fd, char *tmp_file,
 				char *temp, t_list **tmp_files);
+
+//SIGNAL
+
+void		setup_prompt_signals(void);
+void		setup_cmd_signals(void);
 
 #endif

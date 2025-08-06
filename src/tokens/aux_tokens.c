@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 13:33:26 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:14:42 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	asux_seen_quotes(char *input, int *i, int *quotes, char quote)
 		else
 		{
 			(*quotes)++;
+			(*i)++;
 			return ;
 		}
 		(*quotes)++;

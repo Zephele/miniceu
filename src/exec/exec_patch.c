@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_patch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/03 19:15:55 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:36:10 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*find_executable(const char *cmd, char **envp)
 {
 	char	*path_env;
 	char	**dirs;
-	char *full_path;
+	char	*full_path;
 	char	*tmp;
 	int		i;
 
@@ -52,13 +52,13 @@ static char	*find_executable(const char *cmd, char **envp)
 		full_path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(full_path, X_OK) == 0)
-			break;
+			break ;
 		free(full_path);
 		full_path = NULL;
 		i++;
 	}
 	ft_free(dirs);
-	return full_path;
+	return (full_path);
 }
 
 t_token	*exec_external(t_token *tokens, t_env *envs)
@@ -73,6 +73,7 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	i = 0;
 	while (tmp && tmp->type != PIPE)
 	{
+		tmp->content = no_quotes(tmp->content);
 		argv[i++] = tmp->content;
 		tmp = tmp->next;
 	}
