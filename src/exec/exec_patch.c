@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/05 19:36:10 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:06:33 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static char	*find_executable(const char *cmd, char **envp)
 
 t_token	*exec_external(t_token *tokens, t_env *envs)
 {
-	pid_t pid;
-	int status;
-	char *argv[256];
-	char *exec_path;
-	t_token *tmp = tokens;
-	int 	i;
+	pid_t	pid;
+	int		status;
+	char	*argv[256];
+	char	*exec_path;
+	t_token	*tmp = tokens;
+	int		i;
 
 	i = 0;
 	while (tmp && tmp->type != PIPE)
@@ -88,7 +88,7 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	{
 		write(2, "Command not found\n", 18);
 		gg()->last_status = 127;
-		return tmp;
+		return (tmp);
 	}
 
 	pid = fork();
@@ -104,14 +104,14 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 		free(exec_path);
 		waitpid(pid, &status, 0);
 		gg()->last_status = WEXITSTATUS(status);
-		return tmp;
+		return (tmp);
 	}
 	else
 	{
 		free(exec_path);
 		perror("fork");
 		gg()->last_status = 1;
-		return tmp;
+		return (tmp);
 	}
 }
 

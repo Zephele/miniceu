@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/05 19:59:15 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:31:48 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ typedef struct s_global
 	int		last_status;
 	t_list	*list;
 	int		here_tmp;
+	int		heres;
+	int		heres_cmp;
+	char	*temp_h;
+	char	*temp_file_h;
 }	t_global;
 
 # define CMD 0

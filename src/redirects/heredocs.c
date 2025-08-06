@@ -6,14 +6,14 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/05 20:37:12 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 18:39:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 static int	open_file_reddirin(int type, const char *filename,
-	t_list **tmp_files, int heres)
+	t_list **tmp_files)
 {
 	int		fd;
 	char	*tmp_file;
@@ -29,7 +29,8 @@ static int	open_file_reddirin(int type, const char *filename,
 		fd = here_open_aux(fd, tmp_file, temp, tmp_files);
 	if (fd == -1)
 		return (exit_file(fd, temp, 1));
-	if (heres == 0 || gg()->here_tmp == heres)
+	gg()->heres_cmp += 1;
+	if (gg()->heres == 0 || gg()->heres == 1 || gg()->heres_cmp == gg()->heres)
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (exit_file(fd, temp, 2));
 	close(fd);
@@ -68,9 +69,7 @@ static void	*handle_aux(t_token *current, t_list	*tmp_files,
 	int saved_stdout, int saved_stdin)
 {
 	int	type;
-	int	heres;
 
-	heres = ft_hmheres(current);
 	if (current->type == 3 || current->type == 4
 		|| current->type == 2 || current->type == 5)
 	{
@@ -88,7 +87,7 @@ static void	*handle_aux(t_token *current, t_list	*tmp_files,
 				return (error_redir(saved_stdout, saved_stdin, &tmp_files, 1));
 		if (type == 2 || type == 5)
 			if (open_file_reddirin(type,
-					current->content, &tmp_files, heres) == -1)
+					current->content, &tmp_files) == -1)
 				return (error_redir(saved_stdout, saved_stdin, &tmp_files, 1));
 	}
 	return ("o");
@@ -105,6 +104,8 @@ t_token	*handle_redirects(t_token **tokens)
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	current = *tokens;
+	gg()->heres = ft_hmheres(current);
+	gg()->heres_cmp = 0;
 	while (current && current->type != PIPE)
 	{
 		if (handle_aux(current, tmp_files, saved_stdout, saved_stdin) == NULL)

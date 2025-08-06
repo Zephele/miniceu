@@ -6,17 +6,35 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 12:57:45 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 18:30:08 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static void	free_pids_here(void)
+{
+	free_tokens(gg()->token);
+	free_envs(gg()->envs);
+	free(gg()->temp_h);
+	free(gg()->temp_file_h);
+	clear_history();
+}
+
+static void	handle_heredoc_sigint(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	free_pids_here();
+	exit(130);
+}
+
 void	*read_here_aux(const char *delimiter, char *input, int fd)
 {
+	signal(SIGINT, handle_heredoc_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		setup_cmd_signals();
 		input = readline("> ");
 		if (!input)
 		{
@@ -24,7 +42,7 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 			break ;
 		}
 		input = expand_env_vars(input);
-		if (ft_strncmp(input, delimiter, ft_strlen(delimiter)) == 0)
+		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
 		{
 			free(input);
 			break ;
@@ -46,6 +64,8 @@ static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
 
 	input = NULL;
 	tmp_file = gen_tmp_file(index);
+	gg()->temp_h = temp;
+	gg()->temp_file_h = tmp_file;
 	fd = open(tmp_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -57,18 +77,17 @@ static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
 	{
 		signal(SIGINT, SIG_DFL);
 		read_here_aux(delimiter, input, fd);
-		free_tokens(gg()->token);
-		free_envs(gg()->envs);
-		free(temp);
-		free(tmp_file);
-		clear_history();
+		free_pids_here();
 		exit(0);
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		gg()->last_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			gg()->last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			gg()->last_status = 128 + WTERMSIG(status);
 	}
 	return (tmp_file);
 }
