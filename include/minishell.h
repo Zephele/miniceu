@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 17:31:48 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:04:35 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		ft_free(char **ptr);
 void		free_envs_var(char **var);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		free_safe(void *ptr);
+void		free_pids_here(void);
 
 //BUILT-INS
 
@@ -131,11 +132,13 @@ int			is_biut(t_token *tokens);
 
 //PIPES
 t_token		*handle_pipes(t_token *tokens, t_env *envs);
-t_token		*exec_single_pipe(t_token *left_tokens, t_token *right_tokens, t_env *envs);
+t_token		*exec_single_pipe(t_token *left_tokens,
+				t_token *right_tokens, t_env *envs);
 t_token		*exec_multiple_pipes(t_token *tokens, t_env *envs);
 int			count_pipes(t_token *tokens);
 t_token		**split_by_pipes(t_token *tokens);
-void		execute_pipe_segment(t_token *tokens, int input_fd, int output_fd, t_env *envs);
+void		execute_pipe_segment(t_token *tokens, int input_fd,
+				int output_fd, t_env *envs);
 
 //REDIRECTS
 
@@ -161,6 +164,6 @@ int			here_open_aux(int fd, char *tmp_file,
 //SIGNAL
 
 void		setup_prompt_signals(void);
-void		setup_cmd_signals(void);
+void		handle_heredoc_sigint(int signal);
 
 #endif

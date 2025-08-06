@@ -6,28 +6,11 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 18:30:08 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:08:41 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	free_pids_here(void)
-{
-	free_tokens(gg()->token);
-	free_envs(gg()->envs);
-	free(gg()->temp_h);
-	free(gg()->temp_file_h);
-	clear_history();
-}
-
-static void	handle_heredoc_sigint(int signal)
-{
-	(void)signal;
-	write(1, "\n", 1);
-	free_pids_here();
-	exit(130);
-}
 
 void	*read_here_aux(const char *delimiter, char *input, int fd)
 {
@@ -38,7 +21,10 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 		input = readline("> ");
 		if (!input)
 		{
-			perror ("input error");
+			ft_putstr_fd("minishell: warning: here-document at line 9 ", 1);
+			ft_putstr_fd("delimited by end-of-file (wanted `", 1);
+			ft_putstr_fd((char *)delimiter, 1);
+			ft_putstr_fd("')\n", 1);
 			break ;
 		}
 		input = expand_env_vars(input);
@@ -54,25 +40,10 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 	return ("o");
 }
 
-static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
+static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 {
-	char	*input;
-	int		pid;
-	int		status;
-	char	*tmp_file;
-	int		fd;
+	int	status;
 
-	input = NULL;
-	tmp_file = gen_tmp_file(index);
-	gg()->temp_h = temp;
-	gg()->temp_file_h = tmp_file;
-	fd = open(tmp_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		perror ("error fd");
-		return (NULL);
-	}
-	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -89,6 +60,27 @@ static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
 		else if (WIFSIGNALED(status))
 			gg()->last_status = 128 + WTERMSIG(status);
 	}
+}
+
+static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
+{
+	char	*input;
+	int		pid;
+	char	*tmp_file;
+	int		fd;
+
+	input = NULL;
+	tmp_file = gen_tmp_file(index);
+	gg()->temp_h = temp;
+	gg()->temp_file_h = tmp_file;
+	fd = open(tmp_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror ("error fd");
+		return (NULL);
+	}
+	pid = fork();
+	pid_function(pid, delimiter, input, fd);
 	return (tmp_file);
 }
 

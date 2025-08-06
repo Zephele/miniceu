@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 12:33:58 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:14:56 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ char	*no_quotes(char *content)
 				i++;
 			else if (content[i] == '\\' && !content[i + 1])
 				content[i] = ' ';
-			temp[j] = content[i];
-			j++;
-			i++;
+			temp[j++] = content[i++];
 		}
 	}
 	temp[j] = '\0';
