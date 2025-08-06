@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 12:38:52 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:32:06 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ static void	init_minishell(t_env *envs)
 	gg()->envs = envs;
 	gg()->last_status = 0;
 	gg()->here_tmp = 0;
+	gg()->temp_file_h = NULL;
+	gg()->temp_h = NULL;
+	gg()->heres = 0;
+	gg()->heres_cmp = 0;
 }
 
 int	main(void)
