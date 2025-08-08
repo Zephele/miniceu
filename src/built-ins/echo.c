@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 19:14:56 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:50:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ t_token	*ft_echo(t_token **token)
 	newline = 1;
 	if (*token && (compare_aux((*token)->content, "echo") == 0))
 	{
-		*token = (*token)->next;
+		if ((*token)->next && (*token)->next->type != 8)
+			*token = (*token)->next;
+		else
+			return (NULL);
 		if (*token && ft_strncmp_next((*token)->content,
 				"-n", 2, &newline) == 0)
 			*token = (*token)->next;

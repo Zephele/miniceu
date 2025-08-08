@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/01 14:08:13 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/07 16:05:53 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	open_file_reddir(int type, const char *filename)
 	return (0);
 }
 
-static t_token	*copy_tokens(t_token *tokens)
+t_token	*copy_tokens(t_token *tokens)
 {
 	t_token	*head;
 	t_token	*prev;
@@ -88,12 +88,12 @@ static void	built_aux(t_token *current)
 	t_token	*pass;
 
 	pass = current;
-	while (current)
+	while (current && current->type != 8)
 	{
 		while (current->type == 0 || current->type == 1)
 			current = current->next;
 		pass = current;
-		while (current)
+		while (current && current->type != 8)
 		{
 			if (current->type == 0 || current->type == 1)
 			{
@@ -103,6 +103,11 @@ static void	built_aux(t_token *current)
 			}
 			else if (current && current->next && current->next->next)
 				current = b_a2(current);
+			else if (current && current->next && !current->next->next)
+			{
+				b_a3(current);
+				break ;
+			}
 			else
 				current = current->next;
 		}

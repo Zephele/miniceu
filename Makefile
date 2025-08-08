@@ -53,6 +53,6 @@ teste:
 
 val:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-		valgrind --suppressions=valgrind.supp --leak-check=full --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
+		valgrind --suppressions=valgrind.supp --leak-check=full --leak-check=full --show-leak-kinds=all --track-origins=yes -q ./minishell
 
 .PHONY: all clean fclean re val teste

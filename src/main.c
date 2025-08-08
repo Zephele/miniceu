@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 17:32:06 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/07 14:25:45 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	init_minishell(t_env *envs)
 	gg()->temp_h = NULL;
 	gg()->heres = 0;
 	gg()->heres_cmp = 0;
+	gg()->segments = NULL;
 }
 
 int	main(void)

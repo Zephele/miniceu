@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 18:51:13 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/18 12:21:32 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 15:08:50 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,20 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
-	while (tokens)
+	if (tokens && tokens->type != 8)
 	{
-		tmp = tokens;
-		tokens = tokens->next;
-		free(tmp->content);
-		free(tmp);
+		while (tokens && tokens->type != 8)
+		{
+			tmp = tokens;
+			tokens = tokens->next;
+			free_safe(tmp->content);
+			tmp->type = 8;
+			free_safe(tmp);
+			tmp = NULL;
+		}
 	}
+	else
+		return ;
 }
 
 char	*ft_strjoin_free(char *s1, char *s2)

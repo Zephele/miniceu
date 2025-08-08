@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 19:04:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 17:53:35 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+// typedef struct s_pf
+// {
+// 	t_token	**segments;
+// }	t_pf;
+
 typedef struct s_list
 {
 	void			*content;
@@ -56,6 +61,14 @@ typedef struct s_global
 	int		heres_cmp;
 	char	*temp_h;
 	char	*temp_file_h;
+	//
+	//
+	t_token	**segments;
+	t_token	*seg1;
+	t_token	*seg2;
+	int		**pipes;
+	pid_t	*pids;
+	int		pipe_count;
 }	t_global;
 
 # define CMD 0
@@ -87,6 +100,7 @@ int			ft_same_var(char *new_env, char **new, int i, int next);
 int			alloc_env_1(int count, char *new_env);
 t_token		*after_comand(t_token **token);
 t_list		*ft_lstnew(void *content);
+t_token		*copy_tokens(t_token *tokens);
 
 //FREES
 
@@ -100,6 +114,8 @@ void		free_envs_var(char **var);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		free_safe(void *ptr);
 void		free_pids_here(void);
+void		free_pipe(void);
+void		free_pipe_2(void);
 
 //BUILT-INS
 
@@ -129,6 +145,7 @@ t_token		*exec_external(t_token *tokens, t_env *envs);
 t_token		*exec(t_token *tokens, t_env *envs);
 t_token		*exec_biut(t_token *tokens);
 int			is_biut(t_token *tokens);
+int			there_is_redir(t_token *tokens);
 
 //PIPES
 t_token		*handle_pipes(t_token *tokens, t_env *envs);
@@ -160,6 +177,7 @@ void		*error_redir(int saved_stdout,
 t_token		*current_aux(t_token *current);
 int			here_open_aux(int fd, char *tmp_file,
 				char *temp, t_list **tmp_files);
+void		b_a3(t_token *pass);
 
 //SIGNAL
 

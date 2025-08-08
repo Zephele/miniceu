@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/06 17:06:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 17:05:13 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	{
 		execve(exec_path, argv, envs->var);
 		perror("execve");
-		free_envs(gg()->envs);
 		exit(127);
 	}
 	else if (pid > 0)
@@ -138,7 +137,7 @@ void exec_external_with_argv(char **argv, t_env *envs)
     {
         execve(exec_path, argv, envs->var);
         perror("execve");
-        free_envs(gg()->envs);
+		//not here
         exit(127);
     }
     else if (pid > 0)
