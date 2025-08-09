@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/07 16:05:53 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:35:54 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,25 @@ t_token	*copy_tokens(t_token *tokens)
 {
 	t_token	*head;
 	t_token	*prev;
-	t_token	*new_token;
 
 	head = NULL;
 	prev = NULL;
 	while (tokens)
 	{
-		new_token = malloc(sizeof(t_token));
-		if (!new_token)
+		gg()->new_token = malloc(sizeof(t_token));
+		if (!gg()->new_token)
 		{
 			free_tokens(head);
 			return (NULL);
 		}
-		new_token->content = ft_strdup(tokens->content);
-		new_token->type = tokens->type;
-		new_token->next = NULL;
+		gg()->new_token->content = ft_strdup(tokens->content);
+		gg()->new_token->type = tokens->type;
+		gg()->new_token->next = NULL;
 		if (!head)
-			head = new_token;
+			head = gg()->new_token;
 		if (prev)
-			prev->next = new_token;
-		prev = new_token;
+			prev->next = gg()->new_token;
+		prev = gg()->new_token;
 		tokens = tokens->next;
 	}
 	return (head);
@@ -119,25 +118,25 @@ static void	built_aux(t_token *current)
 t_token	*built_external(t_token *tokens, t_env *envs)
 {
 	t_token	*current;
-	t_token	*temp;
 
 	if (is_biut(tokens))
 	{
-		temp = copy_tokens(tokens);
-		current = temp;
+		gg()->temp = copy_tokens(tokens);
+		current = gg()->temp;
 		built_aux(current);
-		tokens = exec_biut(temp);
-		free_tokens (temp);
+		tokens = exec_biut(gg()->temp);
+		free_tokens(gg()->new_token);
+		free_tokens(gg()->temp);
 		write (1, "\n", 1);
 		return (NULL);
 	}
 	else
 	{
-		temp = copy_tokens(tokens);
-		current = temp;
+		gg()->temp = copy_tokens(tokens);
+		current = gg()->temp;
 		built_external_aux(current);
-		exec_external(temp, envs);
-		free_tokens (temp);
+		exec_external(gg()->temp, envs);
+		free_tokens (gg()->temp);
 		return (tokens->next);
 	}
 }

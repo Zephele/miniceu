@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:32:46 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/08 17:54:46 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:26:37 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	execute_pipe_segment(t_token *tokens, int input_fd, int output_fd, t_env *e
 	{
 		handle_redirects(&tokens);
 		free_pipe();
+		gg()->new_token = NULL;
 		exit(gg()->last_status);
 	}
 	else if (is_biut(tokens))
@@ -311,71 +312,6 @@ t_token	*exec_multiple_pipes(t_token *tokens, t_env *envs)
 
 	return (NULL);
 }
-
-//=============================================
-
-// Função auxiliar para copiar uma lista de tokens
-static t_token *copy_token_list(t_token *token)
-{
-    if (!token)
-        return (NULL);
-
-    // Aloca um novo token
-    t_token *new_token = malloc(sizeof(t_token));
-    if (!new_token)
-        return (NULL);
-
-    // Copia o conteúdo com uma cópia profunda
-    new_token->content = ft_strdup(token->content);
-    if (!new_token->content)
-    {
-        free(new_token);
-        return (NULL);
-    }
-
-    // Copia o tipo e o próximo token
-    new_token->type = token->type;
-    new_token->next = copy_token_list(token->next);
-
-    return (new_token);
-}
-
-// Função principal para copiar t_token **
-t_token **copy_tokens_2(t_token **segments_2)
-{
-    if (!segments_2)
-        return (NULL);
-
-    // Conta o número de segmentos
-    int count = 0;
-    while (segments_2[count])
-        count++;
-
-    // Aloca o novo array de ponteiros
-    t_token **new_segments = malloc(sizeof(t_token *) * (count + 1));
-    if (!new_segments)
-        return (NULL);
-
-    // Copia cada lista de tokens
-    for (int i = 0; i < count; i++)
-    {
-        new_segments[i] = copy_token_list(segments_2[i]);
-        if (!new_segments[i])
-        {
-            // Libera tudo se houver falha
-            for (int j = 0; j < i; j++)
-                free_tokens(new_segments[j]);
-            free(new_segments);
-            return (NULL);
-        }
-    }
-
-    // Termina o array com NULL
-    new_segments[count] = NULL;
-
-    return (new_segments);
-}
-
 
 t_token	*handle_pipes(t_token *tokens, t_env *envs)
 {

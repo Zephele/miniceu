@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/08 17:53:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/08 21:24:16 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_global
 	int		**pipes;
 	pid_t	*pids;
 	int		pipe_count;
+	t_token	*new_token;
+	t_token	*temp;
 }	t_global;
 
 # define CMD 0
