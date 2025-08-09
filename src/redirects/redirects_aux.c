@@ -6,11 +6,23 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:36:08 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/05 19:51:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:54:19 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+		// if (current && current->next && !current->next->next)
+		// {
+		// 	free (pass->content);
+		// 	pass->content = NULL;
+		// 	pass->type = 8;
+		// 	free (pass->next->content);
+		// 	pass->next->content = NULL;
+		// 	pass->type = 8;
+		// }
+		// else
+		// 	return ;
 
 void	b_a1(t_token *current, t_token *pass, int i)
 {
@@ -40,6 +52,16 @@ t_token	*b_a2(t_token *current)
 			current = current->next->next;
 	}
 	return (current);
+}
+
+void	b_a3(t_token *pass)
+{
+	free (pass->content);
+	pass->content = NULL;
+	pass->type = 8;
+	free (pass->next->content);
+	pass->next->content = NULL;
+	pass->type = 8;
 }
 
 int	exit_file(int fd, char *temp, int i)
