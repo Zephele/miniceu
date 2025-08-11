@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/08 21:24:16 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:29:08 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ typedef struct s_token
 	int				type;
 	struct s_token	*next;
 }	t_token;
-
-// typedef struct s_pf
-// {
-// 	t_token	**segments;
-// }	t_pf;
 
 typedef struct s_list
 {
@@ -148,6 +143,8 @@ t_token		*exec(t_token *tokens, t_env *envs);
 t_token		*exec_biut(t_token *tokens);
 int			is_biut(t_token *tokens);
 int			there_is_redir(t_token *tokens);
+char		*get_path_env(char **envp);
+char		*find_executable(const char *cmd, char **envp);
 
 //PIPES
 t_token		*handle_pipes(t_token *tokens, t_env *envs);
@@ -158,6 +155,15 @@ int			count_pipes(t_token *tokens);
 t_token		**split_by_pipes(t_token *tokens);
 void		execute_pipe_segment(t_token *tokens, int input_fd,
 				int output_fd, t_env *envs);
+void		free_pipes_memory(int **pipes, int pipe_count);
+void		free_segments_memory(t_token **segments);
+int			count_pipes(t_token *tokens);
+t_token		*copy_until_pipe(t_token *start, t_token *end);
+void	wait_all_processes(pid_t *pids, int pipe_count);
+void	setup_child_process(int **pipes, int pipe_count, int i);
+void	create_child_processes(t_token **segments, int **pipes, pid_t *pids, t_env *envs);
+void	create_pipes(int **pipes, int pipe_count);
+void	close_all_pipes(int **pipes, int pipe_count);
 
 //REDIRECTS
 
