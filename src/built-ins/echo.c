@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/08 21:02:22 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:38:28 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ static void	echo_aux(t_token **token)
 		(*token)->content = no_quotes((*token)->content);
 	else if ((*token)->type == ENV)
 		(*token)->content = expand_env_vars((*token)->content);
-	ft_putstr_fd((*token)->content, STDOUT_FILENO);
+	if ((*token)->content)
+		ft_putstr_fd((*token)->content, STDOUT_FILENO);
 	if ((*token)->next && (*token)->next->content
 		&& ((*token)->next->type != PIPE
 			&& (*token)->next->type != REDIR_IN
