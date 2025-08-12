@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/11 17:23:24 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:42:09 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ typedef struct s_global
 	int		heres_cmp;
 	char	*temp_h;
 	char	*temp_file_h;
-	//
-	//
+
 	t_token	**segments;
 	t_token	*seg1;
 	t_token	*seg2;
@@ -99,6 +98,7 @@ int			alloc_env_1(int count, char *new_env);
 t_token		*after_comand(t_token **token);
 t_list		*ft_lstnew(void *content);
 t_token		*copy_tokens(t_token *tokens);
+void		newline_aux(int newline);
 
 //FREES
 
@@ -160,11 +160,12 @@ void		free_pipes_memory(int **pipes, int pipe_count);
 void		free_segments_memory(t_token **segments);
 int			count_pipes(t_token *tokens);
 t_token		*copy_until_pipe(t_token *start, t_token *end);
-void	wait_all_processes(pid_t *pids, int pipe_count);
-void	setup_child_process(int **pipes, int pipe_count, int i);
-void	create_child_processes(t_token **segments, int **pipes, pid_t *pids, t_env *envs);
-void	create_pipes(int **pipes, int pipe_count);
-void	close_all_pipes(int **pipes, int pipe_count);
+void		wait_all_processes(pid_t *pids, int pipe_count);
+void		setup_child_process(int **pipes, int pipe_count, int i);
+void		create_child_processes(t_token **segments,
+				int **pipes, pid_t *pids);
+void		create_pipes(int **pipes, int pipe_count);
+void		close_all_pipes(int **pipes, int pipe_count);
 
 //REDIRECTS
 
@@ -172,11 +173,12 @@ t_token		*handle_redirects(t_token **tokens);
 int			handle_heredoc(const char *delimiter);
 int			open_file_reddir(int type, const char *filename);
 t_token		*built_external(t_token *tokens, t_env *envs);
-void		b_a1(t_token *current, t_token *pass, int i);
+void		built_external_aux(t_token *current);
 t_token		*b_a2(t_token *current);
 int			exit_file(int fd, char *temp, int i);
-void		copy_aux(t_token *new, t_token *current,
+int			copy_aux(t_token *new, t_token *current,
 				t_token *head, t_token *prev);
+t_token		*built_aux(t_token *current);
 
 //HEREDOCS
 
@@ -188,7 +190,6 @@ void		*error_redir(int saved_stdout,
 t_token		*current_aux(t_token *current);
 int			here_open_aux(int fd, char *tmp_file,
 				char *temp, t_list **tmp_files);
-void		b_a3(t_token *pass);
 
 //SIGNAL
 

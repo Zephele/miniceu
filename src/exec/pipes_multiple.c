@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes_aux3.c                                       :+:      :+:    :+:   */
+/*   pipes_multiple.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:40:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/11 20:04:33 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:32:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ t_token	*handle_pipes(t_token *tokens, t_env *envs)
 
 	if (!tokens)
 		return (NULL);
-
 	pipe_count = count_pipes(tokens);
-
 	if (pipe_count == 0)
 		return (handle_redirects(&tokens));
 	else if (pipe_count == 1)
@@ -36,6 +34,7 @@ t_token	*handle_pipes(t_token *tokens, t_env *envs)
 	else
 		return (exec_multiple_pipes(tokens, envs));
 }
+
 t_token	*exec_multiple_pipes(t_token *tokens, t_env *envs)
 {
 	gg()->pipe_count = count_pipes(tokens);
@@ -53,16 +52,16 @@ t_token	*exec_multiple_pipes(t_token *tokens, t_env *envs)
 	free_pipes_memory(gg()->pipes, gg()->pipe_count);
 	free(gg()->pids);
 	free_segments_memory(gg()->segments);
-
 	return (NULL);
 }
+
 t_token	**split_by_pipes(t_token *tokens)
 {
 	int		pipe_count;
 	t_token	**segments;
 	t_token	*current;
 	t_token	*segment_start;
-	int	i;
+	int		i;
 
 	pipe_count = count_pipes(tokens);
 	current = tokens;

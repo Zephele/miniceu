@@ -6,82 +6,11 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:36:08 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/11 16:55:48 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 10:57:34 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-		// if (current && current->next && !current->next->next)
-		// {
-		// 	free (pass->content);
-		// 	pass->content = NULL;
-		// 	pass->type = 8;
-		// 	free (pass->next->content);
-		// 	pass->next->content = NULL;
-		// 	pass->type = 8;
-		// }
-		// else
-		// 	return ;
-
-// void	b_a1(t_token *current, t_token *pass, int i)
-// {
-// 	if (i == 1)
-// 	{
-// 		free (pass->content);
-// 		pass->content = NULL;
-// 		pass->content = ft_strdup(current->content);
-// 		pass->type = current->type;
-// 	}
-// 	if (i == 2)
-// 	{
-// 		free (pass->content);
-// 		pass->content = NULL;
-// 		pass->type = 8;
-// 		pass = NULL;
-// 		current = NULL;
-// 	}
-// }
-
-// t_token	*b_a2(t_token *current)
-// {
-// 	current = current->next->next;
-// 	if (current->type != 0 && current->type != 1)
-// 	{
-// 		if (current && current->next && current->next->next)
-// 			current = current->next->next;
-// 	}
-// 	return (current);
-// }
-
-// void	b_a3(t_token *pass)
-// {
-// 	free (pass->content);
-// 	pass->content = NULL;
-// 	pass->type = 8;
-// 	free (pass->next->content);
-// 	pass->next->content = NULL;
-// 	pass->type = 8;
-// }
-
-void	b_a1(t_token *current, t_token *pass, int i)
-{
-	if (i == 1)
-	{
-		free(pass->content);
-		pass->content = NULL;
-		pass->content = ft_strdup(current->content);
-		pass->type = current->type;
-	}
-	if (i == 2)
-	{
-		free(pass->content);
-		pass->content = NULL;
-		pass->type = 8;
-		pass = NULL;
-		current = NULL;
-	}
-}
 
 t_token	*b_a2(t_token *current)
 {
@@ -94,17 +23,53 @@ t_token	*b_a2(t_token *current)
 	return (current);
 }
 
-void	b_a3(t_token *pass)
+t_token	*copy_tokens(t_token *tokens)
 {
-	free(pass->content);
-	pass->content = NULL;
-	pass->type = 8;
-	if (pass->next)
+	t_token	*head;
+	t_token	*prev;
+
+	head = NULL;
+	prev = NULL;
+	while (tokens)
 	{
-		free(pass->next->content);
-		pass->next->content = NULL;
-		pass->next->type = 8;
+		gg()->new_token = malloc(sizeof(t_token));
+		if (!gg()->new_token)
+		{
+			free_tokens(head);
+			return (NULL);
+		}
+		gg()->new_token->content = ft_strdup(tokens->content);
+		gg()->new_token->type = tokens->type;
+		gg()->new_token->next = NULL;
+		if (!head)
+			head = gg()->new_token;
+		if (prev)
+			prev->next = gg()->new_token;
+		prev = gg()->new_token;
+		tokens = tokens->next;
 	}
+	return (head);
+}
+
+int	open_file_reddir(int type, const char *filename)
+{
+	int		fd;
+	char	*temp;
+
+	fd = -1;
+	temp = ft_strdup(filename);
+	temp = no_quotes(temp);
+	if (type == 3)
+		fd = open(temp, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == 4)
+		fd = open(temp, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		return (exit_file(fd, temp, 1));
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		return (exit_file(fd, temp, 2));
+	close(fd);
+	free (temp);
+	return (0);
 }
 
 int	exit_file(int fd, char *temp, int i)
@@ -121,4 +86,25 @@ int	exit_file(int fd, char *temp, int i)
 		free_safe (temp);
 	}
 	return (-1);
+}
+
+void	built_external_aux(t_token *current)
+{
+	while (current->content
+		&& current->type != PIPE
+		&& current->type != REDIR_IN
+		&& current->type != REDIR_OUT
+		&& current->type != REDIR_APPEND
+		&& current->type != HEREDOC
+		&& current->type != ENV)
+		current = current->next;
+	while (current)
+	{
+		if (current->content)
+		{
+			free (current->content);
+			current->content = NULL;
+			current = current->next;
+		}
+	}
 }

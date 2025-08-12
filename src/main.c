@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/07 14:25:45 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:27:33 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,35 @@ static void	init_minishell(t_env *envs)
 	gg()->segments = NULL;
 }
 
-int	main(void)
+static void	ml_aux(char *input)
+{
+	t_token	*current;
+	t_token	*tokens;
+
+	while (1)
+	{
+		tokens = tokenize(input, 0);
+		gg()->token = tokens;
+		if (tokens && validate_syntax(tokens))
+		{
+			free_tokens(tokens);
+			return ;
+		}
+		if (tokens)
+		{
+			current = tokens;
+			while (current)
+				current = exec(current, gg()->envs);
+			free_tokens(tokens);
+		}
+		return ;
+	}
+}
+
+static void	main_loop(void)
 {
 	char	*input;
-	t_token	*tokens;
-	t_env	*envs;
-	t_token	*current;
 
-	envs = init_envs(__environ);
-	if (!envs)
-		return (1);
-	init_minishell(envs);
 	while (1)
 	{
 		setup_prompt_signals();
@@ -45,25 +63,21 @@ int	main(void)
 			break ;
 		}
 		add_history(input);
-		tokens = tokenize(input, 0);
-		gg()->token = tokens;
-		if (tokens && validate_syntax(tokens))
-		{
-			free_tokens(tokens);
-			free(input);
-			continue ;
-		}
-		if (tokens)
-		{
-			current = tokens;
-			while (current)
-				current = exec(current, gg()->envs);
-			free_tokens(tokens);
-		}
+		ml_aux(input);
 		free(input);
 	}
+}
+
+int	main(void)
+{
+	t_env	*envs;
+
+	envs = init_envs(__environ);
+	if (!envs)
+		return (1);
+	init_minishell(envs);
+	main_loop();
 	free_envs(envs);
 	clear_history();
 	return (0);
 }
-

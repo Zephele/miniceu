@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:32:46 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/11 19:29:29 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:31:25 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_token	*copy_until_pipe(t_token *start, t_token *end)
 		new_token->content = ft_strdup(current->content);
 		new_token->type = current->type;
 		new_token->next = NULL;
-
 		if (!new_head)
 			new_head = new_token;
 		else
@@ -40,6 +39,7 @@ t_token	*copy_until_pipe(t_token *start, t_token *end)
 	}
 	return (new_head);
 }
+
 void	create_pipes(int **pipes, int pipe_count)
 {
 	int	i;
@@ -74,10 +74,8 @@ void	setup_child_process(int **pipes, int pipe_count, int i)
 {
 	if (i > 0)
 		dup2(pipes[i - 1][0], STDIN_FILENO);
-
 	if (i < pipe_count)
 		dup2(pipes[i][1], STDOUT_FILENO);
-
 	close_all_pipes(pipes, pipe_count);
 }
 
@@ -95,4 +93,3 @@ void	wait_all_processes(pid_t *pids, int pipe_count)
 		i++;
 	}
 }
-

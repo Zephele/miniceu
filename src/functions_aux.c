@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:07:28 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/11 17:29:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:33:42 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,10 @@ t_list	*ft_lstnew(void *content)
 	new_node->next = NULL;
 	free (content);
 	return (new_node);
+}
+
+void	newline_aux(int newline)
+{
+	if (newline)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 }
