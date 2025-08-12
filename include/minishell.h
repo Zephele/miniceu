@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 15:42:09 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:53:10 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char		*find_executable(const char *cmd, char **envp);
 t_token		*handle_pipes(t_token *tokens, t_env *envs);
 t_token		*exec_single_pipe(t_token *left_tokens,
 				t_token *right_tokens, t_env *envs);
-t_token		*exec_multiple_pipes(t_token *tokens, t_env *envs);
+t_token		*exec_multiple_pipes(t_token *tokens);
 int			count_pipes(t_token *tokens);
 t_token		**split_by_pipes(t_token *tokens);
 void		execute_pipe_segment(t_token *tokens, int input_fd,
@@ -166,6 +166,7 @@ void		create_child_processes(t_token **segments,
 				int **pipes, pid_t *pids);
 void		create_pipes(int **pipes, int pipe_count);
 void		close_all_pipes(int **pipes, int pipe_count);
+char		*ft_getenv(char *env);
 
 //REDIRECTS
 

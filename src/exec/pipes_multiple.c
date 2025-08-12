@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:40:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:32:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:00:15 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ t_token	*handle_pipes(t_token *tokens, t_env *envs)
 		return (result);
 	}
 	else
-		return (exec_multiple_pipes(tokens, envs));
+		return (exec_multiple_pipes(tokens));
 }
 
-t_token	*exec_multiple_pipes(t_token *tokens, t_env *envs)
+t_token	*exec_multiple_pipes(t_token *tokens)
 {
 	gg()->pipe_count = count_pipes(tokens);
 	if (gg()->pipe_count == 0)
@@ -46,7 +46,7 @@ t_token	*exec_multiple_pipes(t_token *tokens, t_env *envs)
 	gg()->pipes = malloc(sizeof(int *) * gg()->pipe_count);
 	create_pipes(gg()->pipes, gg()->pipe_count);
 	gg()->pids = malloc(sizeof(pid_t) * (gg()->pipe_count + 1));
-	create_child_processes(gg()->segments, gg()->pipes, gg()->pids, envs);
+	create_child_processes(gg()->segments, gg()->pipes, gg()->pids);
 	close_all_pipes(gg()->pipes, gg()->pipe_count);
 	wait_all_processes(gg()->pids, gg()->pipe_count);
 	free_pipes_memory(gg()->pipes, gg()->pipe_count);
