@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/11 20:29:08 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:23:24 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_global
 	int		pipe_count;
 	t_token	*new_token;
 	t_token	*temp;
+	t_token	*new;
 }	t_global;
 
 # define CMD 0
@@ -174,6 +175,8 @@ t_token		*built_external(t_token *tokens, t_env *envs);
 void		b_a1(t_token *current, t_token *pass, int i);
 t_token		*b_a2(t_token *current);
 int			exit_file(int fd, char *temp, int i);
+void		copy_aux(t_token *new, t_token *current,
+				t_token *head, t_token *prev);
 
 //HEREDOCS
 

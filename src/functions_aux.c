@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:07:28 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/05 16:08:06 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:29:49 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	compare_aux(char *content, char *comp)
 	int	len;
 	int	content_len;
 
-	len = ft_strlen(comp);
-	content_len = ft_strlen(content);
 	if (!content || !comp)
 		return (1);
+	len = ft_strlen(comp);
+	content_len = ft_strlen(content);
 	if (ft_strncmp(content, comp, len) == 0)
 		return (0);
 	else if (content_len == (len + 2)
