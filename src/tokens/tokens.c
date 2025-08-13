@@ -1,0 +1,146 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
+/*   Updated: 2025/08/13 16:25:50 by ratanaka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+static void	schar_aux(char *input, int *i, t_token *token)
+{
+	if (input[*i] == '>')
+	{
+		if (input[*i + 1] == '>')
+			token->type = REDIR_APPEND;
+		else
+			token->type = REDIR_OUT;
+	}
+	else if (input[*i] == '<')
+	{
+		if (input[*i + 1] == '<')
+			token->type = HEREDOC;
+		else
+			token->type = REDIR_IN;
+	}
+	if (((input[*i] == '>') && (input[*i + 1] == '>'))
+		|| ((input[*i] == '<') && (input[*i + 1] == '<')))
+		*i += 2;
+	else
+		*i += 1;
+}
+
+static t_token	*handle_schar(char *input, int *i)
+{
+	t_token	*token;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->content = NULL;
+	if (input[*i] == '>' && input[*i + 1] == '>')
+		token->content = ft_strdup(">>");
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+		token->content = ft_strdup("<<");
+	else
+		token->content = ft_strndup(&input[*i], 1);
+	if (input[*i] == '>' || input[*i] == '<')
+		schar_aux(input, i, token);
+	else
+	{
+		token->type = PIPE;
+		*i += 1;
+	}
+	token->next = NULL;
+	return (token);
+}
+
+static t_token	*handle_quotes(char *input, int *i, char quote)
+{
+	t_token	*token;
+	char	*content;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	content = NULL;
+	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+	{
+		if ((input[*i] == '\'' || input[*i] == '\"'))
+			content = aux_quotes(input, i, quote, content);
+		if (is_empty_token(content, token))
+			return (NULL);
+		while (input[*i] && input[*i] != '\''
+			&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+		{
+			content = ft_strjoin_free(content, (char []){input[*i], '\0'});
+			(*i)++;
+		}
+	}
+	token->content = ft_strdup(content);
+	token->type = ARG;
+	token->next = NULL;
+	free(content);
+	return (token);
+}
+
+static t_token	*handle_general(char *input, int *i, int type)
+{
+	t_token	*token;
+	char	*content;
+	char	quote;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	content = NULL;
+	quote = '\0';
+	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+	{
+		if (input[*i] && input[*i] != '\''
+			&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
+			content = aux_general(input, i, content);
+		if ((input[*i] == '\'' || input[*i] == '\"'))
+			content = aux_quotes(input, i, quote, content);
+		if (is_empty_token(content, token))
+			return (NULL);
+	}
+	token->content = ft_strdup(content);
+	token->type = type;
+	token->next = NULL;
+	free (content);
+	return (token);
+}
+
+t_token	*tokenize(char *input, int i)
+{
+	t_token	*head;
+	t_token	**current;
+
+	head = NULL;
+	current = &head;
+	if (seen_quotes(input, i))
+		return (NULL);
+	i = 0;
+	while ((size_t)i < ft_strlen(input))
+	{
+		if (input[i] == ' ')
+			i++;
+		else if (ft_strchr("<>|", input[i]))
+			*current = handle_schar(input, &i);
+		else if (input[i] == '\'' || input[i] == '\"')
+			*current = handle_quotes(input, &i, input[i]);
+		else if (input[i] == '$')
+			*current = handle_general(input, &i, 7);
+		else
+			*current = handle_general(input, &i, 0);
+		if (*current)
+			current = &(*current)->next;
+	}
+	return (head);
+}
