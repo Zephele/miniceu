@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/06 19:08:41 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:05:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 		input = readline("> ");
 		if (!input)
 		{
-			ft_putstr_fd("minishell: warning: here-document at line 9 ", 1);
+			ft_putstr_fd("minishell: warning: here-document ", 1);
 			ft_putstr_fd("delimited by end-of-file (wanted `", 1);
 			ft_putstr_fd((char *)delimiter, 1);
 			ft_putstr_fd("')\n", 1);

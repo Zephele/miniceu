@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:01:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:34:15 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:44:40 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*aux_general(char *input, int *i, char *content)
 			while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
 				(*i)++;
 			content = ft_substr(input, start, *i - start);
+			content = expand_env_vars(content);
 		}
 		else
 		{

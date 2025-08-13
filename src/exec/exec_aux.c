@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:05:11 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:23:50 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 20:27:43 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,12 @@ char	*find_executable(const char *cmd, char **envp)
 	result = search_in_dirs(dirs, cmd);
 	ft_free(dirs);
 	return (result);
+}
+
+void	free_exec(char *exec_path)
+{
+	free_safe(exec_path);
+	free_tokens(gg()->token);
+	free_envs(gg()->envs);
+	clear_history();
 }

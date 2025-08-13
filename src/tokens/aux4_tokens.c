@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:33:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:45:53 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:53:30 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*expand_aux(char *content, int *i, int *temp_size, char *temp)
 		while (content[temp_i] && (ft_isalnum_underline(content[temp_i])))
 			temp_i++;
 		content_name = ft_substr(content, start, temp_i - start);
-		expanded_content = getenv(content_name);
+		expanded_content = ft_getenv(content_name);
 		if (is_empty_expand(expanded_content, content_name, i, &temp_i))
 			return (temp);
 		temp = ft_strjoin_free(temp, expanded_content);

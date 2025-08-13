@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:50:34 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/06/24 16:39:22 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:25:50 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static t_token	*handle_quotes(char *input, int *i, char quote)
 	return (token);
 }
 
-static t_token	*handle_general(char *input, int *i)
+static t_token	*handle_general(char *input, int *i, int type)
 {
 	t_token	*token;
 	char	*content;
@@ -111,7 +111,7 @@ static t_token	*handle_general(char *input, int *i)
 			return (NULL);
 	}
 	token->content = ft_strdup(content);
-	token->type = CMD;
+	token->type = type;
 	token->next = NULL;
 	free (content);
 	return (token);
@@ -136,9 +136,9 @@ t_token	*tokenize(char *input, int i)
 		else if (input[i] == '\'' || input[i] == '\"')
 			*current = handle_quotes(input, &i, input[i]);
 		else if (input[i] == '$')
-			*current = handle_env(input, &i);
+			*current = handle_general(input, &i, 7);
 		else
-			*current = handle_general(input, &i);
+			*current = handle_general(input, &i, 0);
 		if (*current)
 			current = &(*current)->next;
 	}

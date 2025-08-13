@@ -8,7 +8,7 @@ SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c ./src/si
 		\
 		./src/built-ins/echo.c ./src/built-ins/cd.c ./src/built-ins/pwd.c ./src/built-ins/envs_init.c \
 		./src/built-ins/env.c ./src/built-ins/exit.c ./src/built-ins/unset.c ./src/built-ins/export.c ./src/built-ins/export_aux.c\
-		./src/built-ins/exit_case.c \
+		./src/built-ins/export_empty.c ./src/built-ins/exit_case.c \
 		\
 		./src/exec/exec_patch.c ./src/exec/exec.c  ./src/exec/exec_external.c  ./src/exec/exec_aux.c ./src/exec/pipes.c \
 		./src/exec/pipes_single.c ./src/exec/pipes_segment.c ./src/exec/pipes_multiple.c ./src/exec/pipes_free.c \

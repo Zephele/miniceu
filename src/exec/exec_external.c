@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:21:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:31:48 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:57:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**build_argv(t_token *tokens)
 	return (argv);
 }
 
-static char	*get_exec_path(char **argv, t_env *envs)
+static char	*get_exec_path(char **argv, t_env *envs, t_token *tokens)
 {
 	char	*exec_path;
 
@@ -40,10 +40,43 @@ static char	*get_exec_path(char **argv, t_env *envs)
 		exec_path = find_executable(argv[0], envs->var);
 	if (!exec_path)
 	{
-		write(2, "Command not found\n", 18);
+		if (!get_exec_aux(tokens))
+			return (NULL);
+		if (tokens->type == ENV && tokens->content[0] != '$')
+		{
+			if (tokens && tokens->next)
+			{
+				tokens = tokens->next;
+				exec(tokens, envs);
+				return (NULL);
+			}
+			else
+				return (NULL);
+		}
+		write(2, " command not found\n", 20);
 		gg()->last_status = 127;
 	}
 	return (exec_path);
+}
+
+static void	exec_errors(char *exec_path)
+{
+	if (access(exec_path, F_OK) < 0)
+	{
+		ft_putstr_fd(exec_path, 2);
+		perror(" ");
+		gg()->last_status = 127;
+	}
+	else if (access(exec_path, X_OK) == 0)
+	{
+		ft_putstr_fd(" Is a directory\n", 2);
+		gg()->last_status = 126;
+	}
+	else
+	{
+		gg()->last_status = 126;
+		perror(" ");
+	}
 }
 
 static t_token	*execute_command(char *exec_path,
@@ -55,9 +88,10 @@ static t_token	*execute_command(char *exec_path,
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(exec_path, argv, envs->var);
-		perror("execve");
-		exit(127);
+		if (execve(exec_path, argv, envs->var) == -1)
+			exec_errors(exec_path);
+		free_exec(exec_path);
+		exit(gg()->last_status);
 	}
 	else if (pid > 0)
 	{
@@ -85,7 +119,7 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	tmp = tokens;
 	while (tmp && tmp->type != PIPE)
 		tmp = tmp->next;
-	exec_path = get_exec_path(argv, envs);
+	exec_path = get_exec_path(argv, envs, tokens);
 	if (!exec_path)
 		return (tmp);
 	return (execute_command(exec_path, argv, envs, tmp));

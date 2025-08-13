@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/05 17:14:42 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:53:43 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char	*extract_quoted_content(char *input, int *i, char quote)
 	char	*content;
 
 	content = ft_strdup("");
-	while (input[*i] != '\0' && input[*i] != ' ' && input[*i] == quote)
+	while ((input[*i] != '\0' && input[*i] != ' ' && input[*i] == quote)
+		|| input[*i] == '$')
 	{
 		start = ++(*i);
 		while (input[*i] != '\0' && input[*i] != quote)
@@ -99,7 +100,7 @@ char	*extract_quoted_content(char *input, int *i, char quote)
 		if (is_empty(temp, content))
 			return (NULL);
 		content = ft_strjoin_free(content, temp);
-		if (quote == '"')
+		if (quote == '"' || temp[0] == '"')
 			content = expand_env_vars(content);
 		free(temp);
 		if (input[*i] == quote)

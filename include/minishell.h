@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 15:42:09 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 18:07:36 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/signal.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <termios.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -46,26 +47,27 @@ typedef struct s_list
 
 typedef struct s_global
 {
-	char	*content;
-	t_token	*token;
-	t_env	*envs;
-	int		last_status;
-	t_list	*list;
-	int		here_tmp;
-	int		heres;
-	int		heres_cmp;
-	char	*temp_h;
-	char	*temp_file_h;
+	char			*content;
+	t_token			*token;
+	t_env			*envs;
+	int				last_status;
+	t_list			*list;
+	int				here_tmp;
+	int				heres;
+	int				heres_cmp;
+	char			*temp_h;
+	char			*temp_file_h;
 
-	t_token	**segments;
-	t_token	*seg1;
-	t_token	*seg2;
-	int		**pipes;
-	pid_t	*pids;
-	int		pipe_count;
-	t_token	*new_token;
-	t_token	*temp;
-	t_token	*new;
+	t_token			**segments;
+	t_token			*seg1;
+	t_token			*seg2;
+	int				**pipes;
+	pid_t			*pids;
+	int				pipe_count;
+	t_token			*new_token;
+	t_token			*temp;
+	t_token			*new;
+	struct termios	original_term;
 }	t_global;
 
 # define CMD 0
@@ -130,6 +132,7 @@ void		ft_case_5(t_token **token);
 int			calc_exit_code(t_token **token);
 t_token		*ft_unset(t_token **token);
 t_token		*ft_export(t_token **token);
+int			export_builtin(void);
 
 //ENVS
 
@@ -146,12 +149,13 @@ int			is_biut(t_token *tokens);
 int			there_is_redir(t_token *tokens);
 char		*get_path_env(char **envp);
 char		*find_executable(const char *cmd, char **envp);
+void		*get_exec_aux(t_token *tokens);
 
 //PIPES
 t_token		*handle_pipes(t_token *tokens, t_env *envs);
 t_token		*exec_single_pipe(t_token *left_tokens,
 				t_token *right_tokens, t_env *envs);
-t_token		*exec_multiple_pipes(t_token *tokens, t_env *envs);
+t_token		*exec_multiple_pipes(t_token *tokens);
 int			count_pipes(t_token *tokens);
 t_token		**split_by_pipes(t_token *tokens);
 void		execute_pipe_segment(t_token *tokens, int input_fd,
@@ -166,6 +170,7 @@ void		create_child_processes(t_token **segments,
 				int **pipes, pid_t *pids);
 void		create_pipes(int **pipes, int pipe_count);
 void		close_all_pipes(int **pipes, int pipe_count);
+char		*ft_getenv(char *env);
 
 //REDIRECTS
 
@@ -179,6 +184,7 @@ int			exit_file(int fd, char *temp, int i);
 int			copy_aux(t_token *new, t_token *current,
 				t_token *head, t_token *prev);
 t_token		*built_aux(t_token *current);
+void		free_exec(char *exec_path);
 
 //HEREDOCS
 

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:20:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:32:02 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 14:38:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ static int	ft_new_envs(char *new_env)
 t_token	*ft_export(t_token **token)
 {
 	if (!(*token)->next)
-		return (*token);
+	{
+		export_builtin();
+		return ((*token)->next);
+	}
 	*token = (*token)->next;
 	while (*token)
 	{

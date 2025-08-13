@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/22 15:57:32 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:26:21 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	validate_syntax_aux(t_token *current, t_token *prev)
 	if ((current->type == REDIR_IN || current->type == REDIR_OUT
 			|| current->type == REDIR_APPEND || current->type == HEREDOC)
 		&& (!current->next || (current->next->type
-				!= ARG && current->next->type != CMD)))
+				!= ARG && current->next->type != CMD
+				&& current->next->type != ENV)))
 	{
 		ft_putstr_fd("Syntax error near '", STDERR_FILENO);
 		ft_putstr_fd(current->content, STDERR_FILENO);
@@ -56,22 +57,22 @@ int	validate_syntax(t_token *tokens)
 	return (0);
 }
 
-t_token	*handle_env(char *input, int *i)
-{
-	t_token	*token;
-	int		start;
+// t_token	*handle_env(char *input, int *i)
+// {
+// 	t_token	*token;
+// 	int		start;
 
-	start = *i;
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	while (input[*i] && !ft_strchr(" <>|", input[*i]))
-		(*i)++;
-	token->content = ft_substr(input, start, *i - start);
-	token->type = ENV;
-	token->next = NULL;
-	return (token);
-}
+// 	start = *i;
+// 	token = (t_token *)malloc(sizeof(t_token));
+// 	if (!token)
+// 		return (NULL);
+// 	while (input[*i] && !ft_strchr(" <>|", input[*i]))
+// 		(*i)++;
+// 	token->content = ft_substr(input, start, *i - start);
+// 	token->type = ENV;
+// 	token->next = NULL;
+// 	return (token);
+// }
 
 static char	*expand_dollar(char *temp, int *temp_size, int *i, char *content)
 {
@@ -110,18 +111,6 @@ char	*expand_env_vars(char *content)
 		if (content[i] == '$')
 			temp = expand_dollar(temp, &temp_size, &i, content);
 	}
-	free(content);
+	free_safe(content);
 	return (temp);
 }
-
-		// if (content[i] == '$')
-		// {
-		// 		(i)++;
-		// 	if (content[i] == ' ' || !content[i]
-		// 		|| content[i] == '"' || content[i] == '\'')
-		// 		temp = ft_strjoin_free(temp, "$");
-		// 	else if (content[i] == '?')
-		// 		temp = expand_aux(content, &i, &temp_size, temp);
-		// 	else
-		// 		temp = expand_aux(content, &i, &temp_size, temp);
-		// }

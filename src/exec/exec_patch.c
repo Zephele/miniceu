@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:29:58 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:38:41 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,18 @@ void	exec_external_with_argv(char **argv, t_env *envs)
 		perror("fork");
 		gg()->last_status = 1;
 	}
+}
+
+void	*get_exec_aux(t_token *tokens)
+{
+	if (ft_isdigit(tokens->content[0]))
+	{
+		if ((ft_atoi(tokens->content) - gg()->last_status) == 0)
+		{
+			write(2, " command not found\n", 20);
+			gg()->last_status = 127;
+			return (NULL);
+		}
+	}
+	return ("o");
 }

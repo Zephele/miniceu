@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 14:27:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 18:23:57 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	init_minishell(t_env *envs)
 	gg()->heres = 0;
 	gg()->heres_cmp = 0;
 	gg()->segments = NULL;
+	tcgetattr(STDIN_FILENO, &gg()->original_term);
 }
 
 static void	ml_aux(char *input)
@@ -31,6 +32,7 @@ static void	ml_aux(char *input)
 
 	while (1)
 	{
+		setup_prompt_signals();
 		tokens = tokenize(input, 0);
 		gg()->token = tokens;
 		if (tokens && validate_syntax(tokens))
@@ -43,6 +45,7 @@ static void	ml_aux(char *input)
 			current = tokens;
 			while (current)
 				current = exec(current, gg()->envs);
+			tcsetattr(STDIN_FILENO, TCSANOW, &gg()->original_term);
 			free_tokens(tokens);
 		}
 		return ;
@@ -64,7 +67,7 @@ static void	main_loop(void)
 		}
 		add_history(input);
 		ml_aux(input);
-		free(input);
+		free_safe(input);
 	}
 }
 
@@ -76,6 +79,7 @@ int	main(void)
 	if (!envs)
 		return (1);
 	init_minishell(envs);
+	setup_prompt_signals();
 	main_loop();
 	free_envs(envs);
 	clear_history();
