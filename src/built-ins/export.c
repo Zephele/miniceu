@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:20:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 14:38:18 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:39:34 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_token	*ft_export(t_token **token)
 {
 	if (!(*token)->next)
 	{
-		export_builtin();
+		list_environ_sorted(gg()->envs->var, 0, 0);
 		return ((*token)->next);
 	}
 	*token = (*token)->next;

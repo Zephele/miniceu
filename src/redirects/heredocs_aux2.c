@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 21:46:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:22:49 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 		signal(SIGINT, SIG_DFL);
 		read_here_aux(delimiter, input, fd);
 		free_pids_here();
+		if (gg()->theres_pipe > 0 && gg()->segments)
+			free_segments_memory(gg()->segments);
 		exit(0);
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
+		setup_prompt_signals();
+		// signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			gg()->last_status = WEXITSTATUS(status);
@@ -63,7 +66,7 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 	}
 }
 
-static char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
+char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
 {
 	char	*input;
 	int		pid;

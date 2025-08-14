@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:37 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:41:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:21:09 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ int	count_pipes(t_token *tokens)
 			count++;
 		current = current->next;
 	}
+	gg()->theres_pipe = count;
 	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 21:02:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:20:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_global
 	int				here_tmp;
 	int				heres;
 	int				heres_cmp;
+	int				theres_pipe;
 	char			*temp_h;
 	char			*temp_file_h;
 
@@ -62,6 +63,7 @@ typedef struct s_global
 	t_token			*seg1;
 	t_token			*seg2;
 	int				**pipes;
+	char			*heredoc_file;
 	pid_t			*pids;
 	int				pipe_count;
 	t_token			*new_token;
@@ -101,6 +103,7 @@ t_token		*after_comand(t_token **token);
 t_list		*ft_lstnew(void *content);
 t_token		*copy_tokens(t_token *tokens);
 void		newline_aux(int newline);
+size_t		ft_strcspn(const char *s, const char *reject);
 
 //FREES
 
@@ -132,7 +135,7 @@ void		ft_case_5(t_token **token);
 int			calc_exit_code(t_token **token);
 t_token		*ft_unset(t_token **token);
 t_token		*ft_export(t_token **token);
-int			export_builtin(void);
+void		list_environ_sorted(char **environ, int count, int i);
 
 //ENVS
 
@@ -196,6 +199,7 @@ void		*error_redir(int saved_stdout,
 t_token		*current_aux(t_token *current);
 int			here_open_aux(int fd, char *tmp_file,
 				char *temp, t_list **tmp_files);
+char		*ft_read_heredoc(const char *delimiter, int index, char *temp);
 
 //SIGNAL
 

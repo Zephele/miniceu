@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/08 17:53:20 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:38:01 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,4 @@ t_token	*exec(t_token *tokens, t_env *envs)
 		return (exec_biut(tokens));
 	else
 		return (exec_external(tokens, envs));
-}
-
-void	free_pipe(void)
-{
-	free_tokens(gg()->token);
-	free_envs(gg()->envs);
-	clear_history();
-	if (gg()->segments)
-	{
-		if (gg()->segments[0] && gg()->segments[0]->type != 8)
-			free_tokens(gg()->segments[0]);
-		gg()->segments[0] = NULL;
-		if (gg()->segments[1] && gg()->segments[1]->type != 8)
-			free_tokens(gg()->segments[1]);
-		gg()->segments[1] = NULL;
-		free_safe(gg()->segments);
-		gg()->segments = NULL;
-	}
-	else
-		return ;
 }
