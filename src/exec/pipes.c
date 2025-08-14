@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:32:46 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/14 16:54:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:07:08 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	setup_child_process(int **pipes, int pipe_count, int i)
 	if (i < pipe_count)
 		dup2(pipes[i][1], STDOUT_FILENO);
 	close_all_pipes(pipes, pipe_count);
+	free_pipes_memory(gg()->pipes, gg()->pipe_count);
 }
 
 void	wait_all_processes(pid_t *pids, int pipe_count)

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:00:25 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/14 17:48:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 18:06:26 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	free_pipe_2(void)
 	free_tokens(gg()->token);
 	free_envs(gg()->envs);
 	clear_history();
-	free_pipes_memory(gg()->pipes, gg()->pipe_count);
 	free(gg()->pids);
 	free_segments_memory(gg()->segments);
 }
