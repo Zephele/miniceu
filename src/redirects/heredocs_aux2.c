@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 16:05:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:46:35 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 			break ;
 		}
 		input = expand_env_vars(input);
-		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
+		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0
+			&& ft_strlen(input) == ft_strlen(delimiter))
 		{
 			free(input);
 			break ;
