@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:21:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/13 16:57:47 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:20:46 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,18 @@ static char	*get_exec_path(char **argv, t_env *envs, t_token *tokens)
 {
 	char	*exec_path;
 
-	if (ft_strchr(argv[0], '/'))
-		exec_path = ft_strdup(argv[0]);
+	if (argv[0])
+	{
+		if (ft_strchr(argv[0], '/'))
+			exec_path = ft_strdup(argv[0]);
+		else
+			exec_path = find_executable(argv[0], envs->var);
+	}
 	else
-		exec_path = find_executable(argv[0], envs->var);
+	{
+		gg()->last_status = 127;
+		return (NULL);
+	}
 	if (!exec_path)
 	{
 		if (!get_exec_aux(tokens))
@@ -122,5 +130,6 @@ t_token	*exec_external(t_token *tokens, t_env *envs)
 	exec_path = get_exec_path(argv, envs, tokens);
 	if (!exec_path)
 		return (tmp);
+	setup_prompt_functions();
 	return (execute_command(exec_path, argv, envs, tmp));
 }

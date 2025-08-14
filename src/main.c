@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 18:23:57 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:14:07 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,23 @@ static void	ml_aux(char *input)
 	t_token	*current;
 	t_token	*tokens;
 
-	while (1)
+	setup_prompt_signals();
+	tokens = tokenize(input, 0);
+	gg()->token = tokens;
+	if (tokens && validate_syntax(tokens))
 	{
-		setup_prompt_signals();
-		tokens = tokenize(input, 0);
-		gg()->token = tokens;
-		if (tokens && validate_syntax(tokens))
-		{
-			free_tokens(tokens);
-			return ;
-		}
-		if (tokens)
-		{
-			current = tokens;
-			while (current)
-				current = exec(current, gg()->envs);
-			tcsetattr(STDIN_FILENO, TCSANOW, &gg()->original_term);
-			free_tokens(tokens);
-		}
+		free_tokens(tokens);
 		return ;
 	}
+	if (tokens)
+	{
+		current = tokens;
+		while (current)
+			current = exec(current, gg()->envs);
+		tcsetattr(STDIN_FILENO, TCSANOW, &gg()->original_term);
+		free_tokens(tokens);
+	}
+	return ;
 }
 
 static void	main_loop(void)

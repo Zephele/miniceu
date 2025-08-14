@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:57:38 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 16:26:21 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 19:44:54 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	validate_syntax_aux(t_token *current, t_token *prev)
 {
 	if (current->type == PIPE && (!prev || prev->type == PIPE))
 	{
+		gg()->last_status = 2;
 		ft_putstr_fd("Syntax error near '|'\n", STDERR_FILENO);
 		return (1);
 	}
@@ -25,6 +26,7 @@ static int	validate_syntax_aux(t_token *current, t_token *prev)
 				!= ARG && current->next->type != CMD
 				&& current->next->type != ENV)))
 	{
+		gg()->last_status = 2;
 		ft_putstr_fd("Syntax error near '", STDERR_FILENO);
 		ft_putstr_fd(current->content, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
@@ -51,6 +53,7 @@ int	validate_syntax(t_token *tokens)
 	}
 	if (prev && prev->type == PIPE)
 	{
+		gg()->last_status = 2;
 		ft_putstr_fd("Syntax error: pipe at end\n", STDERR_FILENO);
 		return (1);
 	}

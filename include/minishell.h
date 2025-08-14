@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 18:07:36 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/13 21:02:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,5 +201,6 @@ int			here_open_aux(int fd, char *tmp_file,
 
 void		setup_prompt_signals(void);
 void		handle_heredoc_sigint(int signal);
+void		setup_prompt_functions(void);
 
 #endif
