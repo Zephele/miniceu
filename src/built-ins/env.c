@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:45:29 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 18:38:00 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 21:14:54 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 char	*ft_getenv(char *env)
 {
-	int	i;
+    int	i;
+    int	env_len;
 
-	i = 0;
-	if (env)
-	{
-		while (gg()->envs->var[i])
-		{
-			if (!ft_strncmp(gg()->envs->var[i], env, ft_strlen(env)))
-				return (&gg()->envs->var[i][ft_strlen(env) + 1]);
-			i++;
-		}
-	}
-	return (NULL);
+    i = 0;
+    if (!env)
+        return (NULL);
+    env_len = ft_strlen(env);
+    while (gg()->envs->var[i])
+    {
+        if (!ft_strncmp(gg()->envs->var[i], env, env_len) 
+            && gg()->envs->var[i][env_len] == '=')
+            return (&gg()->envs->var[i][env_len + 1]);
+        i++;
+    }
+    return (NULL);
 }
 
 t_token	*ft_env(t_token **token)

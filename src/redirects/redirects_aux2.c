@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects_aux2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 13:32:02 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 13:35:57 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:02:11 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static t_token	*process_while(t_token *current, t_token **new_token,
 static void	process_tokens(t_token *current, t_token **head,
 	t_token **new_token, t_token **prev)
 {
-	t_token	*pass;
+	// t_token	*pass;
 
-	pass = current;
+	// pass = current;
 	while (current && current->type != 8)
 	{
 		while (current && (current->type == 0 || current->type == 1))
