@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_aux2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 17:22:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/17 20:17:38 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 			break ;
 		}
 		input = expand_env_vars(input);
-		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0
-			&& ft_strlen(input) == ft_strlen(delimiter))
+        if (ft_strncmp(input, delimiter, ft_strlen(delimiter)) == 0
+            && ft_strlen(input) == ft_strlen(delimiter))
 		{
 			free(input);
 			break ;
