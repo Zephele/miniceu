@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:22:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 14:33:22 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/15 20:06:46 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,37 @@ static void	no_quotes_aux(char *content, char *temp, int *i, int *j)
 	}
 }
 
+size_t	ft_strlen2(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (*s != '\0')
+	{
+		s++;
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_strdup2(const char *s)
+{
+	char	*s_copy;
+	size_t	i;
+
+	i = 0;
+	s_copy = malloc((ft_strlen2(s)) + 1);
+	if (!s_copy)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		s_copy[i] = s[i];
+		i++;
+	}
+	s_copy[i] = '\0';
+	return (s_copy);
+}
+
 char	*no_quotes(char *content)
 {
 	char	*temp;
@@ -48,7 +79,7 @@ char	*no_quotes(char *content)
 	j = 0;
 	if (!content)
 		return (NULL);
-	temp = ft_strdup(content);
+	temp = ft_strdup2(content);
 	while (content[i])
 	{
 		if (content[i] == '\'' || content[i] == '\"')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/17 20:20:15 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:56:23 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ t_list		*ft_lstnew(void *content);
 t_token		*copy_tokens(t_token *tokens);
 void		newline_aux(int newline);
 size_t		ft_strcspn(const char *s, const char *reject);
+
+void	*cmd_pipeline(t_token *tokens, t_env *envs);
 
 //FREES
 

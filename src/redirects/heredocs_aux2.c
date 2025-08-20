@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_aux2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/17 20:17:38 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:40:55 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 			break ;
 		}
 		input = expand_env_vars(input);
-        if (ft_strncmp(input, delimiter, ft_strlen(delimiter)) == 0
-            && ft_strlen(input) == ft_strlen(delimiter))
+		if (ft_strncmp(input, delimiter, ft_strlen(delimiter)) == 0
+			&& ft_strlen(input) == ft_strlen(delimiter))
 		{
 			free(input);
 			break ;
@@ -56,8 +56,8 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 	}
 	else
 	{
+		close(fd);
 		setup_prompt_signals();
-		// signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			gg()->last_status = WEXITSTATUS(status);
@@ -75,12 +75,15 @@ char	*ft_read_heredoc(const char *delimiter, int index, char *temp)
 
 	input = NULL;
 	tmp_file = gen_tmp_file(index);
+	if (!tmp_file)
+		return (NULL);
 	gg()->temp_h = temp;
 	gg()->temp_file_h = tmp_file;
 	fd = open(tmp_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror ("error fd");
+		perror ("error opening temp file");
+		free(tmp_file);
 		return (NULL);
 	}
 	pid = fork();

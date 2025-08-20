@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/08 21:24:01 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:41:45 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,15 @@ t_token	*handle_redirects(t_token **tokens)
 	current = *tokens;
 	gg()->heres = ft_hmheres(current);
 	gg()->heres_cmp = 0;
-	while (current && current->type != PIPE)
+	if (!gg()->heredoc_file)
 	{
-		if (handle_aux(current, tmp_files, saved_stdout, saved_stdin) == NULL)
-			return (NULL);
-		current = current->next;
+		while (current && current->type != PIPE)
+		{
+			if (handle_aux(current, tmp_files, saved_stdout,
+					saved_stdin) == NULL)
+				return (NULL);
+			current = current->next;
+		}
 	}
 	if (tokens)
 		current = built_external(*tokens, gg()->envs);
