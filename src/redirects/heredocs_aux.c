@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:45:39 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 16:26:07 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/20 16:38:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*gen_tmp_file(int index)
 	base = "/tmp/minishell_heredoc_";
 	num = ft_itoa(index);
 	filename = ft_strjoin(base, num);
-	free(num);
+	free_safe(num);
 	return (filename);
 }
 

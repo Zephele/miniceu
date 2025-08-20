@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:21:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/14 15:06:06 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:46:39 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ static char	**build_argv(t_token *tokens)
 
 	tmp = tokens;
 	i = 0;
-	while (tmp && tmp->type != PIPE)
+	while (tmp && tmp->content && tmp->type != PIPE)
 	{
 		tmp->content = no_quotes(tmp->content);
 		argv[i++] = tmp->content;
-		tmp = tmp->next;
+		if (tmp->next && tmp->next->content)
+			tmp = tmp->next;
+		else
+			break ;
 	}
 	argv[i] = NULL;
 	return (argv);
