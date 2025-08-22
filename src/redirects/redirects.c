@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 15:15:26 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 13:43:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 22:18:06 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,27 @@ t_token	*built_external(t_token *tokens, t_env *envs)
 		if (tokens && tokens->next)
 			return (tokens->next);
 		return (NULL);
+	}
+}
+
+void	handle_heredoc_sigint(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	free_pids_here();
+	exit(130);
+}
+
+void	free_pids_here(void)
+{
+	free_tokens(gg()->token);
+	free_envs(gg()->envs);
+	free(gg()->temp_h);
+	free(gg()->temp_file_h);
+	clear_history();
+	if (gg()->pipe_count > 1)
+	{
+		free_safe(gg()->pids);
+		free_pipes_memory(gg()->pipes, gg()->pipe_count);
 	}
 }

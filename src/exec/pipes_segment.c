@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:37 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/20 15:35:43 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 23:04:49 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,85 @@ static void	execute_child_process(t_token **segments, int **pipes,
 	}
 }
 
-void	create_child_processes(t_token **segments,
-			int **pipes, pid_t *pids)
+static pid_t	create_process(t_token **segments,
+	int **pipes, int heredoc_fd, int i)
 {
-	int	pipe_count;
-	int	i;
+	pid_t	pid;
 
+	pid = fork();
+	if (pid == 0)
+	{
+		if (i > 0)
+			close(pipes[i - 1][1]);
+		if (i < gg()->pipe_count)
+			close(pipes[i][0]);
+		if (heredoc_fd != -1)
+		{
+			dup2(heredoc_fd, STDIN_FILENO);
+			close(heredoc_fd);
+			free_safe(gg()->heredoc_file);
+		}
+		else if (i > 0)
+			dup2(pipes[i - 1][0], STDIN_FILENO);
+		if (i < gg()->pipe_count)
+			dup2(pipes[i][1], STDOUT_FILENO);
+		close_all_pipes(pipes, gg()->pipe_count);
+		execute_child_process(segments, pipes, gg()->pipe_count, i);
+		exit(gg()->last_status);
+	}
+	return (pid);
+}
+
+static int	heredoc_fds(t_token *heredoc_token, int i)
+{
+	int		heredoc_fd;
+	char	*heredoc_file;
+
+	heredoc_file = gg()->heredoc_file;
+	if (heredoc_token && heredoc_token->next)
+	{
+		heredoc_file = ft_read_heredoc(heredoc_token->next->content, i, NULL);
+		if (!heredoc_file)
+		{
+			perror("heredoc");
+			exit(1);
+		}
+		gg()->heredoc_file = heredoc_file;
+		heredoc_fd = open(gg()->heredoc_file, O_RDONLY);
+		if (heredoc_fd == -1)
+		{
+			free_safe(gg()->heredoc_file);
+			exit(1);
+		}
+	}
+	else
+		heredoc_fd = -1;
+	return (heredoc_fd);
+}
+
+void	create_child_processes(t_token **segments, int **pipes, pid_t *pids)
+{
+	int		pipe_count;
+	t_token	*heredoc_token;
+	int		i;
+	int		heredoc_fd;
+
+	pipe_count = gg()->pipe_count;
 	i = 0;
-	pipe_count = 0;
-	while (segments[pipe_count])
-		pipe_count++;
-	pipe_count--;
 	while (i <= pipe_count)
 	{
-		pids[i] = fork();
-		if (pids[i] == 0)
-			execute_child_process(segments, pipes, pipe_count, i);
+		heredoc_token = find_heredoc_token(segments[i]);
+		heredoc_fd = heredoc_fds(heredoc_token, i);
+		pids[i] = create_process(segments, pipes, heredoc_fd, i);
+		if (heredoc_fd != -1)
+		{
+			close(heredoc_fd);
+			free_safe(gg()->heredoc_file);
+		}
+		if (i > 0)
+			close(pipes[i - 1][0]);
+		if (i < pipe_count)
+			close(pipes[i][1]);
 		i++;
 	}
 }
