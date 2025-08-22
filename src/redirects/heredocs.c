@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/20 15:41:45 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:02:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,19 @@ static void	*handle_aux(t_token *current, t_list	*tmp_files,
 	return ("o");
 }
 
+static void	*loop_heres(t_token *current, t_list *tmp_files,
+	int saved_stdout, int saved_stdin)
+{
+	while (current && current->type != PIPE)
+	{
+		if (handle_aux(current, tmp_files, saved_stdout,
+				saved_stdin) == NULL)
+			return (NULL);
+		current = current->next;
+	}
+	return ("o");
+}
+
 t_token	*handle_redirects(t_token **tokens)
 {
 	int		saved_stdout;
@@ -107,15 +120,8 @@ t_token	*handle_redirects(t_token **tokens)
 	gg()->heres = ft_hmheres(current);
 	gg()->heres_cmp = 0;
 	if (!gg()->heredoc_file)
-	{
-		while (current && current->type != PIPE)
-		{
-			if (handle_aux(current, tmp_files, saved_stdout,
-					saved_stdin) == NULL)
-				return (NULL);
-			current = current->next;
-		}
-	}
+		if (!loop_heres(current, tmp_files, saved_stdout, saved_stdin))
+			return (NULL);
 	if (tokens)
 		current = built_external(*tokens, gg()->envs);
 	while (current && current->type != PIPE)
@@ -124,13 +130,4 @@ t_token	*handle_redirects(t_token **tokens)
 		ft_lstclear(&tmp_files, free);
 	error_redir(saved_stdout, saved_stdin, NULL, 2);
 	return (current);
-}
-
-void	free_pids_here(void)
-{
-	free_tokens(gg()->token);
-	free_envs(gg()->envs);
-	free(gg()->temp_h);
-	free(gg()->temp_file_h);
-	clear_history();
 }

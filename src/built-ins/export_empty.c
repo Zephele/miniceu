@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 14:27:53 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 14:52:57 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 15:39:11 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	sort_env_vars(char **env, int count, int i, int j)
 
 void	list_environ_sorted(char **environ, int count, int i)
 {
-	char		**sorted_env;
+	char	**sorted_env;
 
 	while (environ[count])
 		count++;

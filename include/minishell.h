@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/20 13:56:23 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:34:54 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int			seen_quotes(char *input, int i);
 char		*include_quotes(char *content, char quote);
 char		*extract_quoted_content(char *input, int *i, char quote);
 int			validate_syntax(t_token *tokens);
-t_token		*handle_env(char *input, int *i);
 t_global	*gg(void);
 char		*expand_env_vars(char *content);
 char		*expand_aux(char *content, int *i, int *temp_size, char *temp);
@@ -96,7 +95,6 @@ char		*no_quotes(char *content);
 int			compare_aux(char *content, char *comp);
 char		*aux_quotes(char *input, int *i, char quote, char *content);
 char		*aux_general(char *input, int *i, char *content);
-int			ft_isalphupper_underline(int c);
 int			ft_same_var(char *new_env, char **new, int i, int next);
 int			alloc_env_1(int count, char *new_env);
 t_token		*after_comand(t_token **token);
@@ -104,8 +102,6 @@ t_list		*ft_lstnew(void *content);
 t_token		*copy_tokens(t_token *tokens);
 void		newline_aux(int newline);
 size_t		ft_strcspn(const char *s, const char *reject);
-
-void	*cmd_pipeline(t_token *tokens, t_env *envs);
 
 //FREES
 
@@ -176,11 +172,13 @@ void		create_child_processes(t_token **segments,
 void		create_pipes(int **pipes, int pipe_count);
 void		close_all_pipes(int **pipes, int pipe_count);
 char		*ft_getenv(char *env);
+t_token		*find_heredoc_token(t_token *tokens);
+
+void		heredoc_loop(t_token *tokens);
 
 //REDIRECTS
 
 t_token		*handle_redirects(t_token **tokens);
-int			handle_heredoc(const char *delimiter);
 int			open_file_reddir(int type, const char *filename);
 t_token		*built_external(t_token *tokens, t_env *envs);
 void		built_external_aux(t_token *current);

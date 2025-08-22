@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:10:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/13 22:02:47 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:49:17 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,4 @@ void	setup_prompt_functions(void)
 	sa_quit.sa_handler = ctrl_backslash;
 	sigaction(SIGINT, &sa_int, NULL);
 	sigaction(SIGQUIT, &sa_quit, NULL);
-}
-
-void	handle_heredoc_sigint(int signal)
-{
-	(void)signal;
-	write(1, "\n", 1);
-	free_pids_here();
-	exit(130);
 }
