@@ -6,11 +6,31 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:33:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/20 13:37:33 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:35:37 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	exec_errors(char *exec_path)
+{
+	if (access(exec_path, F_OK) < 0)
+	{
+		ft_putstr_fd(exec_path, 2);
+		perror(" ");
+		gg()->last_status = 127;
+	}
+	else if (access(exec_path, X_OK) == 0)
+	{
+		ft_putstr_fd(" Is a directory\n", 2);
+		gg()->last_status = 126;
+	}
+	else
+	{
+		gg()->last_status = 126;
+		perror(" ");
+	}
+}
 
 int	is_biut(t_token *tokens)
 {
