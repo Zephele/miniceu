@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 20:37:12 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/12 15:49:42 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:29:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ void	ft_case_1(t_token **token)
 	exit(1);
 }
 
-void	ft_case_2(t_token **token)
+void	*ft_case_2(t_token **token)
 {
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	ft_putstr_fd("minishell: too many arguments\n", STDERR_FILENO);
 	*token = (*token)->next->next->next;
+	return (*token);
 }
 
 int	ft_case_3(t_token **token)

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 14:27:53 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/21 15:39:11 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:12:36 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ static void	sort_env_vars(char **env, int count, int i, int j)
 	int		len2;
 	int		compare_len;
 
-	while (i < count - 1)
+	while (i++ < count - 1)
 	{
+		j = 0;
 		while (j < count - i - 1)
 		{
 			len1 = ft_strcspn(env[j], "=");
@@ -75,7 +76,6 @@ static void	sort_env_vars(char **env, int count, int i, int j)
 			}
 			j++;
 		}
-		i++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:42 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/21 19:41:31 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:47:55 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ static pid_t	create_left_process(t_token *left_tokens,
 }
 
 static pid_t	create_right_process(t_token *right_tokens,
-	int pipefd[2], t_env *envs)
+	int pipefd[2], t_env *envs, int fd)
 {
 	pid_t	pid2;
-	int		fd;
 
 	pid2 = fork();
 	if (pid2 == 0)
@@ -63,6 +62,7 @@ static pid_t	create_right_process(t_token *right_tokens,
 		else
 			close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[0]);
 		if (gg()->heredoc_file)
 			free_safe(gg()->heredoc_file);
 		execute_pipe_segment(right_tokens, STDIN_FILENO, STDOUT_FILENO, envs);
@@ -106,9 +106,11 @@ t_token	*exec_single_pipe(t_token *left_tokens,
 	t_token *right_tokens, t_env *envs)
 {
 	int		pipefd[2];
+	int		fd;
 	pid_t	pid1;
 	pid_t	pid2;
 
+	fd = -1;
 	gg()->heredoc_file = NULL;
 	if (pipe(pipefd) == -1)
 	{
@@ -118,7 +120,7 @@ t_token	*exec_single_pipe(t_token *left_tokens,
 	heredoc_loop(left_tokens);
 	pid1 = create_left_process(left_tokens, pipefd, envs);
 	heredoc_loop(right_tokens);
-	pid2 = create_right_process(right_tokens, pipefd, envs);
+	pid2 = create_right_process(right_tokens, pipefd, envs, fd);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	if (gg()->heredoc_file)

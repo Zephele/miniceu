@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/21 19:34:54 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:36:40 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_global
 	t_token			*new_token;
 	t_token			*temp;
 	t_token			*new;
+	char			*input_f;
 	struct termios	original_term;
 }	t_global;
 
@@ -84,7 +85,6 @@ typedef struct s_global
 
 t_token		*tokenize(char *input, int i);
 int			seen_quotes(char *input, int i);
-char		*include_quotes(char *content, char quote);
 char		*extract_quoted_content(char *input, int *i, char quote);
 int			validate_syntax(t_token *tokens);
 t_global	*gg(void);
@@ -100,7 +100,7 @@ int			alloc_env_1(int count, char *new_env);
 t_token		*after_comand(t_token **token);
 t_list		*ft_lstnew(void *content);
 t_token		*copy_tokens(t_token *tokens);
-void		newline_aux(int newline);
+void		*newline_aux(int newline);
 size_t		ft_strcspn(const char *s, const char *reject);
 
 //FREES
@@ -126,7 +126,7 @@ t_token		*ft_cd(t_token **token);
 t_token		*ft_env(t_token **token);
 t_token		*ft_exit(t_token **token);
 void		ft_case_1(t_token **token);
-void		ft_case_2(t_token **token);
+void		*ft_case_2(t_token **token);
 int			ft_case_3(t_token **token);
 void		ft_case_4(t_token **token);
 void		ft_case_5(t_token **token);
@@ -151,6 +151,7 @@ int			there_is_redir(t_token *tokens);
 char		*get_path_env(char **envp);
 char		*find_executable(const char *cmd, char **envp);
 void		*get_exec_aux(t_token *tokens);
+void		exec_errors(char *exec_path);
 
 //PIPES
 t_token		*handle_pipes(t_token *tokens, t_env *envs);

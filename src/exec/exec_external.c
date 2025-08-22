@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:21:27 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/15 19:46:39 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:38:07 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ static char	**build_argv(t_token *tokens)
 	return (argv);
 }
 
+static void	*env_exec(t_env *envs, t_token *tokens)
+{
+	if (tokens && tokens->next)
+	{
+		tokens = tokens->next;
+		exec(tokens, envs);
+		return (NULL);
+	}
+	else
+		return (NULL);
+}
+
 static char	*get_exec_path(char **argv, t_env *envs, t_token *tokens)
 {
 	char	*exec_path;
@@ -54,40 +66,11 @@ static char	*get_exec_path(char **argv, t_env *envs, t_token *tokens)
 		if (!get_exec_aux(tokens))
 			return (NULL);
 		if (tokens->type == ENV && tokens->content[0] != '$')
-		{
-			if (tokens && tokens->next)
-			{
-				tokens = tokens->next;
-				exec(tokens, envs);
-				return (NULL);
-			}
-			else
-				return (NULL);
-		}
-		write(2, " command not found\n", 20);
+			return (env_exec(envs, tokens));
+		write(2, "Command not found\n", 19);
 		gg()->last_status = 127;
 	}
 	return (exec_path);
-}
-
-static void	exec_errors(char *exec_path)
-{
-	if (access(exec_path, F_OK) < 0)
-	{
-		ft_putstr_fd(exec_path, 2);
-		perror(" ");
-		gg()->last_status = 127;
-	}
-	else if (access(exec_path, X_OK) == 0)
-	{
-		ft_putstr_fd(" Is a directory\n", 2);
-		gg()->last_status = 126;
-	}
-	else
-	{
-		gg()->last_status = 126;
-		perror(" ");
-	}
 }
 
 static t_token	*execute_command(char *exec_path,

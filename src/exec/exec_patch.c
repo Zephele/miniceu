@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 19:55:51 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/13 17:38:41 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:38:54 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*get_executable_path(char **argv, t_env *envs)
 		exec_path = find_executable(argv[0], envs->var);
 	if (!exec_path)
 	{
-		write(2, "Command not found\n", 18);
+		write(2, "Command not found\n", 19);
 		gg()->last_status = 127;
 		return (NULL);
 	}
@@ -72,7 +72,7 @@ void	*get_exec_aux(t_token *tokens)
 	{
 		if ((ft_atoi(tokens->content) - gg()->last_status) == 0)
 		{
-			write(2, " command not found\n", 20);
+			write(2, "Command not found\n", 19);
 			gg()->last_status = 127;
 			return (NULL);
 		}

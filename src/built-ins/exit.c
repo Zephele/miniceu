@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:16:00 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/02 19:16:35 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:35:25 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,16 @@ t_token	*ft_exit(t_token **token)
 		{
 			if ((*token)->next->next)
 			{
+				if (is_digit((*token)->next->content)
+					&& is_alpha((*token)->next->next->content))
+				{
+					gg()->last_status = 1;
+					return (ft_case_2(token));
+				}
 				if (is_alpha((*token)->next->next->content))
 					ft_case_1(token);
 				else
-				{
-					ft_case_2(token);
-					return (*token);
-				}
+					return (ft_case_2(token));
 			}
 			else
 				exit(ft_case_3(token));

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:00:25 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/21 22:05:20 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:59:19 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	free_pipe(void)
 	free_tokens(gg()->token);
 	free_envs(gg()->envs);
 	clear_history();
+	free_safe(gg()->input_f);
 	if (gg()->segments)
 	{
 		if (gg()->segments[0] && gg()->segments[0]->type != 8)
@@ -65,4 +66,5 @@ void	free_pipe_2(void)
 	clear_history();
 	free(gg()->pids);
 	free_segments_memory(gg()->segments);
+	free_safe(gg()->input_f);
 }

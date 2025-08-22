@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:07:28 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 14:28:26 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:15:31 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ t_list	*ft_lstnew(void *content)
 	return (new_node);
 }
 
-void	newline_aux(int newline)
+void	*newline_aux(int newline)
 {
 	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	return (NULL);
 }
 
 size_t	ft_strcspn(const char *s, const char *reject)

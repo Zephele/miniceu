@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 17:20:19 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:37:11 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	main_loop(void)
 			printf("exit\n");
 			break ;
 		}
+		gg()->input_f = input;
 		add_history(input);
 		ml_aux(input);
 		free_safe(input);
