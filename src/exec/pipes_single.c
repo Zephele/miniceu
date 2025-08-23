@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:42 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/22 18:47:55 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/22 22:13:17 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	heredoc_loop(t_token *tokens)
 			free_safe(gg()->heredoc_file);
 			heredoc_token = heredoc_token->next;
 			heredoc_file = ft_read_heredoc(heredoc_token->content, 0, NULL);
+			gg()->heredoc_file = heredoc_file;
 			heredoc_token = find_heredoc_token(heredoc_token);
 		}
 		else
