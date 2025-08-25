@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/25 15:34:01 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:22:12 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 {
 	int	status;
+	int	i;
 
+	i = 2;
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -52,9 +54,8 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 		free_pids_here();
 		if (gg()->theres_pipe > 0 && gg()->segments)
 			free_segments_memory(gg()->segments);
-		close(5);
-		close(4);
-		close(3);
+		while (i++ < 1000)
+			close(i);
 		exit(0);
 	}
 	else
