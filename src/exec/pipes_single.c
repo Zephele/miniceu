@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:42 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/25 16:02:35 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:29:18 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static pid_t	create_right_process(t_token *right_tokens,
 			close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
-		if (gg()->heredoc_file)
-			free_safe(gg()->heredoc_file);
+		free_safe(gg()->heredoc_file);
 		execute_pipe_segment(right_tokens, STDIN_FILENO, STDOUT_FILENO, envs);
 		exit(gg()->last_status);
 	}
