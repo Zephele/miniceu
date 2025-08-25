@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:37 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/22 19:22:49 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:02:48 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	heredoc_fds(t_token *heredoc_token, int i)
 		if (heredoc_fd == -1)
 		{
 			free_safe(gg()->heredoc_file);
+			gg()->heredoc_file = NULL;
 			exit(1);
 		}
 	}
@@ -110,6 +111,7 @@ void	create_child_processes(t_token **segments, int **pipes, pid_t *pids)
 		{
 			close(heredoc_fd);
 			free_safe(gg()->heredoc_file);
+			gg()->heredoc_file = NULL;
 		}
 		if (i > 0)
 			close(pipes[i - 1][0]);

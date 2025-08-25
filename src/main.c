@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/22 16:37:11 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:27:14 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	main_loop(void)
 			break ;
 		}
 		gg()->input_f = input;
+		gg()->pipe_count = 0;
 		add_history(input);
 		ml_aux(input);
 		free_safe(input);
