@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:42 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/22 22:13:17 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:02:35 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static pid_t	create_right_process(t_token *right_tokens,
 				dup2(fd, STDIN_FILENO);
 				close(fd);
 			}
+			close(4);
 		}
 		else
 			close(pipefd[1]);
@@ -125,7 +126,10 @@ t_token	*exec_single_pipe(t_token *left_tokens,
 	close(pipefd[0]);
 	close(pipefd[1]);
 	if (gg()->heredoc_file)
+	{
 		free(gg()->heredoc_file);
+		gg()->heredoc_file = NULL;
+	}
 	wait_and_set_status(pid1, pid2);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/22 18:40:00 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:34:01 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 		free_pids_here();
 		if (gg()->theres_pipe > 0 && gg()->segments)
 			free_segments_memory(gg()->segments);
+		close(5);
+		close(4);
+		close(3);
 		exit(0);
 	}
 	else
