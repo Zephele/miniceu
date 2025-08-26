@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 21:01:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/26 11:58:11 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/26 13:44:53 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,3 @@ char	*aux_general(char *input, int *i, char *content)
 	}
 	return (content);
 }
-
-
