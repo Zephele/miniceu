@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:15:37 by pede-jes          #+#    #+#             */
-/*   Updated: 2025/08/25 17:10:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:15:37 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static pid_t	create_process(t_token **segments,
 	return (pid);
 }
 
-static int	heredoc_fds(t_token *heredoc_token, int i)
+static int	heredoc_fds(t_token *heredoc_token)
 {
 	int		heredoc_fd;
 	char	*heredoc_file;
@@ -73,13 +73,12 @@ static int	heredoc_fds(t_token *heredoc_token, int i)
 	heredoc_file = gg()->heredoc_file;
 	if (heredoc_token && heredoc_token->next)
 	{
-		heredoc_file = ft_read_heredoc(heredoc_token->next->content, i, NULL);
-		if (!heredoc_file)
+		heredoc_loop(heredoc_token);
+		if (!gg()->heredoc_file)
 		{
 			perror("heredoc");
 			exit(1);
 		}
-		gg()->heredoc_file = heredoc_file;
 		heredoc_fd = open(gg()->heredoc_file, O_RDONLY);
 		if (heredoc_fd == -1)
 		{
@@ -105,7 +104,7 @@ void	create_child_processes(t_token **segments, int **pipes, pid_t *pids)
 	while (i <= pipe_count)
 	{
 		heredoc_token = find_heredoc_token(segments[i]);
-		heredoc_fd = heredoc_fds(heredoc_token, i);
+		heredoc_fd = heredoc_fds(heredoc_token);
 		pids[i] = create_process(segments, pipes, heredoc_fd, i);
 		if (heredoc_fd != -1)
 		{
