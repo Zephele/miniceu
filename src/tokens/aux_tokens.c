@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aux_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/25 18:23:56 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:47:13 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,55 +81,4 @@ int	seen_quotes(char *input, int i)
 		return (1);
 	}
 	return (0);
-}
-
-char	*extract_quoted_content(char *input, int *i, char quote)
-{
-	int		start;
-	int		theres_quote;
-	char	*temp;
-	char	*content;
-
-	content = ft_strdup("");
-	while ((input[*i] != '\0' && input[*i] != ' ' && input[*i] == quote)
-		|| input[*i] == '$')
-	{
-		if (input[*i] == quote)
-		{
-			theres_quote = (*i);
-			start = ++(*i);
-		}
-		else
-		{
-			theres_quote = (*i);
-			start = (*i);
-		}
-		while (input[*i] != '\0' && input[*i] != quote)
-			(*i)++;
-		if (input[theres_quote] == quote)
-		{
-			temp = ft_substr(input, (start - 1), *i - (start - 2));
-			if (is_empty(temp, content))
-				return (NULL);
-			content = ft_strjoin_free(content, temp);
-			if (quote == '"' || temp[0] == '"')
-				content = expand_env_vars(content);
-			free(temp);
-			if (input[*i] == quote)
-				(*i)++;
-			else
-				break ;
-		}
-		else
-		{
-			temp = ft_substr(input, start, *i - start);
-			if (is_empty(temp, content))
-				return (NULL);
-			content = ft_strjoin_free(content, temp);
-			if (quote == '"' || temp[0] == '"')
-				content = expand_env_vars(content);
-			free(temp);
-		}
-	}
-	return (content);
 }
