@@ -1,63 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux3_tokens.c                                      :+:      :+:    :+:   */
+/*   aux5_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 21:01:22 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/25 19:57:00 by pede-jes         ###   ########.fr       */
+/*   Created: 2025/08/25 19:46:47 by pede-jes          #+#    #+#             */
+/*   Updated: 2025/08/25 19:56:29 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*aux_quotes(char *input, int *i, char quote, char *content)
+static int	condition(char *input, int i, char quote)
 {
-	char	*temp;
-
-	quote = input[*i];
-	if ((input[*i] == '\'' || input[*i] == '\"'))
-	{
-		quote = input[*i];
-		if (!content)
-			content = extract_quoted_content(input, i, quote);
-		else
-		{
-			temp = extract_quoted_content(input, i, quote);
-			content = ft_strjoin_free(content, temp);
-			free (temp);
-		}
-	}
-	return (content);
+	return ((input[i] && input[i] != ' ' && input[i] == quote)
+		|| input[i] == '$');
 }
 
-char	*aux_general(char *input, int *i, char *content)
+static int	handle_quote_case(char *input, int *i, char quote, char **content)
 {
-	char	*temp;
 	int		start;
+	char	*temp;
 
-	start = *i;
-	while (input[*i] && input[*i] != '\''
-		&& input[*i] != '\"' && !ft_strchr(" <>|", input[*i]))
-	{
-		if (!content)
-		{
-			while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
-				(*i)++;
-			content = ft_substr(input, start, *i - start);
-			content = expand_env_vars(content);
-		}
-		else
-		{
-			while (input[*i] && !ft_strchr(" <>|\"\'", input[*i]))
-				(*i)++;
-			temp = ft_substr(input, start, *i - start);
-			content = ft_strjoin_free(content, temp);
-			free (temp);
-		}
-	}
-	return (content);
+	start = ++(*i);
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
+	temp = ft_substr(input, start - 1, *i - start + 2);
+	if (is_empty(temp, *content))
+		return (0);
+	*content = ft_strjoin_free(*content, temp);
+	if (quote == '"' || temp[0] == '"')
+		*content = expand_env_vars(*content);
+	free(temp);
+	if (input[*i] == quote)
+		(*i)++;
+	else
+		return (2);
+	return (1);
 }
 
 static int	handle_dollar_case(char *input, int *i, char quote, char **content)

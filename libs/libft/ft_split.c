@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 12:26:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2024/12/13 18:44:14 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:40:06 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,3 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (new);
 }
-
-// int	main(void)
-// {
-// 	char	str[] = "Jorge o curioso";
-// 	free(ft_split(str, ' '));
-// 	return (0);
-// }
