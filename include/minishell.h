@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/22 19:36:40 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:13:16 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void		*ft_case_2(t_token **token);
 int			ft_case_3(t_token **token);
 void		ft_case_4(t_token **token);
 void		ft_case_5(t_token **token);
+int			valid_quotes(char *new_env);
+char		*cut_quotes_env(char *new_env);
 int			calc_exit_code(t_token **token);
 t_token		*ft_unset(t_token **token);
 t_token		*ft_export(t_token **token);

@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:47:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/28 13:51:30 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:27:48 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	asux_seen_quotes(char *input, int *i, int *quotes, char quote)
 			*quotes = 0;
 	}
 }
+
 static int	aux_seen_redirerror(char *input, int i)
 {
 	int	len;
@@ -38,15 +39,15 @@ static int	aux_seen_redirerror(char *input, int i)
 	len = ft_strlen(input);
 	if (i + 1 < len)
 	{
-		if ((input[i] == '<' && input[i + 1] == '>') ||
-			(input[i] == '>' && input[i + 1] == '<'))
+		if ((input[i] == '<' && input[i + 1] == '>') || (input[i] == '>'
+				&& input[i + 1] == '<'))
 		{
 			ft_putstr_fd("Error: SyntaxError\n", STDERR_FILENO);
 			return (1);
 		}
-		if (i + 2 < len && (input[i] == '<' || input[i] == '>') &&
-			(input[i + 1] == '<' || input[i + 1] == '>') &&
-			(input[i + 2] == '<' || input[i + 2] == '>'))
+		if (i + 2 < len && (input[i] == '<' || input[i] == '>') && (input[i
+					+ 1] == '<' || input[i + 1] == '>') && (input[i + 2] == '<'
+				|| input[i + 2] == '>'))
 		{
 			ft_putstr_fd("Error: SyntaxError\n", STDERR_FILENO);
 			return (1);
