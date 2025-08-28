@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 13:32:02 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/21 18:48:43 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:58:04 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,12 @@ t_token	*built_aux(t_token *current)
 	prev = NULL;
 	process_tokens(current, &head, &new_token, &prev);
 	return (head);
+}
+
+void	handle_heredoc_sigint(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	free_pids_here();
+	exit(130);
 }
