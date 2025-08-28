@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:45:29 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/21 18:46:39 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:49:25 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ t_token	*ft_env(t_token **token)
 	i = 0;
 	if (*token && (compare_aux((*token)->content, "env") == 0))
 	{
+		if ((*token)->next)
+		{
+			*token = (*token)->next;
+			gg()->last_status = 0;
+			return (*token);
+		}
 		while (i < gg()->envs->count)
 		{
 			ft_printf("%s\n", gg()->envs->var[i]);

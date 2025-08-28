@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/28 14:01:22 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:46:18 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void		free_safe(void *ptr);
 void		free_pids_here(void);
 void		free_pipe(void);
 void		free_pipe_2(void);
+t_token		*free_reddirs(t_token *current);
 
 //BUILT-INS
 
