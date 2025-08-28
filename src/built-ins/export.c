@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:20:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 14:39:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:49:52 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,47 @@ static int	valid_argument(char *new_env)
 			size_equal(new_env, 1);
 	return (1);
 }
+static int valid_quotes(char *new_env)
+{
+	int i;
 
+	i = 0;
+	while (new_env[i])
+	{
+		if(new_env[i] == '\'' || new_env[i] == '\"')
+			return (1);
+		(i)++;
+	}
+	return (0);
+}
+static char *cut_quotes_env(char *new_env)
+{
+	int i;
+
+	i = 0;
+	while(new_env[i] != '\"' && new_env[i] != '\'')
+		i++;
+	while((new_env[i + 1] != '\'' && new_env[i + 1] != '\"') && new_env[i+1])
+	{
+		new_env[i] = new_env[i+1] ;
+		i++;
+	}
+	while(new_env[i] != '\0')
+	{
+	 	new_env[i] = '\0';
+		i++;
+	}
+	 
+	 return(new_env);
+}
 static int	ft_new_envs(char *new_env)
 {
 	int		count;
 
 	if (valid_argument(new_env))
 		return (1);
+	if(valid_quotes(new_env))
+		new_env = cut_quotes_env(new_env);
 	count = count_envs(gg()->envs->var);
 	count = alloc_env_1(count, new_env);
 	if (count == -1)
