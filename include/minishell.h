@@ -6,7 +6,7 @@
 /*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/28 14:13:16 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:01:22 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ int			copy_aux(t_token *new, t_token *current,
 				t_token *head, t_token *prev);
 t_token		*built_aux(t_token *current);
 void		free_exec(char *exec_path);
+t_token		*built_external_aux1(t_token *current);
 
 //HEREDOCS
 

@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:08:09 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/26 21:08:56 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:31:17 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ int	here_open_aux(int fd, char *tmp_file,
 		return (-1);
 	}
 	return (fd);
+}
+
+t_token	*free_reddirs(t_token *current)
+{
+	free (current->content);
+	current->content = NULL;
+	current = current->next;
+	if (current)
+	{
+		free (current->content);
+		current->content = NULL;
+		current = current->next;
+	}
+	return (current);
 }

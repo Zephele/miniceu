@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 13:36:08 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/12 10:57:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:30:55 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,25 @@ int	exit_file(int fd, char *temp, int i)
 	return (-1);
 }
 
-void	built_external_aux(t_token *current)
+t_token	*built_external_aux1(t_token *current)
 {
-	while (current->content
-		&& current->type != PIPE
-		&& current->type != REDIR_IN
-		&& current->type != REDIR_OUT
-		&& current->type != REDIR_APPEND
-		&& current->type != HEREDOC
-		&& current->type != ENV)
-		current = current->next;
+	t_token	*now;
+	int		i;
+
+	i = 0;
+	now = current;
 	while (current)
 	{
-		if (current->content)
+		if (current->content && (current->type == 0
+				|| current->type == 1 || current->type == 7))
 		{
-			free (current->content);
-			current->content = NULL;
+			if (i == 0)
+				now = current;
+			i++;
 			current = current->next;
 		}
+		else
+			current = free_reddirs(current);
 	}
+	return (now);
 }
