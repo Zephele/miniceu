@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:41:17 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/25 16:27:54 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/26 20:46:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	open_file_reddirin(int type, const char *filename,
 	fd = -1;
 	tmp_file = NULL;
 	temp = ft_strdup(filename);
-	temp = no_quotes(temp);
 	if (type == 2)
 		fd = open(temp, O_RDONLY);
 	else if (type == 5)

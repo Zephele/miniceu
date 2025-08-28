@@ -15,7 +15,8 @@ SRCS		= ./src/main.c ./src/functions_aux.c ./src/frees.c ./src/frees2.c ./src/si
 		./src/exec/pipes_aux.c \
 		\
 		./src/redirects/redirects.c ./src/redirects/redirects_aux.c ./src/redirects/redirects_aux2.c \
-		./src/redirects/heredocs.c ./src/redirects/heredocs_aux.c ./src/redirects/heredocs_aux2.c
+		./src/redirects/heredocs.c ./src/redirects/heredocs_aux.c ./src/redirects/heredocs_aux2.c \
+		./src/redirects/heredocs_aux3.c
 OBJC		= $(patsubst ./src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJ_DIR		= obj
 CC			= cc
