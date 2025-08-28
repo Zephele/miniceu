@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:20:14 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/14 14:39:34 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:28:46 by pede-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static int	ft_new_envs(char *new_env)
 
 	if (valid_argument(new_env))
 		return (1);
+	if (valid_quotes(new_env))
+		new_env = cut_quotes_env(new_env);
 	count = count_envs(gg()->envs->var);
 	count = alloc_env_1(count, new_env);
 	if (count == -1)
