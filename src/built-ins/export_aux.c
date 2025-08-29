@@ -6,101 +6,104 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 14:40:43 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/07/17 14:54:54 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:41:52 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	same_var_aux(char **new, int i, char *new_env)
+static int	find_var_index(char *new_env)
 {
-	if (new)
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strcspn(new_env, "=");
+	while (gg()->envs->var[i])
 	{
-		free(new[i]);
-		new[i] = NULL;
+		if (ft_strncmp(gg()->envs->var[i], new_env, len) == 0
+			&& gg()->envs->var[i][len] == '=')
+		{
+			return (i);
+		}
+		i++;
 	}
-	new[i] = ft_strdup(new_env);
+	return (-1);
 }
 
-int	ft_same_var(char *new_env, char **new, int i, int next)
+static int	replace_existing_var(char *new_env)
 {
-	int	size_char_var;
-	int	size_char_env;
+	int	index;
 
-	size_char_var = 0;
-	size_char_env = 0;
-	if (!gg()->envs->var[i])
-		return (0);
-	while (gg()->envs->var[i][size_char_var] != '=')
-		size_char_var++;
-	while (new_env[size_char_env] != '=')
-		size_char_env++;
-	if (ft_strncmp(gg()->envs->var[i], new_env, size_char_var) == 0
-		&& size_char_var == size_char_env
-		&& (gg()->envs->var[i][size_char_var] == '='
-		&& new_env[size_char_env] == '='))
+	index = find_var_index(new_env);
+	if (index != -1)
 	{
-		if (next)
-			same_var_aux(new, i, new_env);
+		free(gg()->envs->var[index]);
+		gg()->envs->var[index] = ft_strdup(new_env);
+		if (!gg()->envs->var[index])
+		{
+			perror("Error memory alocation");
+			return (-1);
+		}
 		return (1);
 	}
 	return (0);
 }
 
-static int	alloc_aux(int count, char *new_env, char **new)
+static char	**copy_envs_to_new_array(int count)
 {
-	int	i;
+	char	**new_vars;
+	int		i;
 
-	i = -1;
-	while (++i < count)
+	new_vars = malloc(sizeof(char *) * (count + 2));
+	if (!new_vars)
 	{
-		if (ft_same_var(new_env, new, i, 1))
-			break ;
-		else if (i == count - 1)
-		{
-			new[i] = ft_strdup(new_env);
-			break ;
-		}
-		else
-			new[i] = ft_strdup(gg()->envs->var[i]);
-		if (!new[i])
-		{
-			perror("Error memory alocation");
-			while (i > 0)
-				free(new[--i]);
-			free(new);
-			new = NULL;
-			return (-1);
-		}
+		perror("Error memory alocation");
+		return (NULL);
 	}
+	i = 0;
+	while (i < count)
+	{
+		new_vars[i] = ft_strdup(gg()->envs->var[i]);
+		if (!new_vars[i])
+		{
+			while (--i >= 0)
+				free(new_vars[i]);
+			free(new_vars);
+			return (NULL);
+		}
+		i++;
+	}
+	return (new_vars);
+}
+
+static int	add_new_var(int count, char *new_env)
+{
+	char	**new_vars;
+	int		i;
+
+	new_vars = copy_envs_to_new_array(count);
+	if (!new_vars)
+		return (-1);
+	i = count;
+	new_vars[i] = ft_strdup(new_env);
+	if (!new_vars[i])
+	{
+		while (--i >= 0)
+			free(new_vars[i]);
+		free(new_vars);
+		return (-1);
+	}
+	new_vars[i + 1] = NULL;
+	free_envs_var(gg()->envs->var);
+	gg()->envs->var = new_vars;
+	gg()->envs->count++;
 	return (0);
 }
 
 int	alloc_env_1(int count, char *new_env)
 {
-	char	**new;
-	int		i;
-
-	new = NULL;
-	i = -1;
-	while (gg()->envs->var[++i])
-	{
-		if (ft_same_var(new_env, new, i, 0))
-			gg()->envs->count = (count);
-		else
-			gg()->envs->count = (count + 1);
-	}
-	count = gg()->envs->count;
-	new = malloc(sizeof(char *) * (count + 1));
-	if (!new)
-	{
-		perror("Error memory alocation");
-		return (-1);
-	}
-	ft_memset(new, '\0', (sizeof(char *) * (count + 1)));
-	if (alloc_aux(count, new_env, new) == -1)
-		return (-1);
-	free_envs_var(gg()->envs->var);
-	gg()->envs->var = new;
-	return (count);
+	if (replace_existing_var(new_env) == 1)
+		return (count);
+	return (add_new_var(count, new_env));
 }
