@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:40:57 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/25 18:25:27 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/29 17:24:47 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_minishell(t_env *envs)
 	gg()->heredoc_file = NULL;
 	gg()->segments = NULL;
 	gg()->theres_pipe = 0;
+	gg()->deli_noquot = NULL;
 	tcgetattr(STDIN_FILENO, &gg()->original_term);
 }
 

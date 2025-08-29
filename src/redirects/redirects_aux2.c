@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 13:32:02 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/28 13:58:04 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/29 17:50:02 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,23 @@ t_token	*built_aux(t_token *current)
 
 void	handle_heredoc_sigint(int signal)
 {
+	int	i;
+
+	i = 2;
 	(void)signal;
 	write(1, "\n", 1);
 	free_pids_here();
+	free_safe(gg()->deli_noquot);
+	while (i++ < 1000)
+		close(i);
+	if (gg()->theres_pipe == 1)
+	{
+		clear_history();
+		free_safe(gg()->pids);
+		free_segments_memory(gg()->segments);
+		free_safe(gg()->input_f);
+	}
+	if (gg()->theres_pipe > 1)
+		free_segments_memory(gg()->segments);
 	exit(130);
 }

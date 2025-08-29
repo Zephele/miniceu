@@ -6,7 +6,7 @@
 /*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 16:10:42 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/26 21:08:51 by ratanaka         ###   ########.fr       */
+/*   Updated: 2025/08/29 17:59:23 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,23 @@ static void	*no_input(char *deli_noquot)
 
 void	*read_here_aux(const char *delimiter, char *input, int fd)
 {
-	char	*deli_noquot;
-
-	deli_noquot = ft_strdup(delimiter);
-	deli_noquot = no_quotes(deli_noquot);
+	gg()->deli_noquot = ft_strdup(delimiter);
+	gg()->deli_noquot = no_quotes(gg()->deli_noquot);
 	signal(SIGINT, handle_heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
-			if (!no_input(deli_noquot))
+			if (!no_input(gg()->deli_noquot))
 				break ;
 		input = input_exec(delimiter, input);
-		if (ft_strncmp(input, deli_noquot, ft_strlen(deli_noquot)) == 0
-			&& ft_strlen(input) == ft_strlen(deli_noquot))
+		if (ft_strncmp(input, gg()->deli_noquot,
+				ft_strlen(gg()->deli_noquot)) == 0
+			&& ft_strlen(input) == ft_strlen(gg()->deli_noquot))
 		{
 			free(input);
-			free_safe(deli_noquot);
+			free_safe(gg()->deli_noquot);
 			break ;
 		}
 		ft_putendl_fd(input, fd);
@@ -65,9 +64,8 @@ void	*read_here_aux(const char *delimiter, char *input, int fd)
 static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 {
 	int	status;
-	int	i;
 
-	i = 2;
+	status = 0;
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -75,8 +73,9 @@ static void	pid_function(int pid, const char *delimiter, char *input, int fd)
 		free_pids_here();
 		if (gg()->theres_pipe > 0 && gg()->segments)
 			free_segments_memory(gg()->segments);
-		while (i++ < 1000)
-			close(i);
+		fd = 2;
+		while (fd++ < 1000)
+			close(fd);
 		exit(0);
 	}
 	else

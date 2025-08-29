@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pede-jes <pede-jes@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ratanaka <ratanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:43:45 by ratanaka          #+#    #+#             */
-/*   Updated: 2025/08/28 14:46:18 by pede-jes         ###   ########.fr       */
+/*   Updated: 2025/08/29 17:16:44 by ratanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_global
 	t_token			*new;
 	char			*input_f;
 	struct termios	original_term;
+	char			*deli_noquot;
 }	t_global;
 
 # define CMD 0
